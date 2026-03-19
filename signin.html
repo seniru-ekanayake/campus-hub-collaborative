@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In – Campus Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --navy:#0d1b3e; --navy2:#111d3f;
+    --amber:#f5a623; --white:#ffffff;
+    --muted:rgba(255,255,255,0.55);
+    --border:rgba(255,255,255,0.1);
+    --input-border:#d1d5db;
+    --text-dark:#1a1f36;
+    --text-muted:#6b7280;
+  }
+  body { font-family:'Sora',sans-serif; display:flex; min-height:100vh; overflow:hidden; }
+
+  /* ── LEFT PANEL ── */
+  .left {
+    width:52%; background:var(--navy); color:var(--white);
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:3.5rem; position:relative; overflow:hidden;
+  }
+  .left-logo { position:absolute; top:2.5rem; left:3rem; display:flex; align-items:center; gap:0.75rem; }
+  .left-logo img { width:48px; height:48px; object-fit:contain; }
+  .left-logo span { font-size:0.75rem; color:var(--muted); line-height:1.3; }
+  .left-logo strong { display:block; font-size:0.9rem; color:var(--white); }
+
+  .deco {
+    position:absolute; border:2px solid rgba(255,255,255,0.07);
+    transform:rotate(45deg); border-radius:6px;
+    background:rgba(255,255,255,0.02);
+  }
+  .d1 { width:160px; height:160px; top:25%; right:8%; animation:float 9s ease-in-out infinite; }
+  .d2 { width:220px; height:220px; bottom:20%; right:-40px; animation:float 11s ease-in-out infinite reverse; background:rgba(22,36,80,0.6); }
+  .d3 { width:100px; height:100px; top:45%; left:10%; animation:float 8s ease-in-out infinite 1s; }
+  @keyframes float {
+    0%,100%{ transform:rotate(45deg) translateY(0); }
+    50%    { transform:rotate(45deg) translateY(-14px); }
+  }
+
+  .badge {
+    display:inline-flex; align-items:center; gap:0.5rem;
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:50px; padding:0.35rem 1rem;
+    font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:1.5rem; width:fit-content;
+  }
+  .badge-dot { width:6px; height:6px; border-radius:50%; background:var(--amber); }
+
+  .left h2 { font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; line-height:1.15; margin-bottom:1rem; }
+  .left h2 span { color:var(--amber); }
+  .left p { font-family:'Inter',sans-serif; font-size:0.88rem; color:var(--muted); line-height:1.7; max-width:340px; margin-bottom:3rem; }
+
+  .stats { display:flex; gap:0; }
+  .stat { text-align:left; padding-right:1.5rem; }
+  .stat + .stat { padding-left:1.5rem; border-left:1px solid rgba(255,255,255,0.15); }
+  .stat-n { font-size:1.4rem; font-weight:800; }
+  .stat-l { font-size:0.7rem; color:var(--muted); font-family:'Inter',sans-serif; }
+
+  /* ── RIGHT PANEL ── */
+  .right {
+    flex:1; background:#f8f9fc;
+    display:flex; align-items:center; justify-content:center;
+    padding:3rem 2rem; position:relative;
+  }
+
+  .form-card { width:100%; max-width:420px; }
+
+  .diamond-accent {
+    display:flex; justify-content:space-between; margin-bottom:2rem;
+  }
+  .diamond {
+    width:14px; height:14px; background:var(--amber);
+    transform:rotate(45deg); border-radius:2px;
+  }
+
+  .form-card h3 { font-size:1.7rem; font-weight:800; color:var(--text-dark); margin-bottom:0.35rem; }
+  .form-card .sub { font-family:'Inter',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:2rem; }
+
+  .field { margin-bottom:1rem; position:relative; }
+  .field input {
+    width:100%; padding:0.8rem 1rem 0.8rem 2.8rem;
+    border:1.5px solid var(--input-border); border-radius:8px;
+    font-family:'Inter',sans-serif; font-size:0.9rem; color:var(--text-dark);
+    background:#fff; outline:none; transition:border-color 0.2s;
+  }
+  .field input::placeholder { color:#9ca3af; }
+  .field input:focus { border-color:var(--amber); }
+  .field-icon {
+    position:absolute; left:0.9rem; top:50%; transform:translateY(-50%);
+    color:#9ca3af;
+  }
+  .field-eye {
+    position:absolute; right:0.9rem; top:50%; transform:translateY(-50%);
+    color:#9ca3af; cursor:pointer;
+  }
+
+  .row-opts {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:1.4rem;
+  }
+  .remember { display:flex; align-items:center; gap:0.5rem; font-family:'Inter',sans-serif; font-size:0.83rem; color:var(--text-muted); }
+  .remember input[type=checkbox] { accent-color:var(--amber); width:14px; height:14px; cursor:pointer; }
+  .forgot { font-family:'Inter',sans-serif; font-size:0.83rem; color:#3b82f6; text-decoration:none; }
+  .forgot:hover { text-decoration:underline; }
+
+  .btn-main {
+    width:100%; background:var(--text-dark); color:#fff;
+    border:none; border-radius:8px; padding:0.9rem;
+    font-family:'Sora',sans-serif; font-weight:700; font-size:0.95rem;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;
+    transition:background 0.2s, transform 0.15s;
+  }
+  .btn-main:hover { background:#2d3748; transform:translateY(-2px); }
+  .btn-main svg { transition:transform 0.2s; }
+  .btn-main:hover svg { transform:translateX(4px); }
+
+  .or { text-align:center; font-family:'Inter',sans-serif; font-size:0.82rem; color:var(--text-muted); margin:1rem 0; }
+
+  .btn-sso {
+    width:100%; background:#fff; color:var(--text-dark);
+    border:1.5px solid var(--input-border); border-radius:8px; padding:0.85rem;
+    font-family:'Sora',sans-serif; font-weight:600; font-size:0.9rem;
+    cursor:pointer; transition:border-color 0.2s, transform 0.15s;
+  }
+  .btn-sso:hover { border-color:#888; transform:translateY(-1px); }
+
+  .demo-box {
+    margin-top:1rem; background:#fffbeb; border:1px solid #fde68a;
+    border-radius:8px; padding:0.75rem 1rem;
+    font-family:'Inter',sans-serif; font-size:0.82rem; color:#92400e; text-align:center;
+  }
+  .demo-box strong { color:#b45309; }
+
+  .footer-link { text-align:center; margin-top:1.2rem; font-family:'Inter',sans-serif; font-size:0.83rem; color:var(--text-muted); }
+  .footer-link a { color:#3b82f6; text-decoration:none; font-weight:600; }
+  .footer-link a:hover { text-decoration:underline; }
+
+  @media(max-width:768px){
+    body { flex-direction:column; }
+    .left { width:100%; padding:2rem; min-height:40vh; }
+    .right { padding:2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LEFT -->
+<div class="left">
+  <div class="left-logo">
+    <img src="logo.png" alt="Logo">
+    <span>UNIVERSITY OF<strong>Wolverhampton</strong></span>
+  </div>
+
+  <div class="deco d1"></div>
+  <div class="deco d2"></div>
+  <div class="deco d3"></div>
+
+  <div class="badge"><span class="badge-dot"></span>The University of Opportunity</div>
+  <h2>Your campus.<br><span>Your hub.</span><br>All in one place.</h2>
+  <p>Access events, clubs, facilities, transport and wellbeing support – everything you need, right at your fingertips.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n">23k+</div><div class="stat-l">Students</div></div>
+    <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Clubs and Societies</div></div>
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Campuses</div></div>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+  <div class="form-card">
+    <div class="diamond-accent"><div class="diamond"></div><div class="diamond"></div></div>
+
+    <h3>Welcome back</h3>
+    <p class="sub">Sign in with your University of Wolverhampton credentials.</p>
+
+    <div class="field">
+      <svg class="field-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      <input type="text" placeholder="Student ID or Username">
+    </div>
+
+    <div class="field">
+      <svg class="field-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <input type="password" placeholder="Password" id="pwd">
+      <span class="field-eye" onclick="togglePwd()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </span>
+    </div>
+
+    <div class="row-opts">
+      <label class="remember"><input type="checkbox"> Remember me</label>
+      <a href="#" class="forgot">Forgot password?</a>
+    </div>
+
+    <button class="btn-main" onclick="location.href='dashboard.html'">
+      Sign In to Campus Hub
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+
+    <div class="or">or</div>
+
+    <button class="btn-sso">University Single Sign-On (SSO)</button>
+
+    <div class="demo-box"><strong>Demo credentials:</strong> Admin: admin / admin123</div>
+
+    <p class="footer-link">New student? <a href="register.html">Create your account</a></p>
+  </div>
+</div>
+
+<script>
+function togglePwd(){
+  const i=document.getElementById('pwd');
+  i.type=i.type==='password'?'text':'password';
+}
+</script>
+</body>
+</html>
