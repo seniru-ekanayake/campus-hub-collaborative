@@ -1,0 +1,13 @@
+{
+  "name": "campus-hub-phase1-frontend-tests",
+  "version": "1.0.0",
+  "description": "Jest unit tests for CampusHub Phase 1 frontend JS utilities",
+  "scripts": {
+    "test": "jest --coverage --verbose",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

@@ -1,0 +1,383 @@
+{
+  "info": {
+    "name": "CampusHub Phase 1 – API Test Collection",
+    "description": "Complete Postman collection for testing all Phase 1 REST endpoints. Set {{baseUrl}} = http://localhost:8080/api. Run via Newman: newman run CampusHub_Phase1_API.postman_collection.json",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl",     "value": "http://localhost:8080/api" },
+    { "key": "adminToken",  "value": "" },
+    { "key": "studentToken","value": "" },
+    { "key": "eventId",     "value": "" },
+    { "key": "clubId",      "value": "" },
+    { "key": "announcementId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "AUTH",
+      "item": [
+        {
+          "name": "TC-API-AUTH-001 | Register new student",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Returns username', () => { const b = pm.response.json(); pm.expect(b.username).to.eql('qauser'); });",
+            "pm.test('Role is ROLE_STUDENT', () => pm.expect(pm.response.json().role).to.eql('ROLE_STUDENT'));",
+            "pm.test('Password not exposed', () => pm.expect(pm.response.json()).to.not.have.property('password'));"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/auth/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"username\":\"qauser\",\"email\":\"qauser@wlv.ac.uk\",\"password\":\"QApass123\",\"firstName\":\"QA\",\"lastName\":\"Tester\",\"studentId\":\"QA001\",\"course\":\"Computer Science\"}" }
+          }
+        },
+        {
+          "name": "TC-API-AUTH-002 | Register duplicate username → 400",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 400', () => pm.response.to.have.status(400));",
+            "pm.test('Error message present', () => pm.expect(pm.response.json().error).to.include('Username already taken'));"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/auth/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"username\":\"qauser\",\"email\":\"other@wlv.ac.uk\",\"password\":\"QApass123\",\"firstName\":\"A\",\"lastName\":\"B\",\"studentId\":\"QA002\",\"course\":\"IT\"}" }
+          }
+        },
+        {
+          "name": "TC-API-AUTH-003 | Admin login → saves token",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Token present', () => { const b = pm.response.json(); pm.expect(b.token).to.be.a('string').and.not.empty; });",
+            "pm.test('Role is ROLE_ADMIN', () => pm.expect(pm.response.json().role).to.eql('ROLE_ADMIN'));",
+            "pm.collectionVariables.set('adminToken', pm.response.json().token);"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"username\":\"admin\",\"password\":\"admin123\"}" }
+          }
+        },
+        {
+          "name": "TC-API-AUTH-004 | Student login → saves token",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Role is ROLE_STUDENT', () => pm.expect(pm.response.json().role).to.eql('ROLE_STUDENT'));",
+            "pm.collectionVariables.set('studentToken', pm.response.json().token);"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"username\":\"qauser\",\"password\":\"QApass123\"}" }
+          }
+        },
+        {
+          "name": "TC-API-AUTH-005 | Wrong password → 400",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 400', () => pm.response.to.have.status(400));",
+            "pm.test('Error field present', () => pm.expect(pm.response.json().error).to.be.a('string'));"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"username\":\"qauser\",\"password\":\"WrongPass\"}" }
+          }
+        },
+        {
+          "name": "TC-API-AUTH-006 | GET profile (authenticated) → 200",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Username matches', () => pm.expect(pm.response.json().username).to.eql('qauser'));",
+            "pm.test('No password field', () => pm.expect(pm.response.json()).to.not.have.property('password'));"
+          ]}}],
+          "request": {
+            "method": "GET", "url": "{{baseUrl}}/auth/profile",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" }]
+          }
+        },
+        {
+          "name": "TC-API-AUTH-007 | GET profile (no token) → 401",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 401', () => pm.response.to.have.status(401));"
+          ]}}],
+          "request": { "method": "GET", "url": "{{baseUrl}}/auth/profile" }
+        },
+        {
+          "name": "TC-API-AUTH-008 | PUT profile updates name and course",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('firstName updated', () => pm.expect(pm.response.json().firstName).to.eql('Updated'));",
+            "pm.test('course updated', () => pm.expect(pm.response.json().course).to.eql('Data Science'));"
+          ]}}],
+          "request": {
+            "method": "PUT", "url": "{{baseUrl}}/auth/profile",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"firstName\":\"Updated\",\"lastName\":\"Tester\",\"course\":\"Data Science\"}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "EVENTS",
+      "item": [
+        {
+          "name": "TC-API-EVT-001 | GET /events public → 200 array",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Response is array', () => pm.expect(pm.response.json()).to.be.an('array'));"
+          ]}}],
+          "request": { "method": "GET", "url": "{{baseUrl}}/events" }
+        },
+        {
+          "name": "TC-API-EVT-002 | Admin creates event → 200 + id",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('ID assigned', () => pm.expect(pm.response.json().id).to.be.a('number'));",
+            "pm.test('Title correct', () => pm.expect(pm.response.json().title).to.eql('QA Spring Fair'));",
+            "pm.collectionVariables.set('eventId', pm.response.json().id);"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/admin/events",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"title\":\"QA Spring Fair\",\"description\":\"Test event\",\"eventDate\":\"2025-06-20T14:00:00\",\"location\":\"Main Hall\",\"campus\":\"City\",\"category\":\"Social\",\"capacity\":\"150\"}" }
+          }
+        },
+        {
+          "name": "TC-API-EVT-003 | Student creates event → 403",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 403', () => pm.response.to.have.status(403));"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/admin/events",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"title\":\"Hack\",\"description\":\"x\",\"eventDate\":\"2025-06-20T14:00:00\",\"location\":\"x\",\"campus\":\"x\",\"category\":\"x\",\"capacity\":\"10\"}" }
+          }
+        },
+        {
+          "name": "TC-API-EVT-004 | GET /events/{id} → correct event",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Title matches', () => pm.expect(pm.response.json().title).to.eql('QA Spring Fair'));"
+          ]}}],
+          "request": {
+            "method": "GET", "url": "{{baseUrl}}/events/{{eventId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" }]
+          }
+        },
+        {
+          "name": "TC-API-EVT-005 | Admin updates event → new title",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Title updated', () => pm.expect(pm.response.json().title).to.eql('Updated Fair Title'));"
+          ]}}],
+          "request": {
+            "method": "PUT", "url": "{{baseUrl}}/admin/events/{{eventId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"title\":\"Updated Fair Title\",\"description\":\"Updated\",\"eventDate\":\"2025-07-01T10:00:00\",\"location\":\"Room 2\",\"campus\":\"City\",\"category\":\"Academic\",\"capacity\":\"80\"}" }
+          }
+        },
+        {
+          "name": "TC-API-EVT-006 | Admin deletes event → 200 message",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Message present', () => pm.expect(pm.response.json().message).to.be.a('string'));"
+          ]}}],
+          "request": {
+            "method": "DELETE", "url": "{{baseUrl}}/admin/events/{{eventId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "CLUBS",
+      "item": [
+        {
+          "name": "TC-API-CLUB-001 | Admin creates club → 200 + id",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Club name correct', () => pm.expect(pm.response.json().name).to.eql('QA Coding Society'));",
+            "pm.collectionVariables.set('clubId', pm.response.json().id);"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/admin/clubs",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"name\":\"QA Coding Society\",\"description\":\"Test club\",\"category\":\"Academic\",\"meetingSchedule\":\"Wednesdays\",\"location\":\"Lab A\",\"contactEmail\":\"qa@wlv.ac.uk\",\"active\":true}" }
+          }
+        },
+        {
+          "name": "TC-API-CLUB-002 | Student cannot create club → 403",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 403', () => pm.response.to.have.status(403));"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/admin/clubs",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"name\":\"Rogue\",\"description\":\"x\",\"category\":\"x\",\"meetingSchedule\":\"x\",\"location\":\"x\",\"contactEmail\":\"x@x.com\",\"active\":true}" }
+          }
+        },
+        {
+          "name": "TC-API-CLUB-003 | GET /clubs authenticated → includes new club",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Response is array', () => pm.expect(pm.response.json()).to.be.an('array'));",
+            "pm.test('New club visible', () => { const found = pm.response.json().find(c => c.name === 'QA Coding Society'); pm.expect(found).to.exist; });"
+          ]}}],
+          "request": {
+            "method": "GET", "url": "{{baseUrl}}/clubs",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" }]
+          }
+        },
+        {
+          "name": "TC-API-CLUB-004 | Student joins club → member=true",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('member flag is true', () => pm.expect(pm.response.json().member).to.be.true);"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/clubs/{{clubId}}/join",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" }]
+          }
+        },
+        {
+          "name": "TC-API-CLUB-005 | Double join → 400",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 400', () => pm.response.to.have.status(400));",
+            "pm.test('Error present', () => pm.expect(pm.response.json().error).to.be.a('string'));"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/clubs/{{clubId}}/join",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" }]
+          }
+        },
+        {
+          "name": "TC-API-CLUB-006 | GET /clubs/my → contains joined club",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Contains joined club', () => { const found = pm.response.json().find(c => c.name === 'QA Coding Society'); pm.expect(found).to.exist; });"
+          ]}}],
+          "request": {
+            "method": "GET", "url": "{{baseUrl}}/clubs/my",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" }]
+          }
+        },
+        {
+          "name": "TC-API-CLUB-007 | Student leaves club → 200",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));"
+          ]}}],
+          "request": {
+            "method": "DELETE", "url": "{{baseUrl}}/clubs/{{clubId}}/leave",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "ANNOUNCEMENTS",
+      "item": [
+        {
+          "name": "TC-API-ANN-001 | Admin creates announcement → 200 + id",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Title correct', () => pm.expect(pm.response.json().title).to.eql('QA Notice'));",
+            "pm.test('authorUsername is admin', () => pm.expect(pm.response.json().authorUsername).to.eql('admin'));",
+            "pm.collectionVariables.set('announcementId', pm.response.json().id);"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/admin/announcements",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"title\":\"QA Notice\",\"content\":\"This is a QA test announcement.\",\"category\":\"General\",\"pinned\":false}" }
+          }
+        },
+        {
+          "name": "TC-API-ANN-002 | GET /announcements public → contains new announcement",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('QA Notice visible', () => { const found = pm.response.json().find(a => a.title === 'QA Notice'); pm.expect(found).to.exist; });"
+          ]}}],
+          "request": { "method": "GET", "url": "{{baseUrl}}/announcements" }
+        },
+        {
+          "name": "TC-API-ANN-003 | Student cannot create announcement → 403",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 403', () => pm.response.to.have.status(403));"
+          ]}}],
+          "request": {
+            "method": "POST", "url": "{{baseUrl}}/admin/announcements",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"title\":\"Fake\",\"content\":\"x\",\"category\":\"General\",\"pinned\":false}" }
+          }
+        },
+        {
+          "name": "TC-API-ANN-004 | GET /announcements/category/General → only General",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('All items are General category', () => { pm.response.json().forEach(a => pm.expect(a.category).to.eql('General')); });"
+          ]}}],
+          "request": { "method": "GET", "url": "{{baseUrl}}/announcements/category/General" }
+        },
+        {
+          "name": "TC-API-ANN-005 | Admin updates announcement → new title",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Title updated', () => pm.expect(pm.response.json().title).to.eql('Updated QA Notice'));"
+          ]}}],
+          "request": {
+            "method": "PUT", "url": "{{baseUrl}}/admin/announcements/{{announcementId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" },{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"title\":\"Updated QA Notice\",\"content\":\"Updated content.\",\"category\":\"Academic\",\"pinned\":true}" }
+          }
+        },
+        {
+          "name": "TC-API-ANN-006 | Admin deletes announcement → 200",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('Message returned', () => pm.expect(pm.response.json().message).to.be.a('string'));"
+          ]}}],
+          "request": {
+            "method": "DELETE", "url": "{{baseUrl}}/admin/announcements/{{announcementId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "ADMIN",
+      "item": [
+        {
+          "name": "TC-API-ADMIN-001 | GET /admin/stats → has all 3 fields",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('totalStudents present', () => pm.expect(pm.response.json()).to.have.property('totalStudents'));",
+            "pm.test('totalClubs present', () => pm.expect(pm.response.json()).to.have.property('totalClubs'));",
+            "pm.test('totalEvents present', () => pm.expect(pm.response.json()).to.have.property('totalEvents'));"
+          ]}}],
+          "request": {
+            "method": "GET", "url": "{{baseUrl}}/admin/stats",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }]
+          }
+        },
+        {
+          "name": "TC-API-ADMIN-002 | Student cannot access /admin/stats → 403",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 403', () => pm.response.to.have.status(403));"
+          ]}}],
+          "request": {
+            "method": "GET", "url": "{{baseUrl}}/admin/stats",
+            "header": [{ "key": "Authorization", "value": "Bearer {{studentToken}}" }]
+          }
+        },
+        {
+          "name": "TC-API-ADMIN-003 | GET /admin/users → qauser present",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "pm.test('Status 200', () => pm.response.to.have.status(200));",
+            "pm.test('qauser in list', () => { const found = pm.response.json().find(u => u.username === 'qauser'); pm.expect(found).to.exist; });"
+          ]}}],
+          "request": {
+            "method": "GET", "url": "{{baseUrl}}/admin/users",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }]
+          }
+        }
+      ]
+    }
+  ]
+}
