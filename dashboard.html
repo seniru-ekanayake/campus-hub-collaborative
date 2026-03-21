@@ -403,5 +403,34 @@
   </div>
 </div>
 
+<script>
+  function redirectToSignIn() {
+    alert('Session expired or not authenticated. Please sign in again.');
+    window.location.href = 'signin.html';
+  }
+
+  function isSessionValid() {
+    const expiry = localStorage.getItem('sessionExpiry');
+    if (!expiry) return false;
+
+    const expiryTime = Number(expiry);
+    if (Number.isNaN(expiryTime)) return false;
+
+    return Date.now() < expiryTime;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    if (!isSessionValid()) {
+      redirectToSignIn();
+      return;
+    }
+
+    // Keep session timeout rolling for active users.
+    const extensionMinutes = 20;
+    const newExpiry = Date.now() + extensionMinutes * 60 * 1000;
+    localStorage.setItem('sessionExpiry', String(newExpiry));
+  });
+</script>
+
 </body>
 </html>
