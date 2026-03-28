@@ -69,7 +69,7 @@ campus-hub/
 └── frontend/             standalone copies of the frontend (same files)
 ```
 
-> **Note:** The frontend folder and `backend/src/main/resources/static/` contain the same files. We kept both because Priya was working on the frontend separately while Aiden set up Spring Boot. Just edit the static/ ones if you're running through Spring.
+> **Note:** The frontend folder and `backend/src/main/resources/static/` contain the same files. We kept both because Amashi was working on the frontend separately while Jude set up Spring Boot. Just edit the static/ ones if you're running through Spring.
 
 ---
 
@@ -84,9 +84,3 @@ campus-hub/
 ---
 
 ## Phase 2 (not included)
-
-Removed to keep Phase 1 scoped:
-- Check-in & Rewards (the `engagementPoints` field is a leftover from this)
-- Facilities booking
-- Campus transport schedules
-- Mental Health / Counselling appointment booking
