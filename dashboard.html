@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard – Campus Hub</title>
+<title>Dashboard - Campus Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -17,7 +17,7 @@
   }
   body { font-family:'Inter',sans-serif; background:var(--bg); display:flex; min-height:100vh; color:var(--text); }
 
-  /* ── TOPBAR TICKER ── */
+  /* TOPBAR TICKER */
   .ticker {
     position:fixed; top:0; left:0; right:0; height:32px; z-index:100;
     background:var(--navy); overflow:hidden; display:flex; align-items:center;
@@ -30,7 +30,7 @@
   }
   @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-  /* ── SIDEBAR ── */
+  /* SIDEBAR */
   .sidebar {
     width:var(--sidebar-w); background:var(--navy); color:var(--white);
     position:fixed; top:32px; bottom:0; left:0; z-index:50;
@@ -70,7 +70,7 @@
   .user-info .name { font-weight:600; color:var(--white); }
   .user-info .role { font-size:0.68rem; color:var(--muted); }
 
-  /* ── MAIN ── */
+  /* MAIN */
   .main { margin-left:var(--sidebar-w); padding-top:32px; flex:1; display:flex; flex-direction:column; min-height:100vh; }
 
   /* Topbar */
