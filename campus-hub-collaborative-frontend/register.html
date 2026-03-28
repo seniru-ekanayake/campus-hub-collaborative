@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register – Campus Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --navy:#0d1b3e; --amber:#f5a623;
+    --white:#ffffff; --muted:rgba(255,255,255,0.55);
+    --input-border:#d1d5db; --text-dark:#1a1f36; --text-muted:#6b7280;
+  }
+  body { font-family:'Sora',sans-serif; display:flex; min-height:100vh; overflow-x:hidden; }
+
+  /* LEFT */
+  .left {
+    width:52%; background:var(--navy); color:var(--white);
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:3.5rem; position:relative; overflow:hidden;
+  }
+  .left-logo { position:absolute; top:2.5rem; left:3rem; display:flex; align-items:center; gap:0.75rem; }
+  .left-logo img { width:48px; height:48px; object-fit:contain; }
+  .left-logo span { font-size:0.75rem; color:var(--muted); line-height:1.3; }
+  .left-logo strong { display:block; font-size:0.9rem; color:var(--white); }
+
+  .deco {
+    position:absolute; border:2px solid rgba(255,255,255,0.07);
+    transform:rotate(45deg); border-radius:6px;
+    background:rgba(255,255,255,0.02);
+  }
+  .d1 { width:180px; height:180px; top:28%; right:-20px; background:rgba(30,50,110,0.4); animation:float 10s ease-in-out infinite; }
+  .d2 { width:240px; height:240px; bottom:18%; left:-60px; background:rgba(14,30,70,0.5); animation:float 12s ease-in-out infinite reverse; }
+  .d3 { width:90px; height:90px; top:18%; left:30%; animation:float 8s ease-in-out infinite 2s; }
+  @keyframes float{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(-14px)}}
+
+  .badge {
+    display:inline-flex; align-items:center; gap:0.5rem;
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:50px; padding:0.35rem 1rem;
+    font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:1.5rem; width:fit-content;
+  }
+  .badge-dot { width:6px; height:6px; border-radius:50%; background:var(--amber); }
+
+  .left h2 { font-size:clamp(1.8rem,3.5vw,2.5rem); font-weight:800; line-height:1.18; margin-bottom:1rem; }
+  .left h2 span { color:var(--amber); }
+  .left p { font-family:'Inter',sans-serif; font-size:0.88rem; color:var(--muted); line-height:1.7; max-width:320px; margin-bottom:3rem; }
+
+  .stats { display:flex; gap:0; }
+  .stat { text-align:left; padding-right:1.5rem; }
+  .stat+.stat { padding-left:1.5rem; border-left:1px solid rgba(255,255,255,0.15); }
+  .stat-n { font-size:1.4rem; font-weight:800; }
+  .stat-l { font-size:0.7rem; color:var(--muted); font-family:'Inter',sans-serif; }
+
+  /* RIGHT */
+  .right {
+    flex:1; background:#f8f9fc;
+    display:flex; align-items:center; justify-content:center;
+    padding:3rem 2rem;
+  }
+
+  .form-card { width:100%; max-width:430px; }
+
+  .diamond-accent { display:flex; justify-content:space-between; margin-bottom:2rem; }
+  .diamond { width:14px; height:14px; background:var(--amber); transform:rotate(45deg); border-radius:2px; }
+
+  .form-card h3 { font-size:1.7rem; font-weight:800; color:var(--text-dark); margin-bottom:0.35rem; }
+  .form-card .sub { font-family:'Inter',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:2rem; }
+
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
+
+  .field { margin-bottom:0.9rem; position:relative; }
+  .field input {
+    width:100%; padding:0.8rem 1rem;
+    border:1.5px solid var(--input-border); border-radius:8px;
+    font-family:'Inter',sans-serif; font-size:0.88rem; color:var(--text-dark);
+    background:#fff; outline:none; transition:border-color 0.2s;
+  }
+  .field.icon-left input { padding-left:2.8rem; }
+  .field input::placeholder { color:#9ca3af; }
+  .field input:focus { border-color:var(--amber); }
+  .field-icon { position:absolute; left:0.9rem; top:50%; transform:translateY(-50%); color:#9ca3af; }
+  .field-eye { position:absolute; right:0.9rem; top:50%; transform:translateY(-50%); color:#9ca3af; cursor:pointer; }
+
+  .btn-main {
+    width:100%; background:var(--text-dark); color:#fff;
+    border:none; border-radius:8px; padding:0.9rem;
+    font-family:'Sora',sans-serif; font-weight:700; font-size:0.95rem;
+    cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;
+    margin-top:0.5rem; transition:background 0.2s, transform 0.15s;
+  }
+  .btn-main:hover { background:#2d3748; transform:translateY(-2px); }
+  .btn-main:hover svg { transform:translateX(4px); }
+  .btn-main svg { transition:transform 0.2s; }
+
+  .footer-link { text-align:center; margin-top:1.2rem; font-family:'Inter',sans-serif; font-size:0.83rem; color:var(--text-muted); }
+  .footer-link a { color:#3b82f6; font-weight:600; text-decoration:none; }
+  .footer-link a:hover { text-decoration:underline; }
+
+  @media(max-width:768px){
+    body { flex-direction:column; }
+    .left { width:100%; padding:2rem; min-height:35vh; }
+    .right { padding:2rem 1.5rem; }
+    .row2 { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LEFT -->
+<div class="left">
+  <div class="left-logo">
+    <img src="logo.png" alt="Logo">
+    <span>UNIVERSITY OF<strong>Wolverhampton</strong></span>
+  </div>
+
+  <div class="deco d1"></div>
+  <div class="deco d2"></div>
+  <div class="deco d3"></div>
+
+  <div class="badge"><span class="badge-dot"></span>Join your campus community</div>
+  <h2>Start your<br><span>journey</span><br>with us.</h2>
+  <p>Register to access events, book facilities, join clubs, and get the support you need throughout your studies.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n">23k+</div><div class="stat-l">Students</div></div>
+    <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Clubs</div></div>
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Campuses</div></div>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+  <div class="form-card">
+    <div class="diamond-accent"><div class="diamond"></div><div class="diamond"></div></div>
+
+    <h3>Create your account</h3>
+    <p class="sub">Fill in your details to get started with Campus Hub.</p>
+
+    <div class="row2">
+      <div class="field"><input type="text" placeholder="First Name"></div>
+      <div class="field"><input type="text" placeholder="Last Name"></div>
+    </div>
+
+    <div class="field"><input type="text" placeholder="Username"></div>
+
+    <div class="field"><input type="email" placeholder="University Email (e.g. j.doe@wlv.ac.uk)"></div>
+
+    <div class="row2">
+      <div class="field"><input type="text" placeholder="Student ID"></div>
+      <div class="field"><input type="text" placeholder="Course / Programme"></div>
+    </div>
+
+    <div class="field icon-left">
+      <svg class="field-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <input type="password" placeholder="Create a password" id="pwd">
+      <span class="field-eye" onclick="togglePwd()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </span>
+    </div>
+
+    <button class="btn-main" onclick="location.href='dashboard.html'">
+      Create Account
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+
+    <p class="footer-link">Already have an account? <a href="signin.html">Sign in</a></p>
+  </div>
+</div>
+
+<script>
+function togglePwd(){
+  const i=document.getElementById('pwd');
+  i.type=i.type==='password'?'text':'password';
+}
+</script>
+</body>
+</html>
