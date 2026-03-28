@@ -1,6 +1,6 @@
 # CampusHub – Phase 1
 
-University of Wolverhampton · Student Portal project for the Group Software Engineering module.
+University of Wolverhampton · Student Portal project by EIS Coders.
 
 **Team:**
 - Jude Tirosh – Backend (Spring Boot, security, services)
