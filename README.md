@@ -2,11 +2,6 @@
 
 University of Wolverhampton · Student Portal project for the Group Software Engineering module.
 
-**Team:**
-- Aiden – Backend (Spring Boot, security, services)
-- Priya – Frontend (HTML/CSS/JS pages)
-- Marcus – Database & entities, helped with repos
-
 ---
 
 ## What's in Phase 1
