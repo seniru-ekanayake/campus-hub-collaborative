@@ -89,9 +89,3 @@ campus-hub/
 ---
 
 ## Phase 2 (not included)
-
-Removed to keep Phase 1 scoped:
-- Check-in & Rewards (the `engagementPoints` field is a leftover from this)
-- Facilities booking
-- Campus transport schedules
-- Mental Health / Counselling appointment booking
