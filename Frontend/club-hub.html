@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Club Hub - Campus Hub</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --navy: #0f1b3d;
+      --amber: #f5a623;
+      --white: #fff;
+      --muted: rgba(255, 255, 255, 0.55);
+      --bg: #fbf7ee;
+      --sidebar-w: 210px;
+      --text: #1a1f36;
+      --text2: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      display: flex;
+      min-height: 100vh;
+      color: var(--text);
+    }
+
+    .ticker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 32px;
+      z-index: 100;
+      background: #0a1330;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .ticker-inner {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: ticker 25s linear infinite;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-family: 'Sora', sans-serif;
+    }
+
+    @keyframes ticker {
+      0% {
+        transform: translateX(0)
+      }
+
+      100% {
+        transform: translateX(-50%)
+      }
+    }
+
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--navy);
+      color: var(--white);
+      position: fixed;
+      top: 32px;
+      bottom: 0;
+      left: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .sidebar-brand {
+      padding: 1.4rem 1.2rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .sidebar-brand img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .brand-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 0.7rem;
+      line-height: 1.3;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      font-size: 0.6rem;
+      display: block;
+    }
+
+    .brand-text strong {
+      color: var(--white);
+    }
+
+    .nav-section {
+      padding: 1rem 0 0.5rem;
+    }
+
+    .nav-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.3);
+      padding: 0 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.65);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--white);
+    }
+
+    .nav-item.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    .nav-item svg {
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    .nav-item.active svg {
+      opacity: 1;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+      margin-left: auto;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 1rem 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: #0a1330;
+    }
+
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #1a1000;
+    }
+
+    .user-info .name {
+      font-weight: 600;
+      color: var(--white);
+      font-size: 0.82rem;
+    }
+
+    .user-info .role {
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .main {
+      margin-left: var(--sidebar-w);
+      padding-top: 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 56px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      gap: 1rem;
+      position: sticky;
+      top: 32px;
+      z-index: 40;
+    }
+
+    .page-title {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .breadcrumb {
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.4rem 0.9rem;
+      width: 220px;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text);
+      outline: none;
+      width: 100%;
+    }
+
+    .search-box input::placeholder {
+      color: #9ca3af;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text2);
+      padding: 0.3rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      transition: background 0.15s;
+    }
+
+    .icon-btn:hover {
+      background: var(--bg);
+    }
+
+    .notif-dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .content {
+      padding: 1.8rem 2rem;
+      flex: 1;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .page-header-text h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .page-header-text p {
+      font-size: 0.83rem;
+      color: var(--text2);
+      margin-top: 0.3rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.7rem;
+      margin-left: auto;
+      align-items: center;
+    }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: #888;
+    }
+
+    .btn-amber {
+      background: var(--amber);
+      color: #1a1000;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 1.3rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-amber:hover {
+      background: #ffb733;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 5rem 2rem;
+    }
+
+    .empty-state svg {
+      margin: 0 auto 1.2rem;
+      display: block;
+      opacity: 0.6;
+    }
+
+    .empty-state p {
+      font-size: 0.88rem;
+      color: var(--text2);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
+      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
+      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
+    </div>
+  </div>
+
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      <img src="logo.png" alt="Logo">
+      <div class="brand-text"><span>UNIVERSITY OF</span><strong>Wolverhampton</strong></div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <a href="dashboard.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="9" />
+          <rect x="14" y="3" width="7" height="5" />
+          <rect x="14" y="12" width="7" height="9" />
+          <rect x="3" y="16" width="7" height="5" />
+        </svg>Dashboard</a>
+      <a href="events.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>Events</a>
+      <a href="club-hub.html" class="nav-item active"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 00-3-3.87" />
+          <path d="M16 3.13a4 4 0 010 7.75" />
+        </svg>Club Hub <span class="dot"></span></a>
+      <a href="announcements.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 01-3.46 0" />
+        </svg>Announcements</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Campus</div>
+      <a href="facilities.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <rect x="4" y="2" width="16" height="20" rx="2" />
+          <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01" />
+        </svg>Facilities</a>
+      <a href="transport.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <rect x="1" y="3" width="15" height="13" rx="2" />
+          <path d="M16 8h4l3 3v5h-7V8z" />
+          <circle cx="5.5" cy="18.5" r="2.5" />
+          <circle cx="18.5" cy="18.5" r="2.5" />
+        </svg>Transport</a>
+      <a href="checkin-rewards.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <rect x="8" y="2" width="8" height="4" rx="1" />
+          <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" />
+          <path d="m9 14 2 2 4-4" />
+        </svg>Check-in and Rewards</a>
+      <a href="wellbeing.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+        </svg>Wellbeing</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Account</div>
+      <a href="my-profile.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>My Profile</a>
+      <a href="admin-panel.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3" />
+          <path d="M19.07 4.93A10 10 0 1020.66 7" />
+        </svg>Admin Panel</a>
+      <a href="signin.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
+          stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>Sign Out</a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-chip">
+        <div class="avatar">S</div>
+        <div class="user-info">
+          <div class="name">System</div>
+          <div class="role">Administrator</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main">
+    <div class="topbar">
+      <span class="page-title">Club Hub</span>
+      <span class="breadcrumb">Home > Club Hub</span>
+      <div class="spacer"></div>
+      <div class="search-box">
+        <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+        <input type="text" placeholder="Search campus hub...">
+      </div>
+      <button class="icon-btn"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+          <path d="M13.73 21a2 2 0 01-3.46 0" />
+        </svg><span class="notif-dot"></span></button>
+      <button class="icon-btn" onclick="location.href='signin.html'"><svg width="18" height="18" fill="none"
+          stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg></button>
+    </div>
+
+    <div class="content">
+      <div class="page-header">
+        <svg width="30" height="30" fill="none" stroke="#3a2e1f" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+          <path d="M6 12v5c3 3 9 3 12 0v-5" />
+        </svg>
+        <div class="page-header-text">
+          <h2>Club Hub</h2>
+          <p>Discover and join student clubs and societies</p>
+        </div>
+        <div class="btn-group">
+          <button class="btn-outline">My Clubs</button>
+          <button class="btn-outline">All Clubs</button>
+          <button class="btn-amber">+ Create Club</button>
+        </div>
+      </div>
+
+      <div class="empty-state">
+        <svg width="60" height="60" fill="none" stroke="#3a2e1f" stroke-width="1.6" viewBox="0 0 24 24">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+          <path d="M6 12v5c3 3 9 3 12 0v-5" />
+        </svg>
+        <p>No clubs found.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
