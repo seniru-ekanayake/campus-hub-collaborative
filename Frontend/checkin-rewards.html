@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Club Hub - Campus Hub</title>
+  <title>Check-In and Rewards - Campus Hub</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet">
@@ -23,6 +23,7 @@
       --white: #fff;
       --muted: rgba(255, 255, 255, 0.55);
       --bg: #fbf7ee;
+      --bg2: #f0eadb;
       --sidebar-w: 210px;
       --text: #1a1f36;
       --text2: #6b7280;
@@ -63,8 +64,13 @@
     }
 
     @keyframes ticker {
-      0% { transform: translateX(0) }
-      100% { transform: translateX(-50%) }
+      0% {
+        transform: translateX(0)
+      }
+
+      100% {
+        transform: translateX(-50%)
+      }
     }
 
     .sidebar {
@@ -298,282 +304,86 @@
 
     .page-header {
       display: flex;
-      align-items: flex-start;
-      gap: 1rem;
+      align-items: center;
+      gap: 0.8rem;
       margin-bottom: 1.6rem;
     }
 
-    .page-header-text h2 {
+    .page-header h2 {
       font-family: 'Sora', sans-serif;
       font-size: 1.7rem;
       font-weight: 800;
       color: var(--text);
     }
 
-    .page-header-text p {
-      font-size: 0.83rem;
-      color: var(--text2);
-      margin-top: 0.3rem;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 0.7rem;
-      margin-left: auto;
-      align-items: center;
-    }
-
-    .tab-toggle {
-      display: flex;
-      background: #fff;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      padding: 3px;
-      gap: 3px;
-    }
-
-    .tab-btn {
-      background: transparent;
-      color: var(--text2);
-      border: none;
-      border-radius: 7px;
-      padding: 0.5rem 1.1rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: background 0.18s, color 0.18s;
-      white-space: nowrap;
-    }
-
-    .tab-btn:hover {
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    .tab-btn.active {
-      background: var(--amber);
-      color: #1a1000;
-    }
-
-    .btn-outline {
-      background: #fff;
-      color: var(--text);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 0.6rem 1.2rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    .btn-outline:hover {
-      border-color: #888;
-    }
-
-    .btn-amber {
-      background: var(--amber);
-      color: #1a1000;
-      border: none;
-      border-radius: 8px;
-      padding: 0.65rem 1.3rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-amber:hover {
-      background: #ffb733;
-    }
-
-    .btn-join {
-      display: inline-block;
-      margin-top: 0.75rem;
-      background: var(--navy);
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      padding: 0.45rem 1rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: background 0.18s;
-    }
-
-    .btn-join:hover {
-      background: #1e3064;
-    }
-
-    .btn-join.joined {
-      background: #d1fae5;
-      color: #065f46;
-      cursor: default;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 5rem 2rem;
-    }
-
-    .empty-state svg {
-      margin: 0 auto 1.2rem;
-      display: block;
-      opacity: 0.6;
-    }
-
-    .empty-state p {
-      font-size: 0.88rem;
-      color: var(--text2);
-    }
-
-    .clubs-grid {
+    .top-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: 320px 1fr;
+      gap: 1.4rem;
+      margin-bottom: 1.8rem;
     }
 
-    .club-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.4rem;
-    }
-
-    .club-card-top {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .club-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
+    .points-card {
       background: var(--amber);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      flex-shrink: 0;
-    }
-
-    .club-card-name {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--text);
-    }
-
-    .club-card-cat {
-      font-size: 0.75rem;
-      color: var(--text2);
-      margin-top: 0.15rem;
-    }
-
-    .club-card-desc {
-      font-size: 0.82rem;
-      color: var(--text2);
-      line-height: 1.5;
-      margin-bottom: 0.9rem;
-    }
-
-    .club-card-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .club-meta-pill {
-      font-size: 0.72rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.2rem 0.65rem;
-      color: var(--text2);
-    }
-
-    .club-status-badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.15rem 0.6rem;
-      border-radius: 20px;
-      background: #d1fae5;
-      color: #065f46;
-    }
-
-    .club-status-badge.inactive {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 27, 61, 0.45);
-      z-index: 200;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    .modal {
-      background: #fff;
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 2rem;
-      width: 100%;
-      max-width: 520px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
-    .modal-header {
+    .points-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #1a1000;
+      margin-bottom: 0.5rem;
+    }
+
+    .points-value {
+      font-family: 'Sora', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: #1a1000;
+      line-height: 1;
+    }
+
+    .points-sub {
+      font-size: 0.8rem;
+      color: #3a2000;
+      margin-top: 0.4rem;
+      opacity: 0.8;
+    }
+
+    .checkin-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+    }
+
+    .checkin-title {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.6rem;
-    }
-
-    .modal-title {
+      gap: 0.6rem;
       font-family: 'Sora', sans-serif;
       font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
     }
 
-    .modal-close {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text2);
-      font-size: 1.3rem;
-      line-height: 1;
-      padding: 0.2rem 0.4rem;
-      border-radius: 6px;
-      transition: background 0.15s;
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
 
-    .modal-close:hover {
-      background: var(--bg);
-    }
-
-    .modal-field {
-      margin-bottom: 1.1rem;
-    }
-
-    .modal-field label {
+    .form-group label {
       display: block;
       font-size: 0.8rem;
       font-weight: 600;
@@ -581,77 +391,26 @@
       margin-bottom: 0.4rem;
     }
 
-    .modal-field input,
-    .modal-field textarea {
+    .form-group input,
+    .form-group select {
       width: 100%;
-      padding: 0.65rem 0.9rem;
+      padding: 0.7rem 1rem;
       border: 1.5px solid var(--border);
       border-radius: 8px;
       font-family: 'Inter', sans-serif;
-      font-size: 0.87rem;
+      font-size: 0.88rem;
       color: var(--text);
       background: var(--bg);
       outline: none;
       transition: border-color 0.2s;
     }
 
-    .modal-field input:focus,
-    .modal-field textarea:focus {
+    .form-group input:focus,
+    .form-group select:focus {
       border-color: var(--amber);
     }
 
-    .modal-field textarea {
-      resize: vertical;
-      min-height: 90px;
-    }
-
-    .modal-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .modal-checkbox {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.87rem;
-      color: var(--text);
-      margin-bottom: 1.4rem;
-      cursor: pointer;
-    }
-
-    .modal-checkbox input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
-      accent-color: var(--amber);
-      cursor: pointer;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.8rem;
-    }
-
-    .btn-cancel {
-      background: #fff;
-      color: var(--text);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 0.6rem 1.3rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    .btn-cancel:hover {
-      border-color: #888;
-    }
-
-    .btn-save {
+    .btn-checkin {
       background: var(--amber);
       color: #1a1000;
       border: none;
@@ -659,13 +418,51 @@
       padding: 0.65rem 1.5rem;
       font-family: 'Sora', sans-serif;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       cursor: pointer;
       transition: background 0.2s;
     }
 
-    .btn-save:hover {
+    .btn-checkin:hover {
       background: #ffb733;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+
+    .tab {
+      padding-bottom: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--text2);
+      cursor: pointer;
+      border-bottom: 2.5px solid transparent;
+      transition: color 0.15s;
+      font-weight: 500;
+    }
+
+    .tab.active {
+      color: var(--text);
+      font-weight: 700;
+      border-bottom-color: var(--text);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .empty-state svg {
+      margin: 0 auto 1.2rem;
+      display: block;
+    }
+
+    .empty-state p {
+      font-size: 0.88rem;
+      color: var(--text2);
     }
   </style>
 </head>
@@ -701,13 +498,13 @@
           <line x1="8" y1="2" x2="8" y2="6" />
           <line x1="3" y1="10" x2="21" y2="10" />
         </svg>Events</a>
-      <a href="club-hub.html" class="nav-item active"><svg width="16" height="16" fill="none" stroke="currentColor"
+      <a href="club-hub.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
           stroke-width="2" viewBox="0 0 24 24">
           <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
           <circle cx="9" cy="7" r="4" />
           <path d="M23 21v-2a4 4 0 00-3-3.87" />
           <path d="M16 3.13a4 4 0 010 7.75" />
-        </svg>Club Hub <span class="dot"></span></a>
+        </svg>Club Hub</a>
       <a href="announcements.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
           stroke-width="2" viewBox="0 0 24 24">
           <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
@@ -728,12 +525,12 @@
           <circle cx="5.5" cy="18.5" r="2.5" />
           <circle cx="18.5" cy="18.5" r="2.5" />
         </svg>Transport</a>
-      <a href="checkin-rewards.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
+      <a href="checkin-rewards.html" class="nav-item active"><svg width="16" height="16" fill="none"
+          stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <rect x="8" y="2" width="8" height="4" rx="1" />
           <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" />
           <path d="m9 14 2 2 4-4" />
-        </svg>Check-in and Rewards</a>
+        </svg>Check-in and Rewards <span class="dot"></span></a>
       <a href="wellbeing.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
           stroke-width="2" viewBox="0 0 24 24">
           <path
@@ -772,8 +569,8 @@
 
   <div class="main">
     <div class="topbar">
-      <span class="page-title">Club Hub</span>
-      <span class="breadcrumb">Home > Club Hub</span>
+      <span class="page-title">Check-In and Rewards</span>
+      <span class="breadcrumb">Home > Check-In and Rewards</span>
       <div class="spacer"></div>
       <div class="search-box">
         <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24">
@@ -797,222 +594,85 @@
 
     <div class="content">
       <div class="page-header">
-        <svg width="30" height="30" fill="none" stroke="#3a2e1f" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-          <path d="M6 12v5c3 3 9 3 12 0v-5" />
+        <svg width="30" height="30" fill="#f5b72e" stroke="#f5b72e" stroke-width="1.4" viewBox="0 0 24 24">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
-        <div class="page-header-text">
-          <h2>Club Hub</h2>
-          <p>Discover and join student clubs and societies</p>
+        <h2>Check-In and Rewards</h2>
+      </div>
+
+      <div class="top-cards">
+        <div class="points-card">
+          <div class="points-label">My Engagement Points</div>
+          <div class="points-value">0</div>
+          <div class="points-sub">points earned</div>
         </div>
-        <div class="btn-group">
-          <div class="tab-toggle">
-            <button id="tab-my" class="tab-btn" onclick="switchTab('my')">My Clubs</button>
-            <button id="tab-all" class="tab-btn active" onclick="switchTab('all')">All Clubs</button>
+
+        <div class="checkin-card">
+          <div class="checkin-title">
+            <svg width="20" height="20" fill="none" stroke="#0f1b3d" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0116 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            Check In Now
           </div>
-          <button class="btn-amber" onclick="openModal()">+ Create Club</button>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Location Name</label>
+              <input type="text" placeholder="e.g. Harrison Library">
+            </div>
+            <div class="form-group">
+              <label>Location Type</label>
+              <select>
+                <option>📚 Library (+10 pts)</option>
+                <option>🏋️ Sports Centre (+15 pts)</option>
+                <option>🍽️ Canteen (+5 pts)</option>
+                <option>🎓 Lecture Hall (+10 pts)</option>
+                <option>💻 Computer Lab (+10 pts)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-checkin">✓ Check In</button>
         </div>
       </div>
 
-      <div id="clubs-grid" class="clubs-grid" style="display:none;"></div>
-
-      <div id="empty-state" class="empty-state">
-        <svg width="60" height="60" fill="none" stroke="#3a2e1f" stroke-width="1.6" viewBox="0 0 24 24">
-          <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-          <path d="M6 12v5c3 3 9 3 12 0v-5" />
-        </svg>
-        <p id="empty-msg">No clubs found.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">Create Club</span>
-        <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('history')">My Check-in History</div>
+        <div class="tab" onclick="switchTab('rewards')">Available Rewards</div>
       </div>
 
-      <div class="modal-field">
-        <label>Club Name *</label>
-        <input type="text" id="club-name" placeholder="">
-      </div>
-
-      <div class="modal-field">
-        <label>Description</label>
-        <textarea id="club-desc" placeholder=""></textarea>
-      </div>
-
-      <div class="modal-row">
-        <div class="modal-field">
-          <label>Category</label>
-          <input type="text" id="club-cat" placeholder="Technology, Sports, Arts...">
-        </div>
-        <div class="modal-field">
-          <label>Contact Email</label>
-          <input type="email" id="club-email" placeholder="">
+      <div id="tab-history">
+        <div class="empty-state">
+          <svg width="44" height="44" fill="#e55b7c" stroke="#e55b7c" stroke-width="1" viewBox="0 0 24 24">
+            <path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0116 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <p>No check-ins yet. Start earning points!</p>
         </div>
       </div>
 
-      <div class="modal-row">
-        <div class="modal-field">
-          <label>Meeting Schedule</label>
-          <input type="text" id="club-schedule" placeholder="Wednesdays 6pm">
+      <div id="tab-rewards" style="display:none;">
+        <div class="empty-state">
+          <span style="font-size:2.8rem;">🎁</span>
+          <p>No rewards available yet.</p>
         </div>
-        <div class="modal-field">
-          <label>Location</label>
-          <input type="text" id="club-location" placeholder="Room MX123">
-        </div>
-      </div>
-
-      <label class="modal-checkbox">
-        <input type="checkbox" id="club-active" checked>
-        Active
-      </label>
-
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-save" onclick="saveClub()">Save</button>
       </div>
     </div>
   </div>
 
   <script>
-    var clubs = [];
-    var currentTab = 'all'; 
-
-    var categoryEmojis = {
-      'technology': '💻', 'tech': '💻', 'sports': '⚽', 'sport': '⚽',
-      'arts': '🎨', 'art': '🎨', 'music': '🎵', 'science': '🔬',
-      'gaming': '🎮', 'games': '🎮', 'drama': '🎭', 'theatre': '🎭',
-      'debate': '🗣️', 'finance': '💰', 'business': '💼', 'cooking': '🍳',
-      'film': '🎬', 'photography': '📷', 'nature': '🌿', 'environment': '🌿',
-      'robotics': '🤖', 'literature': '📚', 'book': '📚', 'dance': '💃',
-      'chess': '♟️', 'volunteer': '🤝'
-    };
-
-    function getEmoji(category) {
-      if (!category) return '🎓';
-      var lower = category.toLowerCase();
-      for (var key in categoryEmojis) {
-        if (lower.includes(key)) return categoryEmojis[key];
-      }
-      return '🎓';
-    }
-
     function switchTab(tab) {
-      currentTab = tab;
-      document.getElementById('tab-my').classList.toggle('active', tab === 'my');
-      document.getElementById('tab-all').classList.toggle('active', tab === 'all');
-      renderClubs();
-    }
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-history').style.display = 'none';
+      document.getElementById('tab-rewards').style.display = 'none';
 
-    function toggleJoin(index) {
-      clubs[index].joined = !clubs[index].joined;
-      renderClubs();
-    }
-
-    function openModal() {
-      document.getElementById('modal-overlay').classList.add('open');
-      document.getElementById('club-name').value = '';
-      document.getElementById('club-desc').value = '';
-      document.getElementById('club-cat').value = '';
-      document.getElementById('club-email').value = '';
-      document.getElementById('club-schedule').value = '';
-      document.getElementById('club-location').value = '';
-      document.getElementById('club-active').checked = true;
-      document.getElementById('club-name').focus();
-    }
-
-    function closeModal() {
-      document.getElementById('modal-overlay').classList.remove('open');
-    }
-
-    function handleOverlayClick(e) {
-      if (e.target === document.getElementById('modal-overlay')) closeModal();
-    }
-
-    function saveClub() {
-      var name = document.getElementById('club-name').value.trim();
-      if (!name) {
-        document.getElementById('club-name').focus();
-        document.getElementById('club-name').style.borderColor = '#ef4444';
-        return;
+      if (tab === 'history') {
+        document.querySelectorAll('.tab')[0].classList.add('active');
+        document.getElementById('tab-history').style.display = 'block';
+      } else {
+        document.querySelectorAll('.tab')[1].classList.add('active');
+        document.getElementById('tab-rewards').style.display = 'block';
       }
-      document.getElementById('club-name').style.borderColor = '';
-
-      var club = {
-        name: name,
-        desc: document.getElementById('club-desc').value.trim(),
-        category: document.getElementById('club-cat').value.trim(),
-        email: document.getElementById('club-email').value.trim(),
-        schedule: document.getElementById('club-schedule').value.trim(),
-        location: document.getElementById('club-location').value.trim(),
-        active: document.getElementById('club-active').checked,
-        joined: false
-      };
-
-      clubs.push(club);
-      closeModal();
-      renderClubs();
-    }
-
-    function renderClubs() {
-      var grid = document.getElementById('clubs-grid');
-      var empty = document.getElementById('empty-state');
-      var emptyMsg = document.getElementById('empty-msg');
-
-      var list = currentTab === 'my'
-        ? clubs.filter(function(c) { return c.joined; })
-        : clubs;
-
-      if (list.length === 0) {
-        grid.style.display = 'none';
-        empty.style.display = 'block';
-        emptyMsg.textContent = currentTab === 'my'
-          ? 'You haven\'t joined any clubs yet. Browse All Clubs to get started!'
-          : 'No clubs yet. Create one to get started!';
-        return;
-      }
-
-      empty.style.display = 'none';
-      grid.style.display = 'grid';
-      grid.innerHTML = '';
-
-      list.forEach(function(club) {
-        var realIdx = clubs.indexOf(club);
-        var card = document.createElement('div');
-        card.className = 'club-card';
-
-        var metaHtml = '';
-        if (club.schedule) metaHtml += '<span class="club-meta-pill">🕒 ' + club.schedule + '</span>';
-        if (club.location) metaHtml += '<span class="club-meta-pill">📍 ' + club.location + '</span>';
-        if (club.email) metaHtml += '<span class="club-meta-pill">✉️ ' + club.email + '</span>';
-
-        var joinBtn = '';
-        if (currentTab === 'all') {
-          joinBtn = club.joined
-            ? '<button class="btn-join joined" disabled>✓ Joined</button>'
-            : '<button class="btn-join" onclick="toggleJoin(' + realIdx + ')">+ Join Club</button>';
-        } else {
-          joinBtn = '<button class="btn-join" style="background:#fee2e2;color:#991b1b;" onclick="toggleJoin(' + realIdx + ')">Leave Club</button>';
-        }
-
-        card.innerHTML =
-          '<div class="club-card-top">' +
-            '<div class="club-icon">' + getEmoji(club.category) + '</div>' +
-            '<div>' +
-              '<div class="club-card-name">' + club.name + '</div>' +
-              (club.category ? '<div class="club-card-cat">' + club.category + '</div>' : '') +
-            '</div>' +
-          '</div>' +
-          (club.desc ? '<div class="club-card-desc">' + club.desc + '</div>' : '') +
-          (metaHtml ? '<div class="club-card-meta">' + metaHtml + '</div>' : '') +
-          '<span class="club-status-badge' + (club.active ? '' : ' inactive') + '">' + (club.active ? 'Active' : 'Inactive') + '</span>' +
-          joinBtn;
-
-        grid.appendChild(card);
-      });
     }
   </script>
 
