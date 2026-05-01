@@ -355,6 +355,250 @@
       font-size: 0.88rem;
       color: var(--text2);
     }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .event-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .event-card:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.09);
+      transform: translateY(-2px);
+    }
+
+    .event-card-banner {
+      height: 8px;
+      background: var(--amber);
+    }
+
+    .event-card-body {
+      padding: 1.2rem 1.3rem;
+    }
+
+    .event-card-title {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .event-card-cat {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.18rem 0.65rem;
+      border-radius: 20px;
+      background: #fef3c7;
+      color: #92400e;
+      margin-bottom: 0.8rem;
+    }
+
+    .event-card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .event-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--text2);
+    }
+
+    .event-meta-row svg {
+      flex-shrink: 0;
+    }
+
+    .event-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.3rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .event-cap {
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
+
+    .btn-rsvp {
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 0.4rem 1rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+
+    .btn-rsvp:hover {
+      background: #1e3064;
+    }
+
+    .btn-rsvp.rsvp-done {
+      background: #d1fae5;
+      color: #065f46;
+      cursor: default;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 27, 61, 0.45);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.6rem;
+    }
+
+    .modal-title {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text2);
+      font-size: 1.3rem;
+      line-height: 1;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .modal-close:hover {
+      background: var(--bg);
+    }
+
+    .modal-field {
+      margin-bottom: 1.1rem;
+    }
+
+    .modal-field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-field input,
+    .modal-field textarea,
+    .modal-field select {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.87rem;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal-field input:focus,
+    .modal-field textarea:focus,
+    .modal-field select:focus {
+      border-color: var(--amber);
+    }
+
+    .modal-field textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .modal-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      margin-top: 1.4rem;
+    }
+
+    .btn-cancel {
+      background: #fff;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem 1.3rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .btn-cancel:hover {
+      border-color: #888;
+    }
+
+    .btn-save {
+      background: var(--amber);
+      color: #1a1000;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 1.5rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-save:hover {
+      background: #ffb733;
+    }
   </style>
 </head>
 
@@ -495,19 +739,178 @@
           <h2>Campus Events</h2>
           <p>Discover upcoming events at the University of Wolverhampton</p>
         </div>
-        <button class="btn-amber">+ Create Event</button>
+        <button class="btn-amber" onclick="openModal()">+ Create Event</button>
       </div>
 
-      <div class="empty-state">
+      <div id="events-grid" class="events-grid" style="display:none;"></div>
+
+      <div id="empty-state" class="empty-state">
         <svg width="60" height="60" fill="none" stroke="#5b7fb8" stroke-width="1.6" viewBox="0 0 24 24">
           <rect x="3" y="4" width="18" height="18" rx="2" />
           <path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01" />
         </svg>
-        <p>No upcoming events.</p>
+        <p>No upcoming events. Click <strong>+ Create Event</strong> to add one.</p>
       </div>
     </div>
   </div>
 
-</body>
+  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Create Event</span>
+        <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+      </div>
+
+      <div class="modal-field">
+        <label>Title *</label>
+        <input type="text" id="ev-title" placeholder="">
+      </div>
+
+      <div class="modal-field">
+        <label>Description</label>
+        <textarea id="ev-desc" placeholder=""></textarea>
+      </div>
+
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Campus</label>
+          <select id="ev-campus">
+            <option>City Campus</option>
+            <option>Walsall Campus</option>
+            <option>Telford Campus</option>
+            <option>Online</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label>Category</label>
+          <input type="text" id="ev-cat" placeholder="e.g. Academic, Social">
+        </div>
+      </div>
+
+      <div class="modal-row">
+        <div class="modal-field">
+          <label>Date &amp; Time</label>
+          <input type="datetime-local" id="ev-date">
+        </div>
+        <div class="modal-field">
+          <label>Capacity</label>
+          <input type="number" id="ev-cap" placeholder="50" min="1">
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label>Location</label>
+        <input type="text" id="ev-location" placeholder="Room / Building">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveEvent()">Save Event</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var events = [];
+
+    function openModal() {
+      document.getElementById('modal-overlay').classList.add('open');
+      document.getElementById('ev-title').value = '';
+      document.getElementById('ev-desc').value = '';
+      document.getElementById('ev-campus').selectedIndex = 0;
+      document.getElementById('ev-cat').value = '';
+      document.getElementById('ev-date').value = '';
+      document.getElementById('ev-cap').value = '50';
+      document.getElementById('ev-location').value = '';
+      document.getElementById('ev-title').focus();
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModal();
+    }
+
+    function saveEvent() {
+      var titleEl = document.getElementById('ev-title');
+      var title = titleEl.value.trim();
+      if (!title) {
+        titleEl.style.borderColor = '#ef4444';
+        titleEl.focus();
+        setTimeout(function() { titleEl.style.borderColor = ''; }, 1500);
+        return;
+      }
+
+      var rawDate = document.getElementById('ev-date').value;
+      var dateStr = rawDate
+        ? new Date(rawDate).toLocaleString([], { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+        : 'TBC';
+
+      events.push({
+        title:    title,
+        desc:     document.getElementById('ev-desc').value.trim(),
+        campus:   document.getElementById('ev-campus').value,
+        category: document.getElementById('ev-cat').value.trim(),
+        date:     dateStr,
+        capacity: document.getElementById('ev-cap').value.trim() || '50',
+        location: document.getElementById('ev-location').value.trim(),
+        rsvp:     false
+      });
+
+      closeModal();
+      renderEvents();
+    }
+
+    function toggleRsvp(idx) {
+      events[idx].rsvp = !events[idx].rsvp;
+      renderEvents();
+    }
+
+    function renderEvents() {
+      var grid  = document.getElementById('events-grid');
+      var empty = document.getElementById('empty-state');
+
+      if (events.length === 0) {
+        grid.style.display  = 'none';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      grid.style.display  = 'grid';
+      grid.innerHTML = '';
+
+      events.forEach(function(ev, i) {
+        var card = document.createElement('div');
+        card.className = 'event-card';
+        card.innerHTML =
+          '<div class="event-card-banner"></div>' +
+          '<div class="event-card-body">' +
+            '<div class="event-card-title">' + ev.title + '</div>' +
+            (ev.category ? '<span class="event-card-cat">' + ev.category + '</span>' : '') +
+            (ev.desc ? '<div style="font-size:0.82rem;color:var(--text2);margin-bottom:0.8rem;line-height:1.5;">' + ev.desc + '</div>' : '') +
+            '<div class="event-card-meta">' +
+              '<div class="event-meta-row">' +
+                '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+                ev.date +
+              '</div>' +
+              '<div class="event-meta-row">' +
+                '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+                ev.campus + (ev.location ? ' - ' + ev.location : '') +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="event-card-footer">' +
+            '<span class="event-cap">👥 ' + ev.capacity + ' spots</span>' +
+            '<button class="btn-rsvp' + (ev.rsvp ? ' rsvp-done' : '') + '" onclick="toggleRsvp(' + i + ')">' +
+              (ev.rsvp ? '✓ Reserved' : 'Reserve') +
+            '</button>' +
+          '</div>';
+        grid.appendChild(card);
+      });
+    }
+  </script>
 
 </html>
