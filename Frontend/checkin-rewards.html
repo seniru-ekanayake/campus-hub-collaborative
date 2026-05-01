@@ -464,6 +464,176 @@
       font-size: 0.88rem;
       color: var(--text2);
     }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .history-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .history-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .history-info {
+      flex: 1;
+    }
+
+    .history-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .history-time {
+      font-size: 0.75rem;
+      color: var(--text2);
+      margin-top: 0.1rem;
+    }
+
+    .history-pts {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #16a34a;
+      white-space: nowrap;
+    }
+
+    @keyframes pointsPop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    .pop {
+      animation: pointsPop 0.45s ease;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 10px;
+      padding: 0.85rem 1.4rem;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.22);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-icon {
+      font-size: 1.1rem;
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25%      { transform: translateX(-6px); }
+      75%      { transform: translateX(6px); }
+    }
+
+    .shake { animation: shake 0.3s ease; }
+
+    .rewards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .reward-card {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.3rem 1.1rem;
+      text-align: center;
+      position: relative;
+      transition: box-shadow 0.2s;
+    }
+
+    .reward-card:hover {
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    .reward-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .reward-name {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .reward-cost {
+      font-size: 0.8rem;
+      color: var(--text2);
+      margin-bottom: 0.9rem;
+    }
+
+    .btn-redeem {
+      background: var(--amber);
+      color: #1a1000;
+      border: none;
+      border-radius: 7px;
+      padding: 0.45rem 1.1rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-redeem:hover:not(:disabled) {
+      background: #ffb733;
+    }
+
+    .btn-redeem:disabled {
+      background: var(--bg2);
+      color: var(--text2);
+      cursor: not-allowed;
+    }
+
+    .reward-locked {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.7rem;
+      font-size: 0.72rem;
+      color: var(--text2);
+    }
   </style>
 </head>
 
@@ -619,20 +789,20 @@
           <div class="form-row">
             <div class="form-group">
               <label>Location Name</label>
-              <input type="text" placeholder="e.g. Harrison Library">
+              <input id="ci-name" type="text" placeholder="e.g. Harrison Library">
             </div>
             <div class="form-group">
               <label>Location Type</label>
-              <select>
-                <option>📚 Library (+10 pts)</option>
-                <option>🏋️ Sports Centre (+15 pts)</option>
-                <option>🍽️ Canteen (+5 pts)</option>
-                <option>🎓 Lecture Hall (+10 pts)</option>
-                <option>💻 Computer Lab (+10 pts)</option>
+              <select id="ci-type">
+                <option value="10" data-emoji="📚">📚 Library (+10 pts)</option>
+                <option value="15" data-emoji="🏋️">🏋️ Sports Centre (+15 pts)</option>
+                <option value="5"  data-emoji="🍽️">🍽️ Canteen (+5 pts)</option>
+                <option value="10" data-emoji="🎓">🎓 Lecture Hall (+10 pts)</option>
+                <option value="10" data-emoji="💻">💻 Computer Lab (+10 pts)</option>
               </select>
             </div>
           </div>
-          <button class="btn-checkin">✓ Check In</button>
+          <button id="btn-checkin" class="btn-checkin" onclick="doCheckIn()">✓ Check In</button>
         </div>
       </div>
 
@@ -642,30 +812,146 @@
       </div>
 
       <div id="tab-history">
-        <div class="empty-state">
+        <div id="history-empty" class="empty-state">
           <svg width="44" height="44" fill="#e55b7c" stroke="#e55b7c" stroke-width="1" viewBox="0 0 24 24">
             <path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0116 0z" />
             <circle cx="12" cy="10" r="3" />
           </svg>
           <p>No check-ins yet. Start earning points!</p>
         </div>
+        <div id="history-list" class="history-list" style="display:none;"></div>
       </div>
 
       <div id="tab-rewards" style="display:none;">
-        <div class="empty-state">
-          <span style="font-size:2.8rem;">🎁</span>
-          <p>No rewards available yet.</p>
-        </div>
+        <div class="rewards-grid" id="rewards-grid"></div>
       </div>
     </div>
   </div>
 
+  <div id="toast" class="toast"><span class="toast-icon">✅</span><span id="toast-msg"></span></div>
+
   <script>
+    var totalPoints = 0;
+
+    var REWARDS = [
+      { emoji: '☕', name: 'Free Coffee',          cost: 20,  desc: 'Redeemable at any campus café' },
+      { emoji: '🖨️', name: 'Free Print Credits',   cost: 30,  desc: '10 pages on any campus printer' },
+      { emoji: '🎟️', name: 'Event Priority Access', cost: 50,  desc: 'Skip the queue at campus events' },
+      { emoji: '🍕', name: 'Free Lunch Voucher',    cost: 75,  desc: 'One meal at the main canteen' },
+      { emoji: '📖', name: 'Late Library Permit',   cost: 40,  desc: 'Study until midnight' },
+      { emoji: '🏆', name: 'Campus Star Badge',     cost: 100, desc: 'Displayed on your profile' },
+    ];
+
+    function renderRewards() {
+      var grid = document.getElementById('rewards-grid');
+      grid.innerHTML = '';
+      REWARDS.forEach(function(r, i) {
+        var canAfford = totalPoints >= r.cost;
+        var card = document.createElement('div');
+        card.className = 'reward-card';
+        card.innerHTML =
+          '<div class="reward-emoji">' + r.emoji + '</div>' +
+          '<div class="reward-name">' + r.name + '</div>' +
+          '<div class="reward-cost">' + r.desc + '<br><strong>' + r.cost + ' pts</strong></div>' +
+          (!canAfford ? '<span class="reward-locked">🔒 Need ' + r.cost + ' pts</span>' : '') +
+          '<button class="btn-redeem" ' + (canAfford ? '' : 'disabled') +
+            ' onclick="redeemReward(' + i + ')">' +
+            (canAfford ? 'Redeem' : r.cost + ' pts needed') +
+          '</button>';
+        grid.appendChild(card);
+      });
+    }
+
+    function redeemReward(i) {
+      var r = REWARDS[i];
+      if (totalPoints < r.cost) return;
+      totalPoints -= r.cost;
+      animatePoints();
+      renderRewards();
+      showToast('🎉 ' + r.name + ' redeemed! –' + r.cost + ' pts');
+    }
+
+    function doCheckIn() {
+      var nameEl = document.getElementById('ci-name');
+      var typeEl = document.getElementById('ci-type');
+      var name   = nameEl.value.trim();
+
+      if (!name) {
+        nameEl.classList.remove('shake');
+        void nameEl.offsetWidth;
+        nameEl.classList.add('shake');
+        nameEl.style.borderColor = '#ef4444';
+        nameEl.focus();
+        setTimeout(function() { nameEl.style.borderColor = ''; }, 1500);
+        return;
+      }
+
+      var pts    = parseInt(typeEl.value);
+      var opt    = typeEl.options[typeEl.selectedIndex];
+      var emoji  = opt.getAttribute('data-emoji');
+      var type   = opt.text.split('(')[0].trim();
+
+      totalPoints += pts;
+      animatePoints();
+
+      addHistoryRow(emoji, name, type, pts);
+      renderRewards();
+      showToast('✅ Checked in at ' + name + '  +' + pts + ' pts');
+
+      nameEl.value = '';
+      typeEl.selectedIndex = 0;
+    }
+
+    function animatePoints() {
+      var el = document.querySelector('.points-value');
+      var start = parseInt(el.textContent);
+      var end   = totalPoints;
+      var steps = 20;
+      var step  = 0;
+      el.classList.remove('pop');
+      void el.offsetWidth;
+      el.classList.add('pop');
+      var timer = setInterval(function() {
+        step++;
+        el.textContent = Math.round(start + (end - start) * (step / steps));
+        if (step >= steps) { el.textContent = end; clearInterval(timer); }
+      }, 20);
+    }
+
+    function addHistoryRow(emoji, name, type, pts) {
+      var empty = document.getElementById('history-empty');
+      var list  = document.getElementById('history-list');
+      empty.style.display = 'none';
+      list.style.display  = 'flex';
+
+      var now  = new Date();
+      var time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) +
+                 ' · ' + now.toLocaleDateString([], { day: 'numeric', month: 'short' });
+
+      var row = document.createElement('div');
+      row.className = 'history-row';
+      row.innerHTML =
+        '<div class="history-icon">' + emoji + '</div>' +
+        '<div class="history-info">' +
+          '<div class="history-name">' + name + ' <span style="font-weight:400;color:var(--text2);">&mdash; ' + type + '</span></div>' +
+          '<div class="history-time">' + time + '</div>' +
+        '</div>' +
+        '<div class="history-pts">+' + pts + ' pts</div>';
+
+      list.insertBefore(row, list.firstChild);
+    }
+
+    function showToast(msg) {
+      var toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 3000);
+    }
+
     function switchTab(tab) {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
       document.getElementById('tab-history').style.display = 'none';
       document.getElementById('tab-rewards').style.display = 'none';
-
       if (tab === 'history') {
         document.querySelectorAll('.tab')[0].classList.add('active');
         document.getElementById('tab-history').style.display = 'block';
@@ -674,6 +960,8 @@
         document.getElementById('tab-rewards').style.display = 'block';
       }
     }
+
+    renderRewards();
   </script>
 
 </body>
