@@ -400,6 +400,124 @@
       font-size: 0.88rem;
       color: var(--text2);
     }
+
+    /* MODAL OVERLAY */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    /* MODAL BOX */
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      position: relative;
+      animation: modalIn 0.2s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes modalIn {
+      from { opacity:0; transform: translateY(20px) scale(0.97); }
+      to   { opacity:1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .modal-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text2);
+      font-size: 1.4rem;
+      line-height: 1;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: var(--bg); }
+
+    .modal-field { margin-bottom: 1rem; }
+    .modal-field label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .modal-field label .req { color: #e53e3e; margin-left: 2px; }
+    .modal-field input,
+    .modal-field textarea,
+    .modal-field select {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .modal-field input:focus,
+    .modal-field textarea:focus,
+    .modal-field select:focus { border-color: var(--amber); }
+    .modal-field textarea { resize: vertical; min-height: 80px; }
+
+    .modal-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .btn-cancel {
+      background: #fff;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 1.4rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .btn-cancel:hover { border-color: #888; }
+    .btn-save {
+      background: var(--amber);
+      color: #1a1000;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 1.6rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-save:hover { background: #ffb733; }
   </style>
 </head>
 
@@ -538,7 +656,7 @@
           <h2>Campus Facilities</h2>
           <p>View facility locations, opening times and current status</p>
         </div>
-        <button class="btn-amber">+ Add Facility</button>
+        <button class="btn-amber" onclick="openModal()">+ Add Facility</button>
       </div>
 
       <div class="filter-bar">
@@ -566,6 +684,75 @@
       </div>
     </div>
   </div>
+
+  <!-- ADD FACILITY MODAL -->
+  <div class="modal-overlay" id="addFacilityModal" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Add Facility</span>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-field">
+        <label>Name <span class="req">*</span></label>
+        <input type="text" placeholder="e.g. Library, Sports Hall">
+      </div>
+
+      <div class="modal-field">
+        <label>Description</label>
+        <textarea placeholder="Brief description of the facility..."></textarea>
+      </div>
+
+      <div class="modal-row2">
+        <div class="modal-field">
+          <label>Campus</label>
+          <select>
+            <option>City Campus</option>
+            <option>Walsall Campus</option>
+            <option>Telford Campus</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label>Status</label>
+          <select>
+            <option>Open</option>
+            <option>Closed</option>
+            <option>Limited</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label>Location</label>
+        <input type="text" placeholder="e.g. Building MX, Floor 2">
+      </div>
+
+      <div class="modal-field">
+        <label>Opening Times</label>
+        <input type="text" placeholder="e.g. Mon-Fri 8am-10pm">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('addFacilityModal').classList.add('active');
+    }
+    function closeModal() {
+      document.getElementById('addFacilityModal').classList.remove('active');
+    }
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('addFacilityModal')) closeModal();
+    }
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
 
 </body>
 
