@@ -637,19 +637,44 @@
       </div>
 
       <div class="tabs">
-        <div class="tab active">My Check-in History</div>
-        <div class="tab">Available Rewards</div>
+        <div class="tab active" onclick="switchTab('history')">My Check-in History</div>
+        <div class="tab" onclick="switchTab('rewards')">Available Rewards</div>
       </div>
 
-      <div class="empty-state">
-        <svg width="44" height="44" fill="#e55b7c" stroke="#e55b7c" stroke-width="1" viewBox="0 0 24 24">
-          <path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0116 0z" />
-          <circle cx="12" cy="10" r="3" />
-        </svg>
-        <p>No check-ins yet. Start earning points!</p>
+      <div id="tab-history">
+        <div class="empty-state">
+          <svg width="44" height="44" fill="#e55b7c" stroke="#e55b7c" stroke-width="1" viewBox="0 0 24 24">
+            <path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0116 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <p>No check-ins yet. Start earning points!</p>
+        </div>
+      </div>
+
+      <div id="tab-rewards" style="display:none;">
+        <div class="empty-state">
+          <span style="font-size:2.8rem;">🎁</span>
+          <p>No rewards available yet.</p>
+        </div>
       </div>
     </div>
   </div>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-history').style.display = 'none';
+      document.getElementById('tab-rewards').style.display = 'none';
+
+      if (tab === 'history') {
+        document.querySelectorAll('.tab')[0].classList.add('active');
+        document.getElementById('tab-history').style.display = 'block';
+      } else {
+        document.querySelectorAll('.tab')[1].classList.add('active');
+        document.getElementById('tab-rewards').style.display = 'block';
+      }
+    }
+  </script>
 
 </body>
 
