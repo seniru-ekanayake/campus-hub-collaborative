@@ -417,6 +417,254 @@
         padding: 2rem 1.5rem;
       }
     }
+
+    .sso-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 18, 50, 0.82);
+      backdrop-filter: blur(6px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sso-overlay.active {
+      display: flex;
+    }
+
+    .sso-modal {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      padding: 2.5rem 2.5rem 2rem;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+      position: relative;
+      animation: ssoIn 0.28s cubic-bezier(0.22,1,0.36,1);
+      text-align: center;
+    }
+
+    @keyframes ssoIn {
+      from { opacity: 0; transform: scale(0.94) translateY(18px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .sso-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.1rem;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: #9ca3af;
+      cursor: pointer;
+      line-height: 1;
+      border-radius: 6px;
+      padding: 0.2rem 0.4rem;
+      transition: background 0.15s;
+    }
+
+    .sso-close:hover { background: #f3f4f6; }
+
+    .sso-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .sso-logo-box {
+      width: 42px;
+      height: 42px;
+      background: var(--navy);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sso-logo-text {
+      text-align: left;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .sso-logo-text .top {
+      font-size: 0.58rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .sso-logo-text .bot {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .sso-step {
+      display: none;
+    }
+
+    .sso-step.active {
+      display: block;
+    }
+
+    .sso-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .sso-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.84rem;
+      color: #6b7280;
+      margin-bottom: 1.8rem;
+    }
+
+    .sso-field {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .sso-field label {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.35rem;
+    }
+
+    .sso-field input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.2s;
+      background: #f9fafb;
+    }
+
+    .sso-field input:focus {
+      border-color: var(--navy);
+      background: #fff;
+    }
+
+    .btn-sso-submit {
+      width: 100%;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.3rem;
+    }
+
+    .btn-sso-submit:hover {
+      background: #1a2f6b;
+      transform: translateY(-1px);
+    }
+
+    .sso-divider {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 1.4rem 0 1rem;
+    }
+
+    .sso-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .sso-spinner {
+      width: 52px;
+      height: 52px;
+      border: 4px solid #e5e7eb;
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1.4rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .sso-connecting-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .sso-connecting-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: #6b7280;
+    }
+
+    .sso-tick {
+      width: 64px;
+      height: 64px;
+      background: #d1fae5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+      animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .sso-success-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #065f46;
+      margin-bottom: 0.35rem;
+    }
+
+    .sso-success-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.84rem;
+      color: #6b7280;
+      margin-bottom: 1.6rem;
+    }
+
+    .sso-progress {
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .sso-progress-bar {
+      height: 100%;
+      background: #10b981;
+      border-radius: 99px;
+      width: 0;
+      transition: width 2.2s linear;
+    }
   </style>
 </head>
 
@@ -506,7 +754,7 @@
 
       <div class="or">or</div>
 
-      <button class="btn-sso">University Single Sign-On (SSO)</button>
+      <button class="btn-sso" onclick="openSSO()">University Single Sign-On (SSO)</button>
 
       <div class="demo-box"><strong>Demo credentials:</strong> Admin: admin / admin123</div>
 
@@ -514,10 +762,111 @@
     </div>
   </div>
 
+
+  <div class="sso-overlay" id="ssoOverlay" onclick="handleSSOOverlay(event)">
+    <div class="sso-modal" id="ssoModal">
+      <button class="sso-close" onclick="closeSSO()">&times;</button>
+
+      <div class="sso-logo-row">
+        <div class="sso-logo-box">
+          <svg width="22" height="22" fill="none" stroke="#f5a623" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01"/></svg>
+        </div>
+        <div class="sso-logo-text">
+          <div class="top">University of</div>
+          <div class="bot">Wolverhampton SSO</div>
+        </div>
+      </div>
+
+      <div class="sso-step active" id="ssoStepForm">
+        <div class="sso-title">Single Sign-On</div>
+        <div class="sso-sub">Sign in using your university account credentials</div>
+
+        <div class="sso-field">
+          <label>University Email</label>
+          <input type="email" id="ssoEmail" placeholder="yourname@wlv.ac.uk">
+        </div>
+        <div class="sso-field">
+          <label>Password</label>
+          <input type="password" id="ssoPwd" placeholder="Your university password">
+        </div>
+
+        <button class="btn-sso-submit" onclick="startSSOAuth()">Continue with SSO</button>
+
+        <hr class="sso-divider">
+        <div class="sso-note">🔒 Your credentials are handled securely by the University of Wolverhampton identity provider.</div>
+      </div>
+
+      <div class="sso-step" id="ssoStepLoading">
+        <div class="sso-spinner"></div>
+        <div class="sso-connecting-label">Authenticating&hellip;</div>
+        <div class="sso-connecting-sub">Connecting to the University identity provider</div>
+      </div>
+
+      <div class="sso-step" id="ssoStepSuccess">
+        <div class="sso-tick">
+          <svg width="28" height="28" fill="none" stroke="#059669" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="sso-success-title">Authentication Successful</div>
+        <div class="sso-success-sub">Redirecting you to Campus Hub&hellip;</div>
+        <div class="sso-progress"><div class="sso-progress-bar" id="ssoBar"></div></div>
+      </div>
+    </div>
+  </div>
+
   <script>
     function togglePwd() {
       const i = document.getElementById('pwd');
       i.type = i.type === 'password' ? 'text' : 'password';
+    }
+
+    function openSSO() {
+      document.getElementById('ssoOverlay').classList.add('active');
+      showSSOStep('ssoStepForm');
+    }
+
+    function closeSSO() {
+      document.getElementById('ssoOverlay').classList.remove('active');
+    }
+
+    function handleSSOOverlay(e) {
+      if (e.target === document.getElementById('ssoOverlay')) closeSSO();
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeSSO();
+    });
+
+    function showSSOStep(id) {
+      ['ssoStepForm','ssoStepLoading','ssoStepSuccess'].forEach(function (s) {
+        document.getElementById(s).classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    function startSSOAuth() {
+      const email = document.getElementById('ssoEmail').value.trim();
+      const pwd   = document.getElementById('ssoPwd').value.trim();
+      if (!email || !pwd) {
+        const emptyEl = !email ? document.getElementById('ssoEmail') : document.getElementById('ssoPwd');
+        emptyEl.style.borderColor = '#ef4444';
+        emptyEl.focus();
+        setTimeout(function () { emptyEl.style.borderColor = ''; }, 1800);
+        return;
+      }
+
+      showSSOStep('ssoStepLoading');
+
+      setTimeout(function () {
+        showSSOStep('ssoStepSuccess');
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            document.getElementById('ssoBar').style.width = '100%';
+          });
+        });
+        setTimeout(function () {
+          window.location.href = 'dashboard.html';
+        }, 2400);
+      }, 2200);
     }
   </script>
 </body>
