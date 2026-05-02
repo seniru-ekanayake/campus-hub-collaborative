@@ -1,225 +1,874 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In - Campus Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  :root {
-    --navy:#0d1b3e; --navy2:#111d3f;
-    --amber:#f5a623; --white:#ffffff;
-    --muted:rgba(255,255,255,0.55);
-    --border:rgba(255,255,255,0.1);
-    --input-border:#d1d5db;
-    --text-dark:#1a1f36;
-    --text-muted:#6b7280;
-  }
-  body { font-family:'Sora',sans-serif; display:flex; min-height:100vh; overflow:hidden; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Campus Hub</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  /* LEFT PANEL */
-  .left {
-    width:52%; background:var(--navy); color:var(--white);
-    display:flex; flex-direction:column; justify-content:flex-end;
-    padding:3.5rem; position:relative; overflow:hidden;
-  }
-  .left-logo { position:absolute; top:2.5rem; left:3rem; display:flex; align-items:center; gap:0.75rem; }
-  .left-logo img { width:48px; height:48px; object-fit:contain; }
-  .left-logo span { font-size:0.75rem; color:var(--muted); line-height:1.3; }
-  .left-logo strong { display:block; font-size:0.9rem; color:var(--white); }
+    :root {
+      --navy: #0d1b3e;
+      --navy2: #111d3f;
+      --amber: #f5a623;
+      --white: #ffffff;
+      --muted: rgba(255, 255, 255, 0.55);
+      --border: rgba(255, 255, 255, 0.1);
+      --input-border: #d1d5db;
+      --text-dark: #1a1f36;
+      --text-muted: #6b7280;
+    }
 
-  .deco {
-    position:absolute; border:2px solid rgba(255,255,255,0.07);
-    transform:rotate(45deg); border-radius:6px;
-    background:rgba(255,255,255,0.02);
-  }
-  .d1 { width:160px; height:160px; top:25%; right:8%; animation:float 9s ease-in-out infinite; }
-  .d2 { width:220px; height:220px; bottom:20%; right:-40px; animation:float 11s ease-in-out infinite reverse; background:rgba(22,36,80,0.6); }
-  .d3 { width:100px; height:100px; top:45%; left:10%; animation:float 8s ease-in-out infinite 1s; }
-  @keyframes float {
-    0%,100%{ transform:rotate(45deg) translateY(0); }
-    50%    { transform:rotate(45deg) translateY(-14px); }
-  }
+    body {
+      font-family: 'Sora', sans-serif;
+      display: flex;
+      min-height: 100vh;
+      overflow: hidden;
+    }
 
-  .badge {
-    display:inline-flex; align-items:center; gap:0.5rem;
-    border:1px solid rgba(255,255,255,0.15);
-    border-radius:50px; padding:0.35rem 1rem;
-    font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase;
-    color:var(--muted); margin-bottom:1.5rem; width:fit-content;
-  }
-  .badge-dot { width:6px; height:6px; border-radius:50%; background:var(--amber); }
 
-  .left h2 { font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; line-height:1.15; margin-bottom:1rem; }
-  .left h2 span { color:var(--amber); }
-  .left p { font-family:'Inter',sans-serif; font-size:0.88rem; color:var(--muted); line-height:1.7; max-width:340px; margin-bottom:3rem; }
+    .left {
+      width: 52%;
+      background: var(--navy);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-  .stats { display:flex; gap:0; }
-  .stat { text-align:left; padding-right:1.5rem; }
-  .stat + .stat { padding-left:1.5rem; border-left:1px solid rgba(255,255,255,0.15); }
-  .stat-n { font-size:1.4rem; font-weight:800; }
-  .stat-l { font-size:0.7rem; color:var(--muted); font-family:'Inter',sans-serif; }
+    .left-logo {
+      position: absolute;
+      top: 2.5rem;
+      left: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-  /* RIGHT PANEL */
-  .right {
-    flex:1; background:#f8f9fc;
-    display:flex; align-items:center; justify-content:center;
-    padding:3rem 2rem; position:relative;
-  }
+    .left-logo img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
 
-  .form-card { width:100%; max-width:420px; }
+    .left-logo span {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.3;
+    }
 
-  .diamond-accent {
-    display:flex; justify-content:space-between; margin-bottom:2rem;
-  }
-  .diamond {
-    width:14px; height:14px; background:var(--amber);
-    transform:rotate(45deg); border-radius:2px;
-  }
+    .left-logo strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--white);
+    }
 
-  .form-card h3 { font-size:1.7rem; font-weight:800; color:var(--text-dark); margin-bottom:0.35rem; }
-  .form-card .sub { font-family:'Inter',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:2rem; }
+    .deco {
+      position: absolute;
+      border: 2px solid rgba(255, 255, 255, 0.07);
+      transform: rotate(45deg);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.02);
+    }
 
-  .field { margin-bottom:1rem; position:relative; }
-  .field input {
-    width:100%; padding:0.8rem 1rem 0.8rem 2.8rem;
-    border:1.5px solid var(--input-border); border-radius:8px;
-    font-family:'Inter',sans-serif; font-size:0.9rem; color:var(--text-dark);
-    background:#fff; outline:none; transition:border-color 0.2s;
-  }
-  .field input::placeholder { color:#9ca3af; }
-  .field input:focus { border-color:var(--amber); }
-  .field-icon {
-    position:absolute; left:0.9rem; top:50%; transform:translateY(-50%);
-    color:#9ca3af;
-  }
-  .field-eye {
-    position:absolute; right:0.9rem; top:50%; transform:translateY(-50%);
-    color:#9ca3af; cursor:pointer;
-  }
+    .d1 {
+      width: 160px;
+      height: 160px;
+      top: 25%;
+      right: 8%;
+      animation: float 9s ease-in-out infinite;
+    }
 
-  .row-opts {
-    display:flex; justify-content:space-between; align-items:center;
-    margin-bottom:1.4rem;
-  }
-  .remember { display:flex; align-items:center; gap:0.5rem; font-family:'Inter',sans-serif; font-size:0.83rem; color:var(--text-muted); }
-  .remember input[type=checkbox] { accent-color:var(--amber); width:14px; height:14px; cursor:pointer; }
-  .forgot { font-family:'Inter',sans-serif; font-size:0.83rem; color:#3b82f6; text-decoration:none; }
-  .forgot:hover { text-decoration:underline; }
+    .d2 {
+      width: 220px;
+      height: 220px;
+      bottom: 20%;
+      right: -40px;
+      animation: float 11s ease-in-out infinite reverse;
+      background: rgba(22, 36, 80, 0.6);
+    }
 
-  .btn-main {
-    width:100%; background:var(--text-dark); color:#fff;
-    border:none; border-radius:8px; padding:0.9rem;
-    font-family:'Sora',sans-serif; font-weight:700; font-size:0.95rem;
-    cursor:pointer; display:flex; align-items:center; justify-content:center; gap:0.5rem;
-    transition:background 0.2s, transform 0.15s;
-  }
-  .btn-main:hover { background:#2d3748; transform:translateY(-2px); }
-  .btn-main svg { transition:transform 0.2s; }
-  .btn-main:hover svg { transform:translateX(4px); }
+    .d3 {
+      width: 100px;
+      height: 100px;
+      top: 45%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite 1s;
+    }
 
-  .or { text-align:center; font-family:'Inter',sans-serif; font-size:0.82rem; color:var(--text-muted); margin:1rem 0; }
+    @keyframes float {
 
-  .btn-sso {
-    width:100%; background:#fff; color:var(--text-dark);
-    border:1.5px solid var(--input-border); border-radius:8px; padding:0.85rem;
-    font-family:'Sora',sans-serif; font-weight:600; font-size:0.9rem;
-    cursor:pointer; transition:border-color 0.2s, transform 0.15s;
-  }
-  .btn-sso:hover { border-color:#888; transform:translateY(-1px); }
+      0%,
+      100% {
+        transform: rotate(45deg) translateY(0);
+      }
 
-  .demo-box {
-    margin-top:1rem; background:#fffbeb; border:1px solid #fde68a;
-    border-radius:8px; padding:0.75rem 1rem;
-    font-family:'Inter',sans-serif; font-size:0.82rem; color:#92400e; text-align:center;
-  }
-  .demo-box strong { color:#b45309; }
+      50% {
+        transform: rotate(45deg) translateY(-14px);
+      }
+    }
 
-  .footer-link { text-align:center; margin-top:1.2rem; font-family:'Inter',sans-serif; font-size:0.83rem; color:var(--text-muted); }
-  .footer-link a { color:#3b82f6; text-decoration:none; font-weight:600; }
-  .footer-link a:hover { text-decoration:underline; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50px;
+      padding: 0.35rem 1rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      width: fit-content;
+    }
 
-  @media(max-width:768px){
-    body { flex-direction:column; }
-    .left { width:100%; padding:2rem; min-height:40vh; }
-    .right { padding:2rem 1.5rem; }
-  }
-</style>
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .left h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .left h2 span {
+      color: var(--amber);
+    }
+
+    .left p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 340px;
+      margin-bottom: 3rem;
+    }
+
+    .stats {
+      display: flex;
+      gap: 0;
+    }
+
+    .stat {
+      text-align: left;
+      padding-right: 1.5rem;
+    }
+
+    .stat+.stat {
+      padding-left: 1.5rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .stat-n {
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .stat-l {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+    }
+
+
+    .right {
+      flex: 1;
+      background: #f8f9fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+      position: relative;
+    }
+
+    .form-card {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .diamond-accent {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .diamond {
+      width: 14px;
+      height: 14px;
+      background: var(--amber);
+      transform: rotate(45deg);
+      border-radius: 2px;
+    }
+
+    .form-card h3 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-card .sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .field {
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.8rem;
+      border: 1.5px solid var(--input-border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input::placeholder {
+      color: #9ca3af;
+    }
+
+    .field input:focus {
+      border-color: var(--amber);
+    }
+
+    .field-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+    }
+
+    .field-eye {
+      position: absolute;
+      right: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .row-opts {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .remember input[type=checkbox] {
+      accent-color: var(--amber);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .forgot {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.83rem;
+      color: #3b82f6;
+      text-decoration: none;
+    }
+
+    .forgot:hover {
+      text-decoration: underline;
+    }
+
+    .btn-main {
+      width: 100%;
+      background: var(--text-dark);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.9rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-main:hover {
+      background: #2d3748;
+      transform: translateY(-2px);
+    }
+
+    .btn-main svg {
+      transition: transform 0.2s;
+    }
+
+    .btn-main:hover svg {
+      transform: translateX(4px);
+    }
+
+    .or {
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 1rem 0;
+    }
+
+    .btn-sso {
+      width: 100%;
+      background: #fff;
+      color: var(--text-dark);
+      border: 1.5px solid var(--input-border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .btn-sso:hover {
+      border-color: #888;
+      transform: translateY(-1px);
+    }
+
+    .demo-box {
+      margin-top: 1rem;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: #92400e;
+      text-align: center;
+    }
+
+    .demo-box strong {
+      color: #b45309;
+    }
+
+    .footer-link {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .footer-link a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media(max-width:768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .left {
+        width: 100%;
+        padding: 2rem;
+        min-height: 40vh;
+      }
+
+      .right {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    .sso-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 18, 50, 0.82);
+      backdrop-filter: blur(6px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sso-overlay.active {
+      display: flex;
+    }
+
+    .sso-modal {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      padding: 2.5rem 2.5rem 2rem;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+      position: relative;
+      animation: ssoIn 0.28s cubic-bezier(0.22,1,0.36,1);
+      text-align: center;
+    }
+
+    @keyframes ssoIn {
+      from { opacity: 0; transform: scale(0.94) translateY(18px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .sso-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.1rem;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: #9ca3af;
+      cursor: pointer;
+      line-height: 1;
+      border-radius: 6px;
+      padding: 0.2rem 0.4rem;
+      transition: background 0.15s;
+    }
+
+    .sso-close:hover { background: #f3f4f6; }
+
+    .sso-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .sso-logo-box {
+      width: 42px;
+      height: 42px;
+      background: var(--navy);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sso-logo-text {
+      text-align: left;
+      font-family: 'Sora', sans-serif;
+    }
+
+    .sso-logo-text .top {
+      font-size: 0.58rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .sso-logo-text .bot {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .sso-step {
+      display: none;
+    }
+
+    .sso-step.active {
+      display: block;
+    }
+
+    .sso-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .sso-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.84rem;
+      color: #6b7280;
+      margin-bottom: 1.8rem;
+    }
+
+    .sso-field {
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .sso-field label {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.35rem;
+    }
+
+    .sso-field input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      outline: none;
+      transition: border-color 0.2s;
+      background: #f9fafb;
+    }
+
+    .sso-field input:focus {
+      border-color: var(--navy);
+      background: #fff;
+    }
+
+    .btn-sso-submit {
+      width: 100%;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.3rem;
+    }
+
+    .btn-sso-submit:hover {
+      background: #1a2f6b;
+      transform: translateY(-1px);
+    }
+
+    .sso-divider {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 1.4rem 0 1rem;
+    }
+
+    .sso-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .sso-spinner {
+      width: 52px;
+      height: 52px;
+      border: 4px solid #e5e7eb;
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1.4rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .sso-connecting-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .sso-connecting-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: #6b7280;
+    }
+
+    .sso-tick {
+      width: 64px;
+      height: 64px;
+      background: #d1fae5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+      animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .sso-success-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #065f46;
+      margin-bottom: 0.35rem;
+    }
+
+    .sso-success-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.84rem;
+      color: #6b7280;
+      margin-bottom: 1.6rem;
+    }
+
+    .sso-progress {
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .sso-progress-bar {
+      height: 100%;
+      background: #10b981;
+      border-radius: 99px;
+      width: 0;
+      transition: width 2.2s linear;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- LEFT -->
-<div class="left">
-  <div class="left-logo">
-    <img src="logo.png" alt="Logo">
-    <span>UNIVERSITY OF<strong>Wolverhampton</strong></span>
+
+  <div class="left">
+    <div class="left-logo">
+      <img src="logo.png" alt="Logo">
+      <span>UNIVERSITY OF<strong>Wolverhampton</strong></span>
+    </div>
+
+    <div class="deco d1"></div>
+    <div class="deco d2"></div>
+    <div class="deco d3"></div>
+
+    <div class="badge"><span class="badge-dot"></span>The University of Opportunity</div>
+    <h2>Your campus.<br><span>Your hub.</span><br>All in one place.</h2>
+    <p>Access events, clubs, facilities, transport and wellbeing support – everything you need, right at your
+      fingertips.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-n">23k+</div>
+        <div class="stat-l">Students</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">50+</div>
+        <div class="stat-l">Clubs and Societies</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">3</div>
+        <div class="stat-l">Campuses</div>
+      </div>
+    </div>
   </div>
 
-  <div class="deco d1"></div>
-  <div class="deco d2"></div>
-  <div class="deco d3"></div>
 
-  <div class="badge"><span class="badge-dot"></span>The University of Opportunity</div>
-  <h2>Your campus.<br><span>Your hub.</span><br>All in one place.</h2>
-  <p>Access events, clubs, facilities, transport and wellbeing support – everything you need, right at your fingertips.</p>
+  <div class="right">
+    <div class="form-card">
+      <div class="diamond-accent">
+        <div class="diamond"></div>
+        <div class="diamond"></div>
+      </div>
 
-  <div class="stats">
-    <div class="stat"><div class="stat-n">23k+</div><div class="stat-l">Students</div></div>
-    <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Clubs and Societies</div></div>
-    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Campuses</div></div>
+      <h3>Welcome back</h3>
+      <p class="sub">Sign in with your University of Wolverhampton credentials.</p>
+      <div class="demo-box" style="background:#e7f8ff; border-color:#93c5fd; color:#1d4ed8; margin-bottom:1rem;">
+        🔐 New Authentication Feature: Protected login, SSO and optional two-step verification.
+      </div>
+
+      <div class="field">
+        <svg class="field-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>
+        <input type="text" placeholder="Student ID or Username">
+      </div>
+
+      <div class="field">
+        <svg class="field-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <rect x="3" y="11" width="18" height="11" rx="2" />
+          <path d="M7 11V7a5 5 0 0110 0v4" />
+        </svg>
+        <input type="password" placeholder="Password" id="pwd">
+        <span class="field-eye" onclick="togglePwd()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </span>
+      </div>
+
+      <div class="row-opts">
+        <label class="remember"><input type="checkbox"> Remember me</label>
+        <a href="#" class="forgot">Forgot password?</a>
+      </div>
+
+      <button class="btn-main" onclick="location.href='dashboard.html'">
+        Sign In to Campus Hub
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      <div class="or">or</div>
+
+      <button class="btn-sso" onclick="openSSO()">University Single Sign-On (SSO)</button>
+
+      <div class="demo-box"><strong>Demo credentials:</strong> Admin: admin / admin123</div>
+
+      <p class="footer-link">New student? <a href="register.html">Create your account</a></p>
+    </div>
   </div>
-</div>
 
-<!-- RIGHT -->
-<div class="right">
-  <div class="form-card">
-    <div class="diamond-accent"><div class="diamond"></div><div class="diamond"></div></div>
 
-    <h3>Welcome back</h3>
-    <p class="sub">Sign in with your University of Wolverhampton credentials.</p>
-    <div class="demo-box" style="background:#e7f8ff; border-color:#93c5fd; color:#1d4ed8; margin-bottom:1rem;">
-      🔐 New Authentication Feature: Protected login, SSO and optional two-step verification.
+  <div class="sso-overlay" id="ssoOverlay" onclick="handleSSOOverlay(event)">
+    <div class="sso-modal" id="ssoModal">
+      <button class="sso-close" onclick="closeSSO()">&times;</button>
+
+      <div class="sso-logo-row">
+        <div class="sso-logo-box">
+          <svg width="22" height="22" fill="none" stroke="#f5a623" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01"/></svg>
+        </div>
+        <div class="sso-logo-text">
+          <div class="top">University of</div>
+          <div class="bot">Wolverhampton SSO</div>
+        </div>
+      </div>
+
+      <div class="sso-step active" id="ssoStepForm">
+        <div class="sso-title">Single Sign-On</div>
+        <div class="sso-sub">Sign in using your university account credentials</div>
+
+        <div class="sso-field">
+          <label>University Email</label>
+          <input type="email" id="ssoEmail" placeholder="yourname@wlv.ac.uk">
+        </div>
+        <div class="sso-field">
+          <label>Password</label>
+          <input type="password" id="ssoPwd" placeholder="Your university password">
+        </div>
+
+        <button class="btn-sso-submit" onclick="startSSOAuth()">Continue with SSO</button>
+
+        <hr class="sso-divider">
+        <div class="sso-note">🔒 Your credentials are handled securely by the University of Wolverhampton identity provider.</div>
+      </div>
+
+      <div class="sso-step" id="ssoStepLoading">
+        <div class="sso-spinner"></div>
+        <div class="sso-connecting-label">Authenticating&hellip;</div>
+        <div class="sso-connecting-sub">Connecting to the University identity provider</div>
+      </div>
+
+      <div class="sso-step" id="ssoStepSuccess">
+        <div class="sso-tick">
+          <svg width="28" height="28" fill="none" stroke="#059669" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="sso-success-title">Authentication Successful</div>
+        <div class="sso-success-sub">Redirecting you to Campus Hub&hellip;</div>
+        <div class="sso-progress"><div class="sso-progress-bar" id="ssoBar"></div></div>
+      </div>
     </div>
-
-    <div class="field">
-      <svg class="field-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      <input type="text" placeholder="Student ID or Username">
-    </div>
-
-    <div class="field">
-      <svg class="field-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      <input type="password" placeholder="Password" id="pwd">
-      <span class="field-eye" onclick="togglePwd()">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-      </span>
-    </div>
-
-    <div class="row-opts">
-      <label class="remember"><input type="checkbox"> Remember me</label>
-      <a href="#" class="forgot">Forgot password?</a>
-    </div>
-
-    <button class="btn-main" onclick="location.href='dashboard.html'">
-      Sign In to Campus Hub
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
-
-    <div class="or">or</div>
-
-    <button class="btn-sso">University Single Sign-On (SSO)</button>
-
-    <div class="demo-box"><strong>Demo credentials:</strong> Admin: admin / admin123</div>
-
-    <p class="footer-link">New student? <a href="register.html">Create your account</a></p>
   </div>
-</div>
 
-<script>
-function togglePwd(){
-  const i=document.getElementById('pwd');
-  i.type=i.type==='password'?'text':'password';
-}
-</script>
+  <script>
+    function togglePwd() {
+      const i = document.getElementById('pwd');
+      i.type = i.type === 'password' ? 'text' : 'password';
+    }
+
+    function openSSO() {
+      document.getElementById('ssoOverlay').classList.add('active');
+      showSSOStep('ssoStepForm');
+    }
+
+    function closeSSO() {
+      document.getElementById('ssoOverlay').classList.remove('active');
+    }
+
+    function handleSSOOverlay(e) {
+      if (e.target === document.getElementById('ssoOverlay')) closeSSO();
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeSSO();
+    });
+
+    function showSSOStep(id) {
+      ['ssoStepForm','ssoStepLoading','ssoStepSuccess'].forEach(function (s) {
+        document.getElementById(s).classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    function startSSOAuth() {
+      const email = document.getElementById('ssoEmail').value.trim();
+      const pwd   = document.getElementById('ssoPwd').value.trim();
+      if (!email || !pwd) {
+        const emptyEl = !email ? document.getElementById('ssoEmail') : document.getElementById('ssoPwd');
+        emptyEl.style.borderColor = '#ef4444';
+        emptyEl.focus();
+        setTimeout(function () { emptyEl.style.borderColor = ''; }, 1800);
+        return;
+      }
+
+      showSSOStep('ssoStepLoading');
+
+      setTimeout(function () {
+        showSSOStep('ssoStepSuccess');
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            document.getElementById('ssoBar').style.width = '100%';
+          });
+        });
+        setTimeout(function () {
+          window.location.href = 'dashboard.html';
+        }, 2400);
+      }, 2200);
+    }
+  </script>
 </body>
+
 </html>
