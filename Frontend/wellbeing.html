@@ -395,6 +395,420 @@
       font-size: 0.88rem;
       color: var(--text2);
     }
+
+    .counselor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .counselor-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      animation: cardIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .counselor-card:hover {
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.09);
+      transform: translateY(-2px);
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .cc-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .cc-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--amber);
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .cc-name {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.97rem;
+      color: var(--text);
+    }
+
+    .cc-title {
+      font-size: 0.78rem;
+      color: var(--text2);
+      margin-top: 0.1rem;
+    }
+
+    .cc-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      font-family: 'Sora', sans-serif;
+      border-radius: 20px;
+      padding: 0.2rem 0.65rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .cc-badge.active {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .cc-badge.inactive {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .cc-spec {
+      font-size: 0.78rem;
+      color: var(--text2);
+      background: #f3f4f6;
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .cc-meta {
+      border-top: 1px solid var(--border);
+      padding-top: 0.7rem;
+      margin-top: 0.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .cc-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      color: var(--text2);
+    }
+
+    .cc-meta-row svg {
+      flex-shrink: 0;
+      opacity: 0.55;
+    }
+
+    .btn-book {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.55rem 1rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+
+    .btn-book:hover {
+      background: #34a34a;
+    }
+
+    .session-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .session-table th {
+      background: var(--bg);
+      font-family: 'Sora', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.75rem 1.1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .session-table td {
+      padding: 0.85rem 1.1rem;
+      font-size: 0.84rem;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .session-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .session-table tr:hover td {
+      background: #fafafa;
+    }
+
+    .s-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      font-family: 'Sora', sans-serif;
+      border-radius: 20px;
+      padding: 0.18rem 0.6rem;
+    }
+
+    .s-badge.confirmed {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .s-badge.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .s-badge.cancelled {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      position: relative;
+      animation: modalIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+
+    .modal-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text2);
+      font-size: 1.4rem;
+      line-height: 1;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .modal-close:hover {
+      background: var(--bg);
+    }
+
+    .mrow2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    .mfield {
+      margin-bottom: 0.95rem;
+    }
+
+    .mfield label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .mfield label .req {
+      color: #e53e3e;
+      margin-left: 2px;
+    }
+
+    .mfield input,
+    .mfield textarea {
+      width: 100%;
+      padding: 0.68rem 0.9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.87rem;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .mfield input:focus,
+    .mfield textarea:focus {
+      border-color: var(--amber);
+    }
+
+    .mfield textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .mcheck {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .mcheck input[type=checkbox] {
+      accent-color: var(--amber);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    .btn-cancel {
+      background: #fff;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 1.4rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .btn-cancel:hover {
+      border-color: #888;
+    }
+
+    .btn-save {
+      background: var(--amber);
+      color: #1a1000;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 1.6rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-save:hover {
+      background: #ffb733;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1a1f36;
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.8rem 1.4rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-icon {
+      width: 18px;
+      height: 18px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 
@@ -533,7 +947,7 @@
           <h2>Student Wellbeing</h2>
           <p>Confidential counseling support for University of Wolverhampton students</p>
         </div>
-        <button class="btn-amber">+ Add Counselor</button>
+        <button class="btn-amber" onclick="openModal()">+ Add Counselor</button>
       </div>
 
       <div class="confidential-banner">
@@ -542,19 +956,313 @@
       </div>
 
       <div class="tabs">
-        <div class="tab active">Available Counselors</div>
-        <div class="tab">My Sessions</div>
-        <div class="tab">All Sessions (Admin)</div>
+        <div class="tab active" onclick="switchTab(0, this)">Available Counselors</div>
+        <div class="tab" onclick="switchTab(1, this)">My Sessions</div>
+        <div class="tab" onclick="switchTab(2, this)">All Sessions (Admin)</div>
       </div>
 
-      <div class="empty-state">
-        <svg width="60" height="60" fill="#3fb95a" stroke="#3fb95a" stroke-width="1.5" viewBox="0 0 24 24">
-          <path
-            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-        </svg>
-        <p>No counselors available.</p>
+      <div id="tabContent"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addCounselorModal" onclick="handleOverlay(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Add Counselor</span>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+
+      <div class="mrow2">
+        <div class="mfield">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="cName" placeholder="Dr. Jane Smith">
+        </div>
+        <div class="mfield">
+          <label>Title</label>
+          <input type="text" id="cTitle" placeholder="Senior Counselor">
+        </div>
+      </div>
+
+      <div class="mfield">
+        <label>Specializations</label>
+        <input type="text" id="cSpec" placeholder="Anxiety, Depression, Academic Stress">
+      </div>
+
+      <div class="mfield">
+        <label>Bio</label>
+        <textarea id="cBio"></textarea>
+      </div>
+
+      <div class="mrow2">
+        <div class="mfield">
+          <label>Contact Email</label>
+          <input type="email" id="cEmail" placeholder="counselor@wlv.ac.uk">
+        </div>
+        <div class="mfield">
+          <label>Availability Notes</label>
+          <input type="text" id="cAvail" placeholder="Mon-Thu, 9am-5pm">
+        </div>
+      </div>
+
+      <label class="mcheck">
+        <input type="checkbox" id="cActive" checked> Active
+      </label>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveCounselor()">Save</button>
       </div>
     </div>
+  </div>
+
+  <script>
+    var counselors = [];
+    var currentTab = 0;
+
+    var mySessions = [
+      { counselor: 'Dr. Sarah Ahmed', date: '12 May 2026', time: '10:00 AM', status: 'confirmed' },
+      { counselor: 'Mr. James Okafor', date: '19 May 2026', time: '2:00 PM', status: 'pending' }
+    ];
+
+    var allSessions = [
+      { student: 'Alex Turner', counselor: 'Dr. Sarah Ahmed', date: '12 May 2026', time: '10:00 AM', status: 'confirmed' },
+      { student: 'Priya Sharma', counselor: 'Mr. James Okafor', date: '13 May 2026', time: '11:30 AM', status: 'pending' },
+      { student: 'Lucas Webb', counselor: 'Dr. Sarah Ahmed', date: '14 May 2026', time: '3:00 PM', status: 'cancelled' }
+    ];
+
+    function switchTab(index, el) {
+      document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+      el.classList.add('active');
+      currentTab = index;
+      renderTab();
+    }
+
+    function renderTab() {
+      var container = document.getElementById('tabContent');
+      if (currentTab === 0) {
+        renderCounselors(container);
+      } else if (currentTab === 1) {
+        renderMySessions(container);
+      } else {
+        renderAllSessions(container);
+      }
+    }
+
+    function initials(name) {
+      return name.trim().split(' ').map(function (w) { return w[0]; }).slice(0, 2).join('').toUpperCase();
+    }
+
+    function esc(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function renderCounselors(container) {
+      if (counselors.length === 0) {
+        container.innerHTML =
+          '<div class="empty-state">' +
+          '<svg width="60" height="60" fill="#3fb95a" stroke="#3fb95a" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>' +
+          '<p>No counselors available. Click <strong>+ Add Counselor</strong> to get started.</p>' +
+          '</div>';
+        return;
+      }
+      var html = '<div class="counselor-grid">';
+      counselors.forEach(function (c) {
+        html +=
+          '<div class="counselor-card">' +
+          '<div class="cc-top">' +
+          '<div style="display:flex;align-items:center;gap:0.75rem">' +
+          '<div class="cc-avatar">' + esc(initials(c.name)) + '</div>' +
+          '<div><div class="cc-name">' + esc(c.name) + '</div>' +
+          (c.title ? '<div class="cc-title">' + esc(c.title) + '</div>' : '') +
+          '</div>' +
+          '</div>' +
+          '<span class="cc-badge ' + (c.active ? 'active' : 'inactive') + '">' + (c.active ? 'Active' : 'Inactive') + '</span>' +
+          '</div>' +
+          (c.spec ? '<span class="cc-spec">' + esc(c.spec) + '</span>' : '') +
+          (c.bio ? '<div style="font-size:0.8rem;color:var(--text2);line-height:1.5">' + esc(c.bio) + '</div>' : '') +
+          '<div class="cc-meta">' +
+          (c.email ? '<div class="cc-meta-row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' + esc(c.email) + '</div>' : '') +
+          (c.avail ? '<div class="cc-meta-row"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>' + esc(c.avail) + '</div>' : '') +
+          '</div>' +
+          '<button class="btn-book" onclick="openBookModal(' + counselors.indexOf(c) + ')">Book Session</button>' +
+          '</div>';
+      });
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    function renderMySessions(container) {
+      if (mySessions.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p>You have no sessions booked.</p></div>';
+        return;
+      }
+      var html = '<table class="session-table"><thead><tr><th>Counselor</th><th>Date</th><th>Time</th><th>Status</th></tr></thead><tbody>';
+      mySessions.forEach(function (s) {
+        html += '<tr><td>' + esc(s.counselor) + '</td><td>' + esc(s.date) + '</td><td>' + esc(s.time) + '</td><td><span class="s-badge ' + s.status + '">' + s.status.charAt(0).toUpperCase() + s.status.slice(1) + '</span></td></tr>';
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function renderAllSessions(container) {
+      if (allSessions.length === 0) {
+        container.innerHTML = '<div class="empty-state"><p>No sessions found.</p></div>';
+        return;
+      }
+      var html = '<table class="session-table"><thead><tr><th>Student</th><th>Counselor</th><th>Date</th><th>Time</th><th>Status</th></tr></thead><tbody>';
+      allSessions.forEach(function (s) {
+        html += '<tr><td>' + esc(s.student) + '</td><td>' + esc(s.counselor) + '</td><td>' + esc(s.date) + '</td><td>' + esc(s.time) + '</td><td><span class="s-badge ' + s.status + '">' + s.status.charAt(0).toUpperCase() + s.status.slice(1) + '</span></td></tr>';
+      });
+      html += '</tbody></table>';
+      container.innerHTML = html;
+    }
+
+    function openModal() {
+      document.getElementById('addCounselorModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('addCounselorModal').classList.remove('active');
+    }
+
+    function handleOverlay(e) {
+      if (e.target === document.getElementById('addCounselorModal')) closeModal();
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function saveCounselor() {
+      var name = document.getElementById('cName').value.trim();
+      if (!name) {
+        var el = document.getElementById('cName');
+        el.style.borderColor = '#ef4444';
+        el.focus();
+        setTimeout(function () { el.style.borderColor = ''; }, 1800);
+        return;
+      }
+      counselors.push({
+        name: name,
+        title: document.getElementById('cTitle').value.trim(),
+        spec: document.getElementById('cSpec').value.trim(),
+        bio: document.getElementById('cBio').value.trim(),
+        email: document.getElementById('cEmail').value.trim(),
+        avail: document.getElementById('cAvail').value.trim(),
+        active: document.getElementById('cActive').checked
+      });
+      ['cName', 'cTitle', 'cSpec', 'cBio', 'cEmail', 'cAvail'].forEach(function (id) { document.getElementById(id).value = ''; });
+      document.getElementById('cActive').checked = true;
+      closeModal();
+      currentTab = 0;
+      document.querySelectorAll('.tab').forEach(function (t, i) { t.classList.toggle('active', i === 0); });
+      renderTab();
+    }
+
+    var bookingCounselorIndex = -1;
+
+    function openBookModal(idx) {
+      bookingCounselorIndex = idx;
+      var c = counselors[idx];
+      document.getElementById('bCounselorName').textContent = c.name + (c.title ? ' - ' + c.title : '');
+      document.getElementById('bDate').value = '';
+      document.getElementById('bTime').value = '';
+      document.getElementById('bNotes').value = '';
+      document.getElementById('bookSessionModal').classList.add('active');
+    }
+
+    function closeBookModal() {
+      document.getElementById('bookSessionModal').classList.remove('active');
+    }
+
+    function handleBookOverlay(e) {
+      if (e.target === document.getElementById('bookSessionModal')) closeBookModal();
+    }
+
+    function saveBookSession() {
+      var date = document.getElementById('bDate').value;
+      var time = document.getElementById('bTime').value;
+      if (!date || !time) {
+        var el = !date ? document.getElementById('bDate') : document.getElementById('bTime');
+        el.style.borderColor = '#ef4444';
+        el.focus();
+        setTimeout(function () { el.style.borderColor = ''; }, 1800);
+        return;
+      }
+      var c = counselors[bookingCounselorIndex];
+      var fmt = new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      var parts = time.split(':');
+      var h = parseInt(parts[0]);
+      var m = parts[1];
+      var ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+      var fmtTime = h + ':' + m + ' ' + ampm;
+      var session = { counselor: c.name, date: fmt, time: fmtTime, status: 'confirmed' };
+      mySessions.push(session);
+      allSessions.push({ student: 'You', counselor: c.name, date: fmt, time: fmtTime, status: 'confirmed' });
+      closeBookModal();
+      showToast('Session booked with ' + c.name + '!');
+      if (currentTab === 1) renderMySessions(document.getElementById('tabContent'));
+      if (currentTab === 2) renderAllSessions(document.getElementById('tabContent'));
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('globalToast');
+      document.getElementById('toastMsg').textContent = msg;
+      t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 3000);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { closeModal(); closeBookModal(); }
+    });
+
+    renderTab();
+  </script>
+
+  <div class="modal-overlay" id="bookSessionModal" onclick="handleBookOverlay(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Book a Session</span>
+        <button class="modal-close" onclick="closeBookModal()">&times;</button>
+      </div>
+
+      <div
+        style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:1.2rem;">
+        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:0.88rem;color:#065f46">Counselor</div>
+        <div id="bCounselorName" style="font-size:0.85rem;color:#1a1f36;margin-top:0.2rem"></div>
+      </div>
+
+      <div class="mrow2">
+        <div class="mfield">
+          <label>Date <span class="req">*</span></label>
+          <input type="date" id="bDate">
+        </div>
+        <div class="mfield">
+          <label>Preferred Time <span class="req">*</span></label>
+          <input type="time" id="bTime">
+        </div>
+      </div>
+
+      <div class="mfield">
+        <label>Notes (optional)</label>
+        <textarea id="bNotes" placeholder="Anything you'd like the counselor to know beforehand..."></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeBookModal()">Cancel</button>
+        <button class="btn-save" style="background:var(--green);" onclick="saveBookSession()">Confirm Booking</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="globalToast">
+    <div class="toast-icon">
+      <svg width="10" height="10" fill="none" stroke="#fff" stroke-width="3" viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    </div>
+    <span id="toastMsg"></span>
   </div>
 
 </body>
