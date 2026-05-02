@@ -487,6 +487,44 @@
     .btn-save:hover {
       background: #ffb733;
     }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1a1f36;
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.8rem 1.4rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-icon {
+      width: 18px;
+      height: 18px;
+      background: var(--amber);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 
@@ -628,11 +666,11 @@
 
         <div class="white-card">
           <div class="profile-avatar-wrap">
-            <div class="profile-avatar">S</div>
+            <div class="profile-avatar" id="cardAvatar">S</div>
             <div>
-              <div class="profile-name">System Administrator</div>
-              <div class="profile-username">@admin</div>
-              <div class="profile-email">admin@wlv.ac.uk</div>
+              <div class="profile-name" id="cardName">System Administrator</div>
+              <div class="profile-username" id="cardUsername">@admin</div>
+              <div class="profile-email" id="cardEmail">admin@wlv.ac.uk</div>
             </div>
           </div>
           <div class="stat-badges">
@@ -654,35 +692,88 @@
           <div class="form-row">
             <div class="form-group">
               <label>First Name</label>
-              <input type="text" value="System">
+              <input type="text" id="fFirstName" value="System">
             </div>
             <div class="form-group">
               <label>Last Name</label>
-              <input type="text" value="Administrator">
+              <input type="text" id="fLastName" value="Administrator">
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label>Student ID</label>
-              <input type="text" placeholder="Student ID">
+              <input type="text" id="fStudentId" placeholder="Student ID">
             </div>
             <div class="form-group">
               <label>Course</label>
-              <input type="text" placeholder="Course / Programme">
+              <input type="text" id="fCourse" placeholder="Course / Programme">
             </div>
           </div>
 
           <div class="form-single form-group">
             <label>Email (read-only)</label>
-            <input type="email" value="admin@wlv.ac.uk" readonly>
+            <input type="email" id="fEmail" value="admin@wlv.ac.uk" readonly>
           </div>
 
-          <button class="btn-save">Save Changes</button>
+          <button class="btn-save" onclick="saveProfile()">Save Changes</button>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="toast" id="toast">
+    <div class="toast-icon">
+      <svg width="10" height="10" fill="none" stroke="#1a1000" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    Profile saved!
+  </div>
+
+  <script>
+    const FIELDS = ['fFirstName', 'fLastName', 'fStudentId', 'fCourse'];
+
+    function loadProfile() {
+      FIELDS.forEach(function (id) {
+        var val = localStorage.getItem('profile_' + id);
+        if (val !== null) document.getElementById(id).value = val;
+      });
+      updateCard();
+    }
+
+    function saveProfile() {
+      FIELDS.forEach(function (id) {
+        localStorage.setItem('profile_' + id, document.getElementById(id).value.trim());
+      });
+      updateCard();
+      showToast();
+    }
+
+    function updateCard() {
+      var first = document.getElementById('fFirstName').value.trim();
+      var last  = document.getElementById('fLastName').value.trim();
+      var full  = (first + ' ' + last).trim() || 'System Administrator';
+      var initials = ((first[0] || '') + (last[0] || '')).toUpperCase() || 'S';
+      var sid = document.getElementById('fStudentId').value.trim();
+      var username = sid ? '@' + sid.toLowerCase() : '@admin';
+
+      document.getElementById('cardName').textContent = full;
+      document.getElementById('cardAvatar').textContent = initials;
+      document.getElementById('cardUsername').textContent = username;
+
+      var sidebarAvatar = document.querySelector('.sidebar-footer .avatar');
+      var sidebarName   = document.querySelector('.sidebar-footer .name');
+      if (sidebarAvatar) sidebarAvatar.textContent = initials;
+      if (sidebarName)   sidebarName.textContent   = full;
+    }
+
+    function showToast() {
+      var t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(function () { t.classList.remove('show'); }, 2800);
+    }
+
+    loadProfile();
+  </script>
 
 </body>
 
