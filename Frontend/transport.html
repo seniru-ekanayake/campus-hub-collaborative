@@ -448,6 +448,277 @@
       font-size: 0.88rem;
       color: var(--text2);
     }
+
+    .schedule-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .schedule-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      animation: cardIn 0.25s cubic-bezier(0.22,1,0.36,1);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .schedule-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .sc-route {
+      flex: 1;
+    }
+
+    .sc-route-main {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sc-arrow {
+      color: var(--amber);
+      font-size: 1rem;
+    }
+
+    .sc-meta {
+      font-size: 0.78rem;
+      color: var(--text2);
+      margin-top: 0.25rem;
+    }
+
+    .sc-times {
+      text-align: center;
+    }
+
+    .sc-time-val {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .sc-time-label {
+      font-size: 0.68rem;
+      color: var(--text2);
+      margin-top: 0.1rem;
+    }
+
+    .sc-separator {
+      width: 28px;
+      height: 2px;
+      background: var(--border);
+      border-radius: 99px;
+      align-self: center;
+    }
+
+    .sc-freq {
+      font-size: 0.78rem;
+      color: var(--text2);
+      text-align: center;
+      min-width: 110px;
+    }
+
+    .sc-freq span {
+      display: block;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    .sc-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      font-family: 'Sora', sans-serif;
+      border-radius: 20px;
+      padding: 0.22rem 0.7rem;
+      white-space: nowrap;
+    }
+
+    .sc-badge.active {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .sc-badge.inactive {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .sc-alert {
+      font-size: 0.75rem;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      border-radius: 7px;
+      padding: 0.3rem 0.7rem;
+      margin-top: 0.4rem;
+      display: inline-block;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      padding: 2rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      position: relative;
+      animation: modalIn 0.22s cubic-bezier(0.22,1,0.36,1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+
+    .modal-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text2);
+      font-size: 1.4rem;
+      line-height: 1;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .modal-close:hover { background: var(--bg); }
+
+    .mrow2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+
+    .mfield { margin-bottom: 0.95rem; }
+
+    .mfield label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .mfield input,
+    .mfield textarea,
+    .mfield select {
+      width: 100%;
+      padding: 0.68rem 0.9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.87rem;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .mfield input:focus,
+    .mfield textarea:focus,
+    .mfield select:focus { border-color: var(--amber); }
+
+    .mfield textarea { resize: vertical; min-height: 72px; }
+
+    .mcheck {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .mcheck input[type=checkbox] {
+      accent-color: var(--amber);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-cancel {
+      background: #fff;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 1.4rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .btn-cancel:hover { border-color: #888; }
+
+    .btn-save {
+      background: var(--amber);
+      color: #1a1000;
+      border: none;
+      border-radius: 8px;
+      padding: 0.65rem 1.6rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-save:hover { background: #ffb733; }
   </style>
 </head>
 
@@ -588,7 +859,7 @@
           <h2>Campus Transport</h2>
           <p>Inter-campus shuttle schedules and travel information</p>
         </div>
-        <button class="btn-amber">+ Add Schedule</button>
+        <button class="btn-amber" onclick="openModal()">+ Add Schedule</button>
       </div>
 
 
@@ -615,8 +886,8 @@
         <div class="search-form">
           <div class="form-group">
             <label>From</label>
-            <select>
-              <option>Any Campus</option>
+            <select id="srchFrom">
+              <option value="">Any Campus</option>
               <option>City Campus</option>
               <option>Walsall Campus</option>
               <option>Telford Campus</option>
@@ -624,28 +895,215 @@
           </div>
           <div class="form-group">
             <label>To</label>
-            <select>
-              <option>Any Campus</option>
+            <select id="srchTo">
+              <option value="">Any Campus</option>
               <option>City Campus</option>
               <option>Walsall Campus</option>
               <option>Telford Campus</option>
             </select>
           </div>
-          <button class="btn-search">Search</button>
+          <button class="btn-search" onclick="searchSchedules()">Search</button>
         </div>
       </div>
 
-      <div class="empty-state">
+      <div class="empty-state" id="emptyState">
         <svg width="60" height="60" fill="#f5a623" stroke="#0f1b3d" stroke-width="1.5" viewBox="0 0 24 24">
           <rect x="1" y="3" width="15" height="13" rx="2" />
           <path d="M16 8h4l3 3v5h-7V8z" />
           <circle cx="5.5" cy="18.5" r="2.5" />
           <circle cx="18.5" cy="18.5" r="2.5" />
         </svg>
-        <p>No schedules found.</p>
+        <p id="emptyMsg">No schedules found.</p>
+      </div>
+
+      <div class="schedule-grid" id="scheduleGrid"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addScheduleModal" onclick="handleOverlay(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Add Schedule</span>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+
+      <div class="mrow2">
+        <div class="mfield">
+          <label>From Campus</label>
+          <select id="mFrom">
+            <option>City Campus</option>
+            <option>Walsall Campus</option>
+            <option>Telford Campus</option>
+          </select>
+        </div>
+        <div class="mfield">
+          <label>To Campus</label>
+          <select id="mTo">
+            <option>City Campus</option>
+            <option>Walsall Campus</option>
+            <option>Telford Campus</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mrow2">
+        <div class="mfield">
+          <label>Departure Time</label>
+          <input type="time" id="mDepart" value="08:00">
+        </div>
+        <div class="mfield">
+          <label>Arrival Time</label>
+          <input type="time" id="mArrive" value="09:15">
+        </div>
+      </div>
+
+      <div class="mrow2">
+        <div class="mfield">
+          <label>Frequency</label>
+          <input type="text" id="mFreq" placeholder="Every 30 minutes">
+        </div>
+        <div class="mfield">
+          <label>Days of Operation</label>
+          <input type="text" id="mDays" placeholder="Mon-Fri">
+        </div>
+      </div>
+
+      <div class="mfield">
+        <label>Route Info</label>
+        <textarea id="mRoute" placeholder="Via Ring Road, stops at..."></textarea>
+      </div>
+
+      <div class="mfield">
+        <label>Alert Message (optional)</label>
+        <input type="text" id="mAlert" placeholder="Any current disruptions">
+      </div>
+
+      <label class="mcheck">
+        <input type="checkbox" id="mActive" checked> Active
+      </label>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="saveSchedule()">Save</button>
       </div>
     </div>
   </div>
+
+  <script>
+    var schedules = [];
+
+    function openModal() {
+      document.getElementById('addScheduleModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('addScheduleModal').classList.remove('active');
+    }
+
+    function handleOverlay(e) {
+      if (e.target === document.getElementById('addScheduleModal')) closeModal();
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function fmt12(val) {
+      if (!val) return '--';
+      var parts = val.split(':');
+      var h = parseInt(parts[0]);
+      var m = parts[1];
+      var ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+      return h + ':' + m + ' ' + ampm;
+    }
+
+    function esc(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function saveSchedule() {
+      var from   = document.getElementById('mFrom').value;
+      var to     = document.getElementById('mTo').value;
+      var depart = document.getElementById('mDepart').value;
+      var arrive = document.getElementById('mArrive').value;
+      var freq   = document.getElementById('mFreq').value.trim();
+      var days   = document.getElementById('mDays').value.trim();
+      var route  = document.getElementById('mRoute').value.trim();
+      var alert  = document.getElementById('mAlert').value.trim();
+      var active = document.getElementById('mActive').checked;
+
+      if (!depart || !arrive) {
+        var el = !depart ? document.getElementById('mDepart') : document.getElementById('mArrive');
+        el.style.borderColor = '#ef4444';
+        el.focus();
+        setTimeout(function () { el.style.borderColor = ''; }, 1800);
+        return;
+      }
+
+      schedules.push({ from, to, depart, arrive, freq, days, route, alert, active });
+
+      document.getElementById('mFrom').selectedIndex = 0;
+      document.getElementById('mTo').selectedIndex = 0;
+      document.getElementById('mDepart').value = '08:00';
+      document.getElementById('mArrive').value = '09:15';
+      document.getElementById('mFreq').value = '';
+      document.getElementById('mDays').value = '';
+      document.getElementById('mRoute').value = '';
+      document.getElementById('mAlert').value = '';
+      document.getElementById('mActive').checked = true;
+
+      closeModal();
+      renderSchedules(schedules);
+    }
+
+    function searchSchedules() {
+      var from = document.getElementById('srchFrom').value;
+      var to   = document.getElementById('srchTo').value;
+      var filtered = schedules.filter(function (s) {
+        var matchFrom = !from || s.from === from;
+        var matchTo   = !to   || s.to === to;
+        return matchFrom && matchTo;
+      });
+      renderSchedules(filtered, from || to);
+    }
+
+    function renderSchedules(list, filtered) {
+      var grid = document.getElementById('scheduleGrid');
+      var empty = document.getElementById('emptyState');
+      var msg   = document.getElementById('emptyMsg');
+
+      grid.innerHTML = '';
+
+      if (list.length === 0) {
+        empty.style.display = '';
+        msg.textContent = filtered ? 'No schedules match your search.' : 'No schedules found. Click + Add Schedule to get started.';
+        return;
+      }
+
+      empty.style.display = 'none';
+
+      list.forEach(function (s) {
+        var card = document.createElement('div');
+        card.className = 'schedule-card';
+        card.innerHTML =
+          '<div class="sc-route">' +
+            '<div class="sc-route-main">' + esc(s.from) + '<span class="sc-arrow">&#8594;</span>' + esc(s.to) + '</div>' +
+            (s.route ? '<div class="sc-meta">' + esc(s.route) + '</div>' : '') +
+            (s.alert ? '<div class="sc-alert">&#9888; ' + esc(s.alert) + '</div>' : '') +
+          '</div>' +
+          '<div class="sc-times"><div class="sc-time-val">' + fmt12(s.depart) + '</div><div class="sc-time-label">Departure</div></div>' +
+          '<div class="sc-separator"></div>' +
+          '<div class="sc-times"><div class="sc-time-val">' + fmt12(s.arrive) + '</div><div class="sc-time-label">Arrival</div></div>' +
+          '<div class="sc-freq">' +
+            (s.freq ? '<span>' + esc(s.freq) + '</span>' : '') +
+            (s.days ? esc(s.days) : '') +
+          '</div>' +
+          '<span class="sc-badge ' + (s.active ? 'active' : 'inactive') + '">' + (s.active ? 'Active' : 'Inactive') + '</span>';
+        grid.appendChild(card);
+      });
+    }
+  </script>
 
 </body>
 
