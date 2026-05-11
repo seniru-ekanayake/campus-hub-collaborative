@@ -1,1083 +1,172 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Events - Campus Hub</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-  <style>
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --navy: #0f1b3d;
-      --amber: #f5a623;
-      --white: #fff;
-      --muted: rgba(255, 255, 255, 0.55);
-      --bg: #fbf7ee;
-      --sidebar-w: 210px;
-      --text: #1a1f36;
-      --text2: #6b7280;
-      --border: #e5e7eb;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      display: flex;
-      min-height: 100vh;
-      color: var(--text);
-    }
-
-    .ticker {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 32px;
-      z-index: 100;
-      background: #0a1330;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-    }
-
-    .ticker-inner {
-      display: flex;
-      gap: 3rem;
-      white-space: nowrap;
-      animation: ticker 25s linear infinite;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--amber);
-      font-family: 'Sora', sans-serif;
-    }
-
-    @keyframes ticker {
-      0% {
-        transform: translateX(0)
-      }
-
-      100% {
-        transform: translateX(-50%)
-      }
-    }
-
-    .sidebar {
-      width: var(--sidebar-w);
-      background: var(--navy);
-      color: var(--white);
-      position: fixed;
-      top: 32px;
-      bottom: 0;
-      left: 0;
-      z-index: 50;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-    }
-
-    .sidebar-brand {
-      padding: 1.4rem 1.2rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .sidebar-brand img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-    }
-
-    .brand-text {
-      font-family: 'Sora', sans-serif;
-      font-size: 0.7rem;
-      line-height: 1.3;
-    }
-
-    .brand-text span {
-      color: var(--muted);
-      font-size: 0.6rem;
-      display: block;
-    }
-
-    .brand-text strong {
-      color: var(--white);
-    }
-
-    .nav-section {
-      padding: 1rem 0 0.5rem;
-    }
-
-    .nav-label {
-      font-size: 0.58rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.3);
-      padding: 0 1.2rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      padding: 0.55rem 1.2rem;
-      font-size: 0.83rem;
-      color: rgba(255, 255, 255, 0.65);
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .nav-item:hover {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--white);
-    }
-
-    .nav-item.active {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--amber);
-      font-weight: 600;
-    }
-
-    .nav-item svg {
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
-
-    .nav-item.active svg {
-      opacity: 1;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--amber);
-      margin-left: auto;
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      padding: 1rem 1.2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      background: #0a1330;
-    }
-
-    .user-chip {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--amber);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #1a1000;
-    }
-
-    .user-info .name {
-      font-weight: 600;
-      color: var(--white);
-      font-size: 0.82rem;
-    }
-
-    .user-info .role {
-      font-size: 0.68rem;
-      color: var(--muted);
-    }
-
-    .main {
-      margin-left: var(--sidebar-w);
-      padding-top: 32px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .topbar {
-      height: 56px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      padding: 0 2rem;
-      gap: 1rem;
-      position: sticky;
-      top: 32px;
-      z-index: 40;
-    }
-
-    .page-title {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-    }
-
-    .breadcrumb {
-      font-size: 0.78rem;
-      color: var(--text2);
-    }
-
-    .spacer {
-      flex: 1;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.4rem 0.9rem;
-      width: 220px;
-    }
-
-    .search-box input {
-      border: none;
-      background: transparent;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.82rem;
-      color: var(--text);
-      outline: none;
-      width: 100%;
-    }
-
-    .search-box input::placeholder {
-      color: #9ca3af;
-    }
-
-    .icon-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text2);
-      padding: 0.3rem;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      position: relative;
-      transition: background 0.15s;
-    }
-
-    .icon-btn:hover {
-      background: var(--bg);
-    }
-
-    .notif-dot {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--amber);
-    }
-
-    .content {
-      padding: 1.8rem 2rem;
-      flex: 1;
-    }
-
-    .page-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1.6rem;
-    }
-
-    .page-header-text h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .page-header-text p {
-      font-size: 0.83rem;
-      color: var(--text2);
-      margin-top: 0.3rem;
-    }
-
-    .btn-amber {
-      background: var(--amber);
-      color: #1a1000;
-      border: none;
-      border-radius: 8px;
-      padding: 0.65rem 1.3rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      margin-left: auto;
-      align-self: flex-start;
-      transition: background 0.2s;
-    }
-
-    .btn-amber:hover {
-      background: #ffb733;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 5rem 2rem;
-    }
-
-    .empty-state svg {
-      margin: 0 auto 1.2rem;
-      display: block;
-      opacity: 0.6;
-    }
-
-    .empty-state p {
-      font-size: 0.88rem;
-      color: var(--text2);
-    }
-
-    .events-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .event-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-
-    .event-card:hover {
-      box-shadow: 0 6px 24px rgba(0,0,0,0.09);
-      transform: translateY(-2px);
-    }
-
-    .event-card-banner {
-      height: 8px;
-      background: var(--amber);
-    }
-
-    .event-card-body {
-      padding: 1.2rem 1.3rem;
-    }
-
-    .event-card-title {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-    }
-
-    .event-card-cat {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.18rem 0.65rem;
-      border-radius: 20px;
-      background: #fef3c7;
-      color: #92400e;
-      margin-bottom: 0.8rem;
-    }
-
-    .event-card-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .event-meta-row {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.8rem;
-      color: var(--text2);
-    }
-
-    .event-meta-row svg {
-      flex-shrink: 0;
-    }
-
-    .event-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 1.3rem;
-      border-top: 1px solid var(--border);
-      background: var(--bg);
-    }
-
-    .event-cap {
-      font-size: 0.78rem;
-      color: var(--text2);
-    }
-
-    .btn-rsvp {
-      background: var(--navy);
-      color: #fff;
-      border: none;
-      border-radius: 7px;
-      padding: 0.4rem 1rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: background 0.18s;
-    }
-
-    .btn-rsvp:hover {
-      background: #1e3064;
-    }
-
-    .btn-rsvp.rsvp-done {
-      background: #d1fae5;
-      color: #065f46;
-      cursor: default;
-    }
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 27, 61, 0.45);
-      z-index: 200;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    .modal {
-      background: #fff;
-      border-radius: 16px;
-      padding: 2rem;
-      width: 100%;
-      max-width: 520px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.6rem;
-    }
-
-    .modal-title {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--text);
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text2);
-      font-size: 1.3rem;
-      line-height: 1;
-      padding: 0.2rem 0.4rem;
-      border-radius: 6px;
-      transition: background 0.15s;
-    }
-
-    .modal-close:hover {
-      background: var(--bg);
-    }
-
-    .modal-field {
-      margin-bottom: 1.1rem;
-    }
-
-    .modal-field label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-    }
-
-    .modal-field input,
-    .modal-field textarea,
-    .modal-field select {
-      width: 100%;
-      padding: 0.65rem 0.9rem;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.87rem;
-      color: var(--text);
-      background: var(--bg);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .modal-field input:focus,
-    .modal-field textarea:focus,
-    .modal-field select:focus {
-      border-color: var(--amber);
-    }
-
-    .modal-field textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .modal-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.8rem;
-      margin-top: 1.4rem;
-    }
-
-    .btn-cancel {
-      background: #fff;
-      color: var(--text);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 0.6rem 1.3rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    .btn-cancel:hover {
-      border-color: #888;
-    }
-
-    .btn-save {
-      background: var(--amber);
-      color: #1a1000;
-      border: none;
-      border-radius: 8px;
-      padding: 0.65rem 1.5rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-save:hover {
-      background: #ffb733;
-    }
-    .notif-wrapper {
-      position: relative;
-    }
-
-    .notif-panel {
-      display: none;
-      position: fixed;
-      top: 90px;
-      right: 24px;
-      width: 320px;
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.06);
-      z-index: 9999;
-      overflow: hidden;
-      animation: notifIn 0.2s cubic-bezier(0.22,1,0.36,1);
-    }
-
-    .notif-panel.open { display: block; }
-
-    @keyframes notifIn {
-      from { opacity: 0; transform: translateY(-8px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .notif-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 1.2rem 0.75rem;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .notif-title {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: #1a1f36;
-    }
-
-    .notif-mark-all {
-      font-size: 0.75rem;
-      color: #e09010;
-      font-weight: 600;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .notif-mark-all:hover { text-decoration: underline; }
-
-    .notif-list { max-height: 300px; overflow-y: auto; }
-
-    .notif-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      padding: 0.85rem 1.2rem;
-      border-bottom: 1px solid #f3f4f6;
-      cursor: pointer;
-      transition: background 0.12s;
-    }
-
-    .notif-item:last-child { border-bottom: none; }
-    .notif-item:hover { background: #f9fafb; }
-
-    .notif-dot-ind {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #3b82f6;
-      flex-shrink: 0;
-      margin-top: 5px;
-      transition: background 0.2s;
-    }
-
-    .notif-dot-ind.read { background: #d1d5db; }
-
-    .notif-item-text { flex: 1; }
-
-    .notif-item-title {
-      font-size: 0.83rem;
-      font-weight: 600;
-      color: #1a1f36;
-      margin-bottom: 0.2rem;
-      line-height: 1.35;
-    }
-
-    .notif-item-time {
-      font-size: 0.74rem;
-      color: #6b7280;
-    }
-
-    .notif-footer {
-      padding: 0.65rem 1.2rem;
-      text-align: center;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    .notif-footer a {
-      font-size: 0.78rem;
-      color: #e09010;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .notif-footer a:hover { text-decoration: underline; }
-  </style>
+  <title>Events – Campus Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
+<main class="page-content">
+  <div class="animate-in">
+    <div class="page-header">
+      <div>
+        <h1>📅 Campus Events</h1>
+        <p class="text-muted">Discover upcoming events at the University of Wolverhampton</p>
+      </div>
+      <div id="admin-controls" class="hidden">
+        <button class="btn btn-primary" onclick="openAddModal()">+ Create Event</button>
+      </div>
+    </div>
 
-  <div class="ticker">
-    <div class="ticker-inner">
-      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
-      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
-      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
+    <div class="card-grid" id="events-grid">
+      <div class="loading-overlay" style="grid-column:1/-1"><div class="loading-spinner"></div></div>
     </div>
   </div>
+</main>
 
-  <nav class="sidebar">
-    <div class="sidebar-brand">
-      <img src="logo.png" alt="Logo">
-      <div class="brand-text"><span>UNIVERSITY OF</span><strong>Wolverhampton</strong></div>
+<div class="modal-overlay hidden" id="event-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Create Event</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
     </div>
-    <div class="nav-section">
-      <div class="nav-label">Overview</div>
-      <a href="dashboard.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="3" y="3" width="7" height="9" />
-          <rect x="14" y="3" width="7" height="5" />
-          <rect x="14" y="12" width="7" height="9" />
-          <rect x="3" y="16" width="7" height="5" />
-        </svg>Dashboard</a>
-      <a href="events.html" class="nav-item active"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="3" y="4" width="18" height="18" rx="2" />
-          <line x1="16" y1="2" x2="16" y2="6" />
-          <line x1="8" y1="2" x2="8" y2="6" />
-          <line x1="3" y1="10" x2="21" y2="10" />
-        </svg>Events <span class="dot"></span></a>
-      <a href="club-hub.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 00-3-3.87" />
-          <path d="M16 3.13a4 4 0 010 7.75" />
-        </svg>Club Hub</a>
-      <a href="announcements.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 01-3.46 0" />
-        </svg>Announcements</a>
-    </div>
-    <div class="nav-section">
-      <div class="nav-label">Campus</div>
-      <a href="facilities.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="4" y="2" width="16" height="20" rx="2" />
-          <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01" />
-        </svg>Facilities</a>
-      <a href="transport.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="1" y="3" width="15" height="13" rx="2" />
-          <path d="M16 8h4l3 3v5h-7V8z" />
-          <circle cx="5.5" cy="18.5" r="2.5" />
-          <circle cx="18.5" cy="18.5" r="2.5" />
-        </svg>Transport</a>
-      <a href="checkin-rewards.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="8" y="2" width="8" height="4" rx="1" />
-          <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" />
-          <path d="m9 14 2 2 4-4" />
-        </svg>Check-in and Rewards</a>
-      <a href="wellbeing.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <path
-            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-        </svg>Wellbeing</a>
-    </div>
-    <div class="nav-section">
-      <div class="nav-label">Account</div>
-      <a href="my-profile.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4" />
-          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-        </svg>My Profile</a>
-      <a href="admin-panel.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="3" />
-          <path d="M19.07 4.93A10 10 0 1020.66 7" />
-        </svg>Admin Panel</a>
-      <a href="signin.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-          <polyline points="16 17 21 12 16 7" />
-          <line x1="21" y1="12" x2="9" y2="12" />
-        </svg>Sign Out</a>
-    </div>
-    <div class="sidebar-footer">
-      <div class="user-chip">
-        <div class="avatar">S</div>
-        <div class="user-info">
-          <div class="name">System</div>
-          <div class="role">Administrator</div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <div class="main">
-    <div class="topbar">
-      <span class="page-title">Events</span>
-      <span class="breadcrumb">Home > Events</span>
-      <div class="spacer"></div>
-      <div class="search-box">
-        <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8" />
-          <path d="M21 21l-4.35-4.35" />
-        </svg>
-        <input type="text" placeholder="Search campus hub...">
-      </div>
-            <div class="notif-wrapper">
-        <button class="icon-btn" id="bell-btn" onclick="toggleNotif(event)">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
-          <span class="notif-dot" id="notif-dot"></span>
-        </button>
-        <div class="notif-panel" id="notif-panel">
-          <div class="notif-header">
-            <span class="notif-title">Notifications</span>
-            <button class="notif-mark-all" onclick="markAllRead()">Mark all read</button>
-          </div>
-          <div class="notif-list">
-            <div class="notif-item" onclick="markRead(this)">
-              <span class="notif-dot-ind"></span>
-              <div class="notif-item-text">
-                <div class="notif-item-title">New event: Spring Fair 2025</div>
-                <div class="notif-item-time">2 minutes ago</div>
-              </div>
-            </div>
-            <div class="notif-item" onclick="markRead(this)">
-              <span class="notif-dot-ind"></span>
-              <div class="notif-item-text">
-                <div class="notif-item-title">Your check-in points updated</div>
-                <div class="notif-item-time">1 hour ago</div>
-              </div>
-            </div>
-            <div class="notif-item" onclick="markRead(this)">
-              <span class="notif-dot-ind read"></span>
-              <div class="notif-item-text">
-                <div class="notif-item-title">Library booking confirmed</div>
-                <div class="notif-item-time">Yesterday, 4:30 PM</div>
-              </div>
-            </div>
-          </div>
-          <div class="notif-footer">
-            <a href="announcements.html">View all notifications</a>
-          </div>
-        </div>
-      </div>
-      <button class="icon-btn" onclick="location.href='signin.html'"><svg width="18" height="18" fill="none"
-          stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-          <polyline points="16 17 21 12 16 7" />
-          <line x1="21" y1="12" x2="9" y2="12" />
-        </svg></button>
-    </div>
-
-    <div class="content">
-      <div class="page-header">
-        <span style="font-size: 1.3em; vertical-align: middle;">📅</span>
-        <div class="page-header-text">
-          <h2>Campus Events</h2>
-          <p>Discover upcoming events at the University of Wolverhampton</p>
-        </div>
-        <button class="btn-amber" onclick="openModal()">+ Create Event</button>
-      </div>
-
-      <div id="events-grid" class="events-grid" style="display:none;"></div>
-
-      <div id="empty-state" class="empty-state">
-        <span style="font-size: 1.3em; vertical-align: middle;">📅</span>
-        <p>No upcoming events. Click <strong>+ Create Event</strong> to add one.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">Create Event</span>
-        <button class="modal-close" onclick="closeModal()">&#x2715;</button>
-      </div>
-
-      <div class="modal-field">
+    <div class="modal-body">
+      <input type="hidden" id="event-id">
+      <div class="form-group">
         <label>Title *</label>
-        <input type="text" id="ev-title" placeholder="">
+        <input type="text" id="ev-title" class="form-control" required>
       </div>
-
-      <div class="modal-field">
+      <div class="form-group">
         <label>Description</label>
-        <textarea id="ev-desc" placeholder=""></textarea>
+        <textarea id="ev-desc" class="form-control"></textarea>
       </div>
-
-      <div class="modal-row">
-        <div class="modal-field">
+      <div class="form-row">
+        <div class="form-group">
           <label>Campus</label>
-          <select id="ev-campus">
+          <select id="ev-campus" class="form-control">
             <option>City Campus</option>
             <option>Walsall Campus</option>
             <option>Telford Campus</option>
-            <option>Online</option>
           </select>
         </div>
-        <div class="modal-field">
+        <div class="form-group">
           <label>Category</label>
-          <input type="text" id="ev-cat" placeholder="e.g. Academic, Social">
+          <input type="text" id="ev-category" class="form-control" placeholder="e.g. Academic, Social">
         </div>
       </div>
-
-      <div class="modal-row">
-        <div class="modal-field">
-          <label>Date &amp; Time</label>
-          <input type="datetime-local" id="ev-date">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date & Time</label>
+          <input type="datetime-local" id="ev-date" class="form-control">
         </div>
-        <div class="modal-field">
+        <div class="form-group">
           <label>Capacity</label>
-          <input type="number" id="ev-cap" placeholder="50" min="1">
+          <input type="number" id="ev-capacity" class="form-control" value="50">
         </div>
       </div>
-
-      <div class="modal-field">
+      <div class="form-group">
         <label>Location</label>
-        <input type="text" id="ev-location" placeholder="Room / Building">
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-save" onclick="saveEvent()">Save Event</button>
+        <input type="text" id="ev-location" class="form-control" placeholder="Room / Building">
       </div>
     </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEvent()">Save Event</button>
+    </div>
   </div>
+</div>
 
-  <script>
-    var events = [];
+<script src="../js/app.js"></script>
+<script src="../js/layout.js"></script>
+<script>
+  if (!Auth.requireLogin()) throw new Error();
+  renderLayout('events');
 
-    function openModal() {
-      document.getElementById('modal-overlay').classList.add('open');
-      document.getElementById('ev-title').value = '';
-      document.getElementById('ev-desc').value = '';
-      document.getElementById('ev-campus').selectedIndex = 0;
-      document.getElementById('ev-cat').value = '';
-      document.getElementById('ev-date').value = '';
-      document.getElementById('ev-cap').value = '50';
-      document.getElementById('ev-location').value = '';
-      document.getElementById('ev-title').focus();
+  let allEvents = [];
+  if (Auth.isAdmin()) document.getElementById('admin-controls').classList.remove('hidden');
+
+  async function loadEvents() {
+    const grid = document.getElementById('events-grid');
+    Utils.loading(grid);
+    try {
+      allEvents = await Http.get('/events');
+    } catch { grid.innerHTML = '<p class="text-muted">Could not load events.</p>'; return; }
+
+    if (!allEvents.length) { Utils.empty(grid, 'No upcoming events.', '📅'); return; }
+
+    grid.innerHTML = allEvents.map(ev => `
+      <div class="event-card">
+        <div class="card-img">📅</div>
+        <div class="card-content">
+          <h3>${Utils.escape(ev.title)}</h3>
+          <p>${Utils.escape(ev.description || '')}</p>
+          <p>📍 ${Utils.escape(ev.location || '')} &bull; ${Utils.escape(ev.campus || '')}</p>
+          <p>🗓 ${Utils.formatDateTime(ev.eventDate)}</p>
+          ${ev.capacity ? `<p>👥 Capacity: ${ev.capacity}</p>` : ''}
+          <div class="card-meta">
+            ${ev.category ? `<span class="badge badge-info">${ev.category}</span>` : ''}
+            ${Auth.isAdmin() ? `
+              <button class="btn btn-sm btn-outline" onclick="editEvent(${ev.id})">Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteEvent(${ev.id})">Delete</button>` : ''}
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function openAddModal() {
+    document.getElementById('modal-title').textContent = 'Create Event';
+    document.getElementById('event-id').value = '';
+    ['ev-title','ev-desc','ev-category','ev-location'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ev-capacity').value = 50;
+    document.getElementById('ev-date').value = '';
+    document.getElementById('event-modal').classList.remove('hidden');
+  }
+
+  function editEvent(id) {
+    const ev = allEvents.find(x => x.id === id);
+    if (!ev) return;
+    document.getElementById('modal-title').textContent = 'Edit Event';
+    document.getElementById('event-id').value = ev.id;
+    document.getElementById('ev-title').value = ev.title || '';
+    document.getElementById('ev-desc').value = ev.description || '';
+    document.getElementById('ev-campus').value = ev.campus || 'City Campus';
+    document.getElementById('ev-category').value = ev.category || '';
+    document.getElementById('ev-capacity').value = ev.capacity || 50;
+    document.getElementById('ev-location').value = ev.location || '';
+    if (ev.eventDate) {
+      document.getElementById('ev-date').value = new Date(ev.eventDate).toISOString().slice(0, 16);
     }
+    document.getElementById('event-modal').classList.remove('hidden');
+  }
 
-    function closeModal() {
-      document.getElementById('modal-overlay').classList.remove('open');
-    }
+  function closeModal() { document.getElementById('event-modal').classList.add('hidden'); }
 
-    function handleOverlayClick(e) {
-      if (e.target === document.getElementById('modal-overlay')) closeModal();
-    }
+  async function saveEvent() {
+    const id = document.getElementById('event-id').value;
+    const body = {
+      title: document.getElementById('ev-title').value,
+      description: document.getElementById('ev-desc').value,
+      campus: document.getElementById('ev-campus').value,
+      category: document.getElementById('ev-category').value,
+      capacity: parseInt(document.getElementById('ev-capacity').value),
+      location: document.getElementById('ev-location').value,
+      eventDate: document.getElementById('ev-date').value || null
+    };
+    try {
+      if (id) { await Http.put('/admin/events/' + id, body); Toast.success('Event updated.'); }
+      else { await Http.post('/admin/events', body); Toast.success('Event created.'); }
+      closeModal(); loadEvents();
+    } catch (e) { Toast.error(e.message); }
+  }
 
-    function saveEvent() {
-      var titleEl = document.getElementById('ev-title');
-      var title = titleEl.value.trim();
-      if (!title) {
-        titleEl.style.borderColor = '#ef4444';
-        titleEl.focus();
-        setTimeout(function() { titleEl.style.borderColor = ''; }, 1500);
-        return;
-      }
+  async function deleteEvent(id) {
+    if (!confirm('Delete this event?')) return;
+    try { await Http.delete('/admin/events/' + id); Toast.success('Deleted.'); loadEvents(); }
+    catch (e) { Toast.error(e.message); }
+  }
 
-      var rawDate = document.getElementById('ev-date').value;
-      var dateStr = rawDate
-        ? new Date(rawDate).toLocaleString([], { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
-        : 'TBC';
-
-      events.push({
-        title:    title,
-        desc:     document.getElementById('ev-desc').value.trim(),
-        campus:   document.getElementById('ev-campus').value,
-        category: document.getElementById('ev-cat').value.trim(),
-        date:     dateStr,
-        capacity: document.getElementById('ev-cap').value.trim() || '50',
-        location: document.getElementById('ev-location').value.trim(),
-        rsvp:     false
-      });
-
-      closeModal();
-      renderEvents();
-    }
-
-    function toggleRsvp(idx) {
-      events[idx].rsvp = !events[idx].rsvp;
-      renderEvents();
-    }
-
-    function renderEvents() {
-      var grid  = document.getElementById('events-grid');
-      var empty = document.getElementById('empty-state');
-
-      if (events.length === 0) {
-        grid.style.display  = 'none';
-        empty.style.display = 'block';
-        return;
-      }
-
-      empty.style.display = 'none';
-      grid.style.display  = 'grid';
-      grid.innerHTML = '';
-
-      events.forEach(function(ev, i) {
-        var card = document.createElement('div');
-        card.className = 'event-card';
-        card.innerHTML =
-          '<div class="event-card-banner"></div>' +
-          '<div class="event-card-body">' +
-            '<div class="event-card-title">' + ev.title + '</div>' +
-            (ev.category ? '<span class="event-card-cat">' + ev.category + '</span>' : '') +
-            (ev.desc ? '<div style="font-size:0.82rem;color:var(--text2);margin-bottom:0.8rem;line-height:1.5;">' + ev.desc + '</div>' : '') +
-            '<div class="event-card-meta">' +
-              '<div class="event-meta-row">' +
-                '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
-                ev.date +
-              '</div>' +
-              '<div class="event-meta-row">' +
-                '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 7-8 13-8 13s-8-6-8-13a8 8 0 0116 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
-                ev.campus + (ev.location ? ' - ' + ev.location : '') +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="event-card-footer">' +
-            '<span class="event-cap">👥 ' + ev.capacity + ' spots</span>' +
-            '<button class="btn-rsvp' + (ev.rsvp ? ' rsvp-done' : '') + '" onclick="toggleRsvp(' + i + ')">' +
-              (ev.rsvp ? '✓ Reserved' : 'Reserve') +
-            '</button>' +
-          '</div>';
-        grid.appendChild(card);
-      });
-    }
-
-    function toggleNotif(e) {
-      e.stopPropagation();
-      var panel = document.getElementById('notif-panel');
-      panel.classList.toggle('open');
-    }
-
-    function markRead(item) {
-      item.querySelector('.notif-dot-ind').classList.add('read');
-      updateNotifDot();
-    }
-
-    function markAllRead() {
-      document.querySelectorAll('.notif-dot-ind').forEach(function(d) { d.classList.add('read'); });
-      updateNotifDot();
-    }
-
-    function updateNotifDot() {
-      var unread = document.querySelectorAll('.notif-dot-ind:not(.read)').length;
-      var dot = document.getElementById('notif-dot');
-      if (dot) dot.style.display = unread > 0 ? 'block' : 'none';
-    }
-
-    document.addEventListener('click', function(e) {
-      var panel = document.getElementById('notif-panel');
-      var btn = document.getElementById('bell-btn');
-      if (panel && panel.classList.contains('open') && btn && !panel.contains(e.target) && !btn.contains(e.target)) {
-        panel.classList.remove('open');
-      }
-    });
-  </script>
-
+  loadEvents();
+</script>
+</body>
 </html>

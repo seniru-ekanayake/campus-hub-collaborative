@@ -1,1138 +1,221 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Facilities - Campus Hub</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-  <style>
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --navy: #0f1b3d;
-      --amber: #f5a623;
-      --white: #fff;
-      --muted: rgba(255, 255, 255, 0.55);
-      --bg: #fbf7ee;
-      --sidebar-w: 210px;
-      --text: #1a1f36;
-      --text2: #6b7280;
-      --border: #e5e7eb;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      display: flex;
-      min-height: 100vh;
-      color: var(--text);
-    }
-
-    .ticker {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 32px;
-      z-index: 100;
-      background: #0a1330;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-    }
-
-    .ticker-inner {
-      display: flex;
-      gap: 3rem;
-      white-space: nowrap;
-      animation: ticker 25s linear infinite;
-      font-size: 0.62rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--amber);
-      font-family: 'Sora', sans-serif;
-    }
-
-    @keyframes ticker {
-      0% {
-        transform: translateX(0)
-      }
-
-      100% {
-        transform: translateX(-50%)
-      }
-    }
-
-    .sidebar {
-      width: var(--sidebar-w);
-      background: var(--navy);
-      color: var(--white);
-      position: fixed;
-      top: 32px;
-      bottom: 0;
-      left: 0;
-      z-index: 50;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-    }
-
-    .sidebar-brand {
-      padding: 1.4rem 1.2rem 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .sidebar-brand img {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
-    }
-
-    .brand-text {
-      font-family: 'Sora', sans-serif;
-      font-size: 0.7rem;
-      line-height: 1.3;
-    }
-
-    .brand-text span {
-      color: var(--muted);
-      font-size: 0.6rem;
-      display: block;
-    }
-
-    .brand-text strong {
-      color: var(--white);
-    }
-
-    .nav-section {
-      padding: 1rem 0 0.5rem;
-    }
-
-    .nav-label {
-      font-size: 0.58rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.3);
-      padding: 0 1.2rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      padding: 0.55rem 1.2rem;
-      font-size: 0.83rem;
-      color: rgba(255, 255, 255, 0.65);
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-    }
-
-    .nav-item:hover {
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--white);
-    }
-
-    .nav-item.active {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--amber);
-      font-weight: 600;
-    }
-
-    .nav-item svg {
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
-
-    .nav-item.active svg {
-      opacity: 1;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--amber);
-      margin-left: auto;
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      padding: 1rem 1.2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      background: #0a1330;
-    }
-
-    .user-chip {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--amber);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: #1a1000;
-    }
-
-    .user-info .name {
-      font-weight: 600;
-      color: var(--white);
-      font-size: 0.82rem;
-    }
-
-    .user-info .role {
-      font-size: 0.68rem;
-      color: var(--muted);
-    }
-
-    .main {
-      margin-left: var(--sidebar-w);
-      padding-top: 32px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .topbar {
-      height: 56px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      padding: 0 2rem;
-      gap: 1rem;
-      position: sticky;
-      top: 32px;
-      z-index: 40;
-    }
-
-    .page-title {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-    }
-
-    .breadcrumb {
-      font-size: 0.78rem;
-      color: var(--text2);
-    }
-
-    .spacer {
-      flex: 1;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.4rem 0.9rem;
-      width: 220px;
-    }
-
-    .search-box input {
-      border: none;
-      background: transparent;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.82rem;
-      color: var(--text);
-      outline: none;
-      width: 100%;
-    }
-
-    .search-box input::placeholder {
-      color: #9ca3af;
-    }
-
-    .icon-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text2);
-      padding: 0.3rem;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      position: relative;
-      transition: background 0.15s;
-    }
-
-    .icon-btn:hover {
-      background: var(--bg);
-    }
-
-    .notif-dot {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--amber);
-    }
-
-    .content {
-      padding: 1.8rem 2rem;
-      flex: 1;
-    }
-
-    .page-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1.6rem;
-    }
-
-    .page-header-text h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .page-header-text p {
-      font-size: 0.83rem;
-      color: var(--text2);
-      margin-top: 0.3rem;
-    }
-
-    .btn-amber {
-      background: var(--amber);
-      color: #1a1000;
-      border: none;
-      border-radius: 10px;
-      padding: 0.7rem 1.4rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      margin-left: auto;
-      align-self: flex-start;
-      transition: background 0.2s;
-    }
-
-    .btn-amber:hover {
-      background: #ffb733;
-    }
-
-    .filter-bar {
-      background: #fff;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      padding: 1.1rem 1.4rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      margin-bottom: 1.6rem;
-    }
-
-    .filter-select {
-      padding: 0.65rem 1rem;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      color: var(--text);
-      background: var(--bg);
-      outline: none;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    .filter-select:focus {
-      border-color: var(--amber);
-    }
-
-    .btn-filter {
-      background: #fff;
-      color: var(--text);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 0.65rem 1.2rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    .btn-filter:hover {
-      border-color: #888;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 4rem 2rem;
-    }
-
-    .empty-state svg {
-      margin: 0 auto 1.2rem;
-      display: block;
-      opacity: 0.6;
-    }
-
-    .empty-state p {
-      font-size: 0.88rem;
-      color: var(--text2);
-    }
-
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal {
-      background: #fff;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 440px;
-      padding: 2rem;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-      position: relative;
-      animation: modalIn 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    @keyframes modalIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.97);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text2);
-      font-size: 1.4rem;
-      line-height: 1;
-      padding: 0.2rem 0.4rem;
-      border-radius: 6px;
-      transition: background 0.15s;
-    }
-
-    .modal-close:hover {
-      background: var(--bg);
-    }
-
-    .modal-field {
-      margin-bottom: 1rem;
-    }
-
-    .modal-field label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-    }
-
-    .modal-field label .req {
-      color: #e53e3e;
-      margin-left: 2px;
-    }
-
-    .modal-field input,
-    .modal-field textarea,
-    .modal-field select {
-      width: 100%;
-      padding: 0.7rem 0.9rem;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.88rem;
-      color: var(--text);
-      background: #fff;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .modal-field input:focus,
-    .modal-field textarea:focus,
-    .modal-field select:focus {
-      border-color: var(--amber);
-    }
-
-    .modal-field textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .modal-row2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.8rem;
-    }
-
-    .modal-footer {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.8rem;
-      margin-top: 1.5rem;
-    }
-
-    .btn-cancel {
-      background: #fff;
-      color: var(--text);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 0.65rem 1.4rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: border-color 0.2s;
-    }
-
-    .btn-cancel:hover {
-      border-color: #888;
-    }
-
-    .btn-save {
-      background: var(--amber);
-      color: #1a1000;
-      border: none;
-      border-radius: 8px;
-      padding: 0.65rem 1.6rem;
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .btn-save:hover {
-      background: #ffb733;
-    }
-
-    .facilities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .facility-card {
-      background: #fff;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      padding: 1.4rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-      transition: box-shadow 0.2s, transform 0.2s;
-      animation: cardIn 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    @keyframes cardIn {
-      from {
-        opacity: 0;
-        transform: translateY(12px) scale(0.97);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .facility-card:hover {
-      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.09);
-      transform: translateY(-2px);
-    }
-
-    .card-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-
-    .card-name {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-    }
-
-    .badge {
-      font-size: 0.7rem;
-      font-weight: 700;
-      font-family: 'Sora', sans-serif;
-      border-radius: 20px;
-      padding: 0.2rem 0.65rem;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .badge-open {
-      background: #d1fae5;
-      color: #065f46;
-    }
-
-    .badge-closed {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    .badge-limited {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .card-desc {
-      font-size: 0.82rem;
-      color: var(--text2);
-      line-height: 1.5;
-    }
-
-    .card-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      margin-top: 0.3rem;
-      border-top: 1px solid var(--border);
-      padding-top: 0.75rem;
-    }
-
-    .card-meta-row {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.8rem;
-      color: var(--text2);
-    }
-
-    .card-meta-row svg {
-      flex-shrink: 0;
-      opacity: 0.6;
-    }
-
-    .card-campus {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: #5b7fb8;
-      background: #eff4ff;
-      border-radius: 6px;
-      padding: 0.15rem 0.5rem;
-      margin-bottom: 0.2rem;
-    }
-    .notif-wrapper {
-      position: relative;
-    }
-
-    .notif-panel {
-      display: none;
-      position: fixed;
-      top: 90px;
-      right: 24px;
-      width: 320px;
-      background: #fff;
-      border-radius: 14px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.06);
-      z-index: 9999;
-      overflow: hidden;
-      animation: notifIn 0.2s cubic-bezier(0.22,1,0.36,1);
-    }
-
-    .notif-panel.open { display: block; }
-
-    @keyframes notifIn {
-      from { opacity: 0; transform: translateY(-8px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .notif-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 1.2rem 0.75rem;
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .notif-title {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: #1a1f36;
-    }
-
-    .notif-mark-all {
-      font-size: 0.75rem;
-      color: #e09010;
-      font-weight: 600;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .notif-mark-all:hover { text-decoration: underline; }
-
-    .notif-list { max-height: 300px; overflow-y: auto; }
-
-    .notif-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      padding: 0.85rem 1.2rem;
-      border-bottom: 1px solid #f3f4f6;
-      cursor: pointer;
-      transition: background 0.12s;
-    }
-
-    .notif-item:last-child { border-bottom: none; }
-    .notif-item:hover { background: #f9fafb; }
-
-    .notif-dot-ind {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #3b82f6;
-      flex-shrink: 0;
-      margin-top: 5px;
-      transition: background 0.2s;
-    }
-
-    .notif-dot-ind.read { background: #d1d5db; }
-
-    .notif-item-text { flex: 1; }
-
-    .notif-item-title {
-      font-size: 0.83rem;
-      font-weight: 600;
-      color: #1a1f36;
-      margin-bottom: 0.2rem;
-      line-height: 1.35;
-    }
-
-    .notif-item-time {
-      font-size: 0.74rem;
-      color: #6b7280;
-    }
-
-    .notif-footer {
-      padding: 0.65rem 1.2rem;
-      text-align: center;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    .notif-footer a {
-      font-size: 0.78rem;
-      color: #e09010;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .notif-footer a:hover { text-decoration: underline; }
-  </style>
+  <title>Facilities – Campus Hub</title>
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
+<main class="page-content">
+  <div class="animate-in">
+    <div class="page-header">
+      <div>
+        <h1>🏛 Campus Facilities</h1>
+        <p class="text-muted">View facility locations, opening times and current status</p>
+      </div>
+      <div id="admin-controls" class="hidden">
+        <button class="btn btn-primary" onclick="openAddModal()">+ Add Facility</button>
+      </div>
+    </div>
 
-  <div class="ticker">
-    <div class="ticker-inner">
-      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
-      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
-      <span>THE UNIVERSITY OF OPPORTUNITY</span><span>|</span><span>INSPIRING ACHIEVEMENT</span><span>|</span>
+    
+    <div class="card mb-2">
+      <div class="card-body" style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
+        <select id="filter-campus" class="form-control" style="max-width:200px">
+          <option value="">All Campuses</option>
+          <option value="City Campus">City Campus</option>
+          <option value="Walsall Campus">Walsall Campus</option>
+          <option value="Telford Campus">Telford Campus</option>
+        </select>
+        <select id="filter-status" class="form-control" style="max-width:200px">
+          <option value="">All Statuses</option>
+          <option value="OPEN">Open</option>
+          <option value="CLOSED">Closed</option>
+          <option value="BUSY">Busy</option>
+        </select>
+        <button class="btn btn-outline btn-sm" onclick="loadFacilities()">🔍 Filter</button>
+      </div>
+    </div>
+
+    <div class="card-grid" id="facilities-grid">
+      <div class="loading-overlay" style="grid-column:1/-1"><div class="loading-spinner"></div></div>
     </div>
   </div>
+</main>
 
-  <nav class="sidebar">
-    <div class="sidebar-brand">
-      <img src="logo.png" alt="Logo">
-      <div class="brand-text"><span>UNIVERSITY OF</span><strong>Wolverhampton</strong></div>
+<div class="modal-overlay hidden" id="facility-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Add Facility</h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
     </div>
-    <div class="nav-section">
-      <div class="nav-label">Overview</div>
-      <a href="dashboard.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="3" y="3" width="7" height="9" />
-          <rect x="14" y="3" width="7" height="5" />
-          <rect x="14" y="12" width="7" height="9" />
-          <rect x="3" y="16" width="7" height="5" />
-        </svg>Dashboard</a>
-      <a href="events.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="3" y="4" width="18" height="18" rx="2" />
-          <line x1="16" y1="2" x2="16" y2="6" />
-          <line x1="8" y1="2" x2="8" y2="6" />
-          <line x1="3" y1="10" x2="21" y2="10" />
-        </svg>Events</a>
-      <a href="club-hub.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M23 21v-2a4 4 0 00-3-3.87" />
-          <path d="M16 3.13a4 4 0 010 7.75" />
-        </svg>Club Hub</a>
-      <a href="announcements.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-          <path d="M13.73 21a2 2 0 01-3.46 0" />
-        </svg>Announcements</a>
-    </div>
-    <div class="nav-section">
-      <div class="nav-label">Campus</div>
-      <a href="facilities.html" class="nav-item active"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="4" y="2" width="16" height="20" rx="2" />
-          <path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01" />
-        </svg>Facilities <span class="dot"></span></a>
-      <a href="transport.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="1" y="3" width="15" height="13" rx="2" />
-          <path d="M16 8h4l3 3v5h-7V8z" />
-          <circle cx="5.5" cy="18.5" r="2.5" />
-          <circle cx="18.5" cy="18.5" r="2.5" />
-        </svg>Transport</a>
-      <a href="checkin-rewards.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <rect x="8" y="2" width="8" height="4" rx="1" />
-          <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" />
-          <path d="m9 14 2 2 4-4" />
-        </svg>Check-in and Rewards</a>
-      <a href="wellbeing.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <path
-            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-        </svg>Wellbeing</a>
-    </div>
-    <div class="nav-section">
-      <div class="nav-label">Account</div>
-      <a href="my-profile.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="8" r="4" />
-          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-        </svg>My Profile</a>
-      <a href="admin-panel.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="3" />
-          <path d="M19.07 4.93A10 10 0 1020.66 7" />
-        </svg>Admin Panel</a>
-      <a href="signin.html" class="nav-item"><svg width="16" height="16" fill="none" stroke="currentColor"
-          stroke-width="2" viewBox="0 0 24 24">
-          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-          <polyline points="16 17 21 12 16 7" />
-          <line x1="21" y1="12" x2="9" y2="12" />
-        </svg>Sign Out</a>
-    </div>
-    <div class="sidebar-footer">
-      <div class="user-chip">
-        <div class="avatar">S</div>
-        <div class="user-info">
-          <div class="name">System</div>
-          <div class="role">Administrator</div>
-        </div>
+    <div class="modal-body">
+      <input type="hidden" id="facility-id">
+      <div class="form-group">
+        <label>Name *</label>
+        <input type="text" id="fac-name" class="form-control" required>
       </div>
-    </div>
-  </nav>
-
-  <div class="main">
-    <div class="topbar">
-      <span class="page-title">Facilities</span>
-      <span class="breadcrumb">Home > Facilities</span>
-      <div class="spacer"></div>
-      <div class="search-box">
-        <svg width="14" height="14" fill="none" stroke="#9ca3af" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8" />
-          <path d="M21 21l-4.35-4.35" />
-        </svg>
-        <input type="text" placeholder="Search campus hub...">
-      </div>
-            <div class="notif-wrapper">
-        <button class="icon-btn" id="bell-btn" onclick="toggleNotif(event)">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 01-3.46 0" />
-          </svg>
-          <span class="notif-dot" id="notif-dot"></span>
-        </button>
-        <div class="notif-panel" id="notif-panel">
-          <div class="notif-header">
-            <span class="notif-title">Notifications</span>
-            <button class="notif-mark-all" onclick="markAllRead()">Mark all read</button>
-          </div>
-          <div class="notif-list">
-            <div class="notif-item" onclick="markRead(this)">
-              <span class="notif-dot-ind"></span>
-              <div class="notif-item-text">
-                <div class="notif-item-title">New event: Spring Fair 2025</div>
-                <div class="notif-item-time">2 minutes ago</div>
-              </div>
-            </div>
-            <div class="notif-item" onclick="markRead(this)">
-              <span class="notif-dot-ind"></span>
-              <div class="notif-item-text">
-                <div class="notif-item-title">Your check-in points updated</div>
-                <div class="notif-item-time">1 hour ago</div>
-              </div>
-            </div>
-            <div class="notif-item" onclick="markRead(this)">
-              <span class="notif-dot-ind read"></span>
-              <div class="notif-item-text">
-                <div class="notif-item-title">Library booking confirmed</div>
-                <div class="notif-item-time">Yesterday, 4:30 PM</div>
-              </div>
-            </div>
-          </div>
-          <div class="notif-footer">
-            <a href="announcements.html">View all notifications</a>
-          </div>
-        </div>
-      </div>
-      <button class="icon-btn" onclick="location.href='signin.html'"><svg width="18" height="18" fill="none"
-          stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-          <polyline points="16 17 21 12 16 7" />
-          <line x1="21" y1="12" x2="9" y2="12" />
-        </svg></button>
-    </div>
-
-    <div class="content">
-      <div class="page-header">
-        <span style="font-size: 1.3em; vertical-align: middle;">🏢</span>
-        <div class="page-header-text">
-          <h2>Campus Facilities</h2>
-          <p>View facility locations, opening times and current status</p>
-        </div>
-        <button class="btn-amber" onclick="openModal()">+ Add Facility</button>
-      </div>
-
-      <div class="filter-bar">
-        <select class="filter-select">
-          <option>All Campuses</option>
-          <option>City Campus</option>
-          <option>Walsall Campus</option>
-          <option>Telford Campus</option>
-        </select>
-        <select class="filter-select">
-          <option>All Statuses</option>
-          <option>Open</option>
-          <option>Closed</option>
-          <option>Limited</option>
-        </select>
-        <button class="btn-filter">⌕ Filter</button>
-      </div>
-
-      <div class="empty-state" id="emptyState">
-        <span style="font-size: 1.3em; vertical-align: middle;">🏢</span>
-        <p>No facilities found. Click <strong>+ Add Facility</strong> to get started.</p>
-      </div>
-
-      <div class="facilities-grid" id="facilitiesGrid"></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="addFacilityModal" onclick="handleOverlayClick(event)">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">Add Facility</span>
-        <button class="modal-close" onclick="closeModal()">&times;</button>
-      </div>
-
-      <div class="modal-field">
-        <label>Name <span class="req">*</span></label>
-        <input type="text" id="fName" placeholder="e.g. Library, Sports Hall">
-      </div>
-
-      <div class="modal-field">
+      <div class="form-group">
         <label>Description</label>
-        <textarea id="fDesc" placeholder="Brief description of the facility..."></textarea>
+        <textarea id="fac-desc" class="form-control"></textarea>
       </div>
-
-      <div class="modal-row2">
-        <div class="modal-field">
+      <div class="form-row">
+        <div class="form-group">
           <label>Campus</label>
-          <select id="fCampus">
+          <select id="fac-campus" class="form-control">
             <option>City Campus</option>
             <option>Walsall Campus</option>
             <option>Telford Campus</option>
           </select>
         </div>
-        <div class="modal-field">
+        <div class="form-group">
           <label>Status</label>
-          <select id="fStatus">
-            <option>Open</option>
-            <option>Closed</option>
-            <option>Limited</option>
+          <select id="fac-status" class="form-control">
+            <option value="OPEN">Open</option>
+            <option value="CLOSED">Closed</option>
+            <option value="BUSY">Busy</option>
           </select>
         </div>
       </div>
-
-      <div class="modal-field">
+      <div class="form-group">
         <label>Location</label>
-        <input type="text" id="fLocation" placeholder="e.g. Building MX, Floor 2">
+        <input type="text" id="fac-location" class="form-control" placeholder="e.g. Building MX, Floor 2">
       </div>
-
-      <div class="modal-field">
+      <div class="form-group">
         <label>Opening Times</label>
-        <input type="text" id="fHours" placeholder="e.g. Mon-Fri 8am-10pm">
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-save" onclick="saveFacility()">Save</button>
+        <input type="text" id="fac-times" class="form-control" placeholder="e.g. Mon-Fri 8am-10pm">
       </div>
     </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveFacility()">Save</button>
+    </div>
   </div>
+</div>
 
-  <script>
-    function openModal() {
-      document.getElementById('addFacilityModal').classList.add('active');
+<script src="../js/app.js"></script>
+<script src="../js/layout.js"></script>
+<script>
+  if (!Auth.requireLogin()) throw new Error();
+  renderLayout('facilities');
+
+  let allFacilities = [];
+
+  if (Auth.isAdmin()) document.getElementById('admin-controls').classList.remove('hidden');
+
+  async function loadFacilities() {
+    const grid = document.getElementById('facilities-grid');
+    Utils.loading(grid);
+
+    try {
+      allFacilities = await Http.get('/facilities');
+    } catch {
+      grid.innerHTML = '<p class="text-muted" style="grid-column:1/-1">Failed to load facilities.</p>';
+      return;
     }
 
-    function closeModal() {
-      document.getElementById('addFacilityModal').classList.remove('active');
-    }
+    const campus = document.getElementById('filter-campus').value;
+    const status = document.getElementById('filter-status').value;
+    let filtered = allFacilities;
+    if (campus) filtered = filtered.filter(f => f.campus === campus);
+    if (status) filtered = filtered.filter(f => f.status === status);
 
-    function handleOverlayClick(e) {
-      if (e.target === document.getElementById('addFacilityModal')) closeModal();
-    }
+    if (!filtered.length) { Utils.empty(grid, 'No facilities found.', '🏛'); return; }
 
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeModal();
-    });
+    const statusDot = { OPEN: 'status-open', CLOSED: 'status-closed', BUSY: 'status-busy' };
+    grid.innerHTML = filtered.map(f => `
+      <div class="facility-card">
+        <div class="card-img">🏛</div>
+        <div class="card-content">
+          <h3>${Utils.escape(f.name)}</h3>
+          <p>${Utils.escape(f.description || '')}</p>
+          <p><strong>📍</strong> ${Utils.escape(f.location || '')} &bull; ${Utils.escape(f.campus || '')}</p>
+          <p>⏰ ${Utils.escape(f.openingTimes || 'Hours not listed')}</p>
+          <div class="card-meta">
+            <span><span class="status-dot ${statusDot[f.status]}"></span>${f.status}</span>
+            ${Auth.isAdmin() ? `
+              <button class="btn btn-sm btn-outline" onclick="editFacility(${f.id})">Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteFacility(${f.id})">Delete</button>
+              <select class="form-control" style="padding:0.25rem;font-size:0.8rem;width:auto" onchange="updateStatus(${f.id}, this.value)">
+                <option value="">Set Status</option>
+                <option value="OPEN">Open</option>
+                <option value="CLOSED">Closed</option>
+                <option value="BUSY">Busy</option>
+              </select>` : ''}
+          </div>
+        </div>
+      </div>`).join('');
+  }
 
-    function saveFacility() {
-      const name = document.getElementById('fName').value.trim();
-      const desc = document.getElementById('fDesc').value.trim();
-      const campus = document.getElementById('fCampus').value;
-      const status = document.getElementById('fStatus').value;
-      const location = document.getElementById('fLocation').value.trim();
-      const hours = document.getElementById('fHours').value.trim();
+  function openAddModal() {
+    document.getElementById('modal-title').textContent = 'Add Facility';
+    document.getElementById('facility-id').value = '';
+    ['fac-name','fac-desc','fac-location','fac-times'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fac-status').value = 'OPEN';
+    document.getElementById('facility-modal').classList.remove('hidden');
+  }
 
-      if (!name) {
-        document.getElementById('fName').focus();
-        document.getElementById('fName').style.borderColor = '#e53e3e';
-        return;
+  function editFacility(id) {
+    const f = allFacilities.find(x => x.id === id);
+    if (!f) return;
+    document.getElementById('modal-title').textContent = 'Edit Facility';
+    document.getElementById('facility-id').value = f.id;
+    document.getElementById('fac-name').value = f.name || '';
+    document.getElementById('fac-desc').value = f.description || '';
+    document.getElementById('fac-campus').value = f.campus || 'City Campus';
+    document.getElementById('fac-status').value = f.status || 'OPEN';
+    document.getElementById('fac-location').value = f.location || '';
+    document.getElementById('fac-times').value = f.openingTimes || '';
+    document.getElementById('facility-modal').classList.remove('hidden');
+  }
+
+  function closeModal() {
+    document.getElementById('facility-modal').classList.add('hidden');
+  }
+
+  async function saveFacility() {
+    const id = document.getElementById('facility-id').value;
+    const body = {
+      name: document.getElementById('fac-name').value,
+      description: document.getElementById('fac-desc').value,
+      campus: document.getElementById('fac-campus').value,
+      status: document.getElementById('fac-status').value,
+      location: document.getElementById('fac-location').value,
+      openingTimes: document.getElementById('fac-times').value
+    };
+    try {
+      if (id) {
+        await Http.put('/admin/facilities/' + id, body);
+        Toast.success('Facility updated.');
+      } else {
+        await Http.post('/admin/facilities', body);
+        Toast.success('Facility added.');
       }
-      document.getElementById('fName').style.borderColor = '';
-
-      const badgeClass = { 'Open': 'badge-open', 'Closed': 'badge-closed', 'Limited': 'badge-limited' }[status] || 'badge-open';
-
-      const card = document.createElement('div');
-      card.className = 'facility-card';
-      card.innerHTML = `
-        <div class="card-top">
-          <span class="card-name">${escHtml(name)}</span>
-          <span class="badge ${badgeClass}">${escHtml(status)}</span>
-        </div>
-        ${desc ? `<p class="card-desc">${escHtml(desc)}</p>` : ''}
-        <span class="card-campus">${escHtml(campus)}</span>
-        <div class="card-meta">
-          ${location ? `<div class="card-meta-row">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            ${escHtml(location)}
-          </div>` : ''}
-          ${hours ? `<div class="card-meta-row">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            ${escHtml(hours)}
-          </div>` : ''}
-        </div>
-      `;
-
-      document.getElementById('facilitiesGrid').appendChild(card);
-      document.getElementById('emptyState').style.display = 'none';
-
-      ['fName', 'fDesc', 'fLocation', 'fHours'].forEach(id => document.getElementById(id).value = '');
-      document.getElementById('fStatus').selectedIndex = 0;
-      document.getElementById('fCampus').selectedIndex = 0;
-
       closeModal();
-    }
+      loadFacilities();
+    } catch (e) { Toast.error(e.message); }
+  }
 
-    function escHtml(str) {
-      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-  </script>
+  async function deleteFacility(id) {
+    if (!confirm('Delete this facility?')) return;
+    try {
+      await Http.delete('/admin/facilities/' + id);
+      Toast.success('Facility deleted.');
+      loadFacilities();
+    } catch (e) { Toast.error(e.message); }
+  }
 
+  async function updateStatus(id, status) {
+    if (!status) return;
+    try {
+      await Http.patch('/admin/facilities/' + id + '/status', { status });
+      Toast.success('Status updated.');
+      loadFacilities();
+    } catch (e) { Toast.error(e.message); }
+  }
 
-  <script>
-    function toggleNotif(e) {
-      e.stopPropagation();
-      var panel = document.getElementById('notif-panel');
-      panel.classList.toggle('open');
-    }
-
-    function markRead(item) {
-      item.querySelector('.notif-dot-ind').classList.add('read');
-      updateNotifDot();
-    }
-
-    function markAllRead() {
-      document.querySelectorAll('.notif-dot-ind').forEach(function(d) { d.classList.add('read'); });
-      updateNotifDot();
-    }
-
-    function updateNotifDot() {
-      var unread = document.querySelectorAll('.notif-dot-ind:not(.read)').length;
-      var dot = document.getElementById('notif-dot');
-      if (dot) dot.style.display = unread > 0 ? 'block' : 'none';
-    }
-
-    document.addEventListener('click', function(e) {
-      var panel = document.getElementById('notif-panel');
-      var btn = document.getElementById('bell-btn');
-      if (panel && panel.classList.contains('open') && btn && !panel.contains(e.target) && !btn.contains(e.target)) {
-        panel.classList.remove('open');
-      }
-    });
-  </script></body>
-
+  loadFacilities();
+</script>
+</body>
 </html>
