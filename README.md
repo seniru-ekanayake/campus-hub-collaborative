@@ -11,7 +11,7 @@ Student Portal project by **EIS Coders**.
 | Name | Role |
 |---|---|
 | Jude Tirosh | Backend - Spring Boot, security, services |
-| Amashi Aththanagoda | Frontend - HTML/CSS/JS pages |  Mobile app - Expo React Native |
+| Amashi Aththanagoda | Frontend - HTML/CSS/JS pages And Mobile app - Expo React Native |
 | Jude Danushan | Database and entities, helped with repositories |
 
 ---
