@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Campus Hub",
+    "slug": "campus-hub",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B1628"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.wolverhampton.campushub"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B1628"
+      },
+      "package": "com.wolverhampton.campushub",
+      "edgeToEdgeEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-font"
+    ]
+  }
+}
