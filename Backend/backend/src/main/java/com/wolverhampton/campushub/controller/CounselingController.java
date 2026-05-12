@@ -1,4 +1,4 @@
-﻿package com.wolverhampton.campushub.controller;
+package com.wolverhampton.campushub.controller;
 
 import com.wolverhampton.campushub.dto.AppDTO.*;
 import com.wolverhampton.campushub.service.CounselingService;

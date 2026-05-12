@@ -1,4 +1,4 @@
-﻿package com.wolverhampton.campushub.config;
+package com.wolverhampton.campushub.config;
 
 import com.wolverhampton.campushub.entity.Role;
 import com.wolverhampton.campushub.entity.User;
