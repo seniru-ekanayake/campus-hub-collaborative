@@ -12,9 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
-// JWT helper — generate, parse, validate tokens
-// Secret + expiry pulled from application.properties so we can change them without touching code.
-// Expiry is currently 24h (86400000ms) — seemed reasonable for a uni portal.
 @Component
 public class JwtUtils {
 
@@ -27,7 +24,6 @@ public class JwtUtils {
     private long jwtExpiration;
 
     private Key getSigningKey() {
-        // JJWT requires the key to be derived this way for HMAC-SHA
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
@@ -50,8 +46,6 @@ public class JwtUtils {
                 .getSubject();
     }
 
-    // Returns false for expired, malformed, or tampered tokens.
-    // The filter checks this before letting any request through.
     public boolean validateJwtToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);

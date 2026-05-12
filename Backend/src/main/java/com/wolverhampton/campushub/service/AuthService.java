@@ -28,7 +28,6 @@ public class AuthService {
     @Autowired private JwtUtils jwtUtils;
 
     public UserDTO register(AuthDTO.RegisterRequest request) {
-        // Check both username and email uniqueness before doing anything
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("Username already taken");
         }
@@ -45,7 +44,6 @@ public class AuthService {
         user.setStudentId(request.getStudentId());
         user.setCourse(request.getCourse());
 
-        // Everyone who registers gets STUDENT — only DataInitializer makes admins
         Role studentRole = roleRepository.findByName(Role.RoleName.ROLE_STUDENT)
                 .orElseThrow(() -> new RuntimeException("Student role not found"));
         user.setRoles(Set.of(studentRole));
@@ -55,7 +53,6 @@ public class AuthService {
     }
 
     public AuthDTO.LoginResponse login(AuthDTO.LoginRequest request) {
-        // Spring handles the actual credential check — throws if wrong
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
@@ -63,11 +60,9 @@ public class AuthService {
         String token = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        // Just grab the first role — users only have one in this version
         String role = userDetails.getAuthorities().stream()
                 .findFirst().map(Object::toString).orElse("ROLE_STUDENT");
 
-        // Need the full User object to get firstName/lastName for the response
         User user = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -81,8 +76,6 @@ public class AuthService {
         return toDTO(user);
     }
 
-    // Only allows updating name and course — username/email/password not changeable here
-    // TODO: add a separate change-password endpoint if we revisit this
     public UserDTO updateProfile(String username, UserDTO dto) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -92,7 +85,6 @@ public class AuthService {
         return toDTO(userRepository.save(user));
     }
 
-    // Shared by AuthController and AdminController (admin user list reuses this)
     public UserDTO toDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());

@@ -1,4 +1,4 @@
-package com.wolverhampton.campushub.config;
+﻿package com.wolverhampton.campushub.config;
 
 import com.wolverhampton.campushub.entity.Role;
 import com.wolverhampton.campushub.entity.User;
@@ -11,9 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-// Runs once on startup to seed the DB with the roles and default admin.
-// Jude Danushan set up the role seeding, Jude Tirosh added the admin user bit.
-// Hibernate with ddl-auto=update creates the tables, this just fills in the required rows.
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -28,7 +25,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // Only seed roles if the table is empty — avoids duplicates on restart
+        
         if (roleRepository.count() == 0) {
             Role studentRole = new Role();
             studentRole.setName(Role.RoleName.ROLE_STUDENT);
@@ -39,8 +36,7 @@ public class DataInitializer implements CommandLineRunner {
             roleRepository.save(adminRole);
         }
 
-        // Create the default admin if it's not there yet
-        // credentials are in the README — change before any real deployment
+        
         if (!userRepository.existsByUsername("admin")) {
             User admin = new User();
             admin.setUsername("admin");
@@ -50,7 +46,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setLastName("Administrator");
 
             Role adminRole = roleRepository.findByName(Role.RoleName.ROLE_ADMIN)
-                    .orElseThrow(() -> new RuntimeException("Admin role not found — did role seeding fail?"));
+                    .orElseThrow(() -> new RuntimeException("Admin role not found"));
             admin.setRoles(Set.of(adminRole));
             userRepository.save(admin);
 

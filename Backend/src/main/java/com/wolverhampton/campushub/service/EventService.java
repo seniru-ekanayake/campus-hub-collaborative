@@ -18,13 +18,11 @@ public class EventService {
     @Autowired private EventRepository eventRepository;
     @Autowired private UserRepository userRepository;
 
-    // Students only see upcoming events, sorted by date ascending
     public List<EventDTO> getUpcomingEvents() {
         return eventRepository.findByEventDateAfterOrderByEventDateAsc(LocalDateTime.now())
                 .stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    // Admin panel needs all events including past ones
     public List<EventDTO> getAllEvents() {
         return eventRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }
@@ -39,7 +37,7 @@ public class EventService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Event e = new Event();
         mapToEntity(dto, e);
-        e.setCreatedBy(user);  // track who posted it
+        e.setCreatedBy(user);
         return toDTO(eventRepository.save(e));
     }
 

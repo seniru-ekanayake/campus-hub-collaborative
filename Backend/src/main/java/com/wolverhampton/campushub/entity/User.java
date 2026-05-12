@@ -5,9 +5,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-// Core user entity. Roles are EAGER because Spring Security needs them
-// on every request — lazy would cause LazyInitializationException in the filter.
-// engagementPoints is leftover from the Phase 2 check-in system we didn't finish.
 @Entity
 @Table(name = "users")
 public class User {
@@ -23,15 +20,14 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String password;  // always stored BCrypt-hashed, never plaintext
+    private String password;
 
     private String firstName;
     private String lastName;
     private String studentId;
-    private String profilePicture;  // not wired up in the UI yet
+    private String profilePicture;
     private String course;
-
-    private int engagementPoints = 0;  // Phase 2 placeholder — nothing updates this currently
+    private int engagementPoints = 0;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

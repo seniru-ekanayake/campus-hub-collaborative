@@ -15,10 +15,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-// Runs on every request. Pulls the JWT out of the Authorization header,
-// validates it, and sets the authentication in Spring's security context.
-// If there's no token (or a bad one), it just passes through — the path-level
-// rules in SecurityConfig decide whether that's allowed.
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
@@ -37,20 +33,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getUsernameFromToken(jwt);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            // Don't let a bad token crash the whole request — just leave auth unset
             logger.error("Cannot set user authentication: {}", e);
         }
         filterChain.doFilter(request, response);
     }
 
-    // Expects "Bearer <token>" in the Authorization header
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {

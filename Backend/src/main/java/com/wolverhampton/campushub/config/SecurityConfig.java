@@ -23,12 +23,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
-// Main security setup – Jude Tirosh
-// We're stateless (JWT), no sessions, no CSRF needed.
-// Took a while to get CORS working with the frontend running on a separate port during dev.
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity  // needed so @PreAuthorize works on controller methods
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -55,7 +52,6 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // Wide-open CORS for now — fine for dev/demo, would lock this down for prod
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
@@ -75,11 +71,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // login/register are public
                 .requestMatchers("/api/auth/**").permitAll()
-                // static frontend files served by Spring
                 .requestMatchers("/", "/index.html", "/css/**", "/js/**", "/pages/**", "/*.html").permitAll()
-                // everything under /api/admin/** requires ADMIN role (also enforced at method level)
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )

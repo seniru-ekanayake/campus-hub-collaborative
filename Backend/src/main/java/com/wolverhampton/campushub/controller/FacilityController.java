@@ -1,56 +1,65 @@
 package com.wolverhampton.campushub.controller;
 
+import com.wolverhampton.campushub.dto.FacilityDTO;
 import com.wolverhampton.campushub.entity.Facility;
 import com.wolverhampton.campushub.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/facilities")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api")
 public class FacilityController {
-    
+
     @Autowired
     private FacilityService facilityService;
-    
-    @PostMapping
-    public ResponseEntity<Facility> createFacility(@RequestBody Facility facility) {
-        return new ResponseEntity<>(facilityService.createFacility(facility), HttpStatus.CREATED);
+
+    @GetMapping("/facilities")
+    public ResponseEntity<List<FacilityDTO>> getAll() {
+        return ResponseEntity.ok(facilityService.getAllFacilities());
     }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<Facility>> getFacility(@PathVariable Long id) {
-        Optional<Facility> facility = facilityService.getFacilityById(id);
-        return facility.isPresent() ? 
-            new ResponseEntity<>(facility, HttpStatus.OK) : 
-            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    @GetMapping("/facilities/{id}")
+    public ResponseEntity<FacilityDTO> getOne(@PathVariable Long id) {
+        return ResponseEntity.ok(facilityService.getFacility(id));
     }
-    
-    @GetMapping
-    public ResponseEntity<List<Facility>> getAllFacilities() {
-        return new ResponseEntity<>(facilityService.getAllFacilities(), HttpStatus.OK);
+
+    @PostMapping("/admin/facilities")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> create(@RequestBody FacilityDTO dto) {
+        try {
+            return ResponseEntity.ok(facilityService.createFacility(dto));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
-    
-    @PutMapping("/{id}")
-    public ResponseEntity<Facility> updateFacility(@PathVariable Long id, @RequestBody Facility facility) {
-        Facility updatedFacility = facilityService.updateFacility(id, facility);
-        return updatedFacility != null ? 
-            new ResponseEntity<>(updatedFacility, HttpStatus.OK) : 
-            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    @PutMapping("/admin/facilities/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody FacilityDTO dto) {
+        try {
+            return ResponseEntity.ok(facilityService.updateFacility(id, dto));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFacility(@PathVariable Long id) {
+
+    @DeleteMapping("/admin/facilities/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         facilityService.deleteFacility(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.ok(Map.of("message", "Facility deleted"));
     }
-    
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<Facility>> getFacilitiesByStatus(@PathVariable String status) {
-        return new ResponseEntity<>(facilityService.getFacilitiesByStatus(status), HttpStatus.OK);
+
+    @PatchMapping("/admin/facilities/{id}/status")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateStatus(@PathVariable Long id,
+                                          @RequestBody Map<String, String> body) {
+        Facility.FacilityStatus status = Facility.FacilityStatus.valueOf(body.get("status").toUpperCase());
+        return ResponseEntity.ok(facilityService.updateStatus(id, status));
     }
 }

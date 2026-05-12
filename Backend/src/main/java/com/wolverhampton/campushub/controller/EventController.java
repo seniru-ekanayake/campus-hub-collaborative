@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-// Student-facing: GET /api/events (upcoming only)
-// Admin-facing:   everything under /api/admin/events (CRUD, all events)
-// Role check is on the path level in SecurityConfig + @PreAuthorize here for safety.
 @RestController
 @RequestMapping("/api")
 public class EventController {
@@ -27,7 +24,6 @@ public class EventController {
         return ResponseEntity.ok(eventService.getUpcomingEvents());
     }
 
-    // Admin panel uses this to see everything including past events
     @GetMapping("/events/all")
     public ResponseEntity<List<EventDTO>> getAll() {
         return ResponseEntity.ok(eventService.getAllEvents());

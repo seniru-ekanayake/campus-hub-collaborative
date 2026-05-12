@@ -1,4 +1,4 @@
-package com.wolverhampton.campushub.controller;
+﻿package com.wolverhampton.campushub.controller;
 
 import com.wolverhampton.campushub.dto.AppDTO.*;
 import com.wolverhampton.campushub.service.CounselingService;
@@ -19,13 +19,13 @@ public class CounselingController {
     @Autowired
     private CounselingService counselingService;
 
-    // Public-facing (authenticated): list counselors
+    
     @GetMapping("/counseling/counselors")
     public ResponseEntity<List<CounselorDTO>> getCounselors() {
         return ResponseEntity.ok(counselingService.getActiveCounselors());
     }
 
-    // Book session
+    
     @PostMapping("/counseling/sessions")
     public ResponseEntity<?> bookSession(@RequestBody SessionBookingRequest request,
                                          @AuthenticationPrincipal UserDetails userDetails) {
@@ -36,14 +36,14 @@ public class CounselingController {
         }
     }
 
-    // View own sessions
+    
     @GetMapping("/counseling/sessions/my")
     public ResponseEntity<List<CounselingSessionDTO>> getMySessions(
             @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.ok(counselingService.getMySessionsForStudent(userDetails.getUsername()));
     }
 
-    // Cancel own session
+    
     @PatchMapping("/counseling/sessions/{id}/cancel")
     public ResponseEntity<?> cancelSession(@PathVariable Long id,
                                            @AuthenticationPrincipal UserDetails userDetails) {
@@ -54,7 +54,7 @@ public class CounselingController {
         }
     }
 
-    // ============ Admin endpoints ============
+    
 
     @GetMapping("/admin/counseling/counselors")
     @PreAuthorize("hasRole('ADMIN')")

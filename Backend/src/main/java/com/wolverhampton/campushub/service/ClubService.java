@@ -20,7 +20,6 @@ public class ClubService {
     @Autowired private ClubMembershipRepository membershipRepository;
     @Autowired private UserRepository userRepository;
 
-    // Students only see active clubs; admin panel uses getAllClubs() which includes inactive ones
     public List<ClubDTO> getActiveClubs(String username) {
         return clubRepository.findByActive(true)
                 .stream().map(c -> toDTO(c, username)).collect(Collectors.toList());
@@ -51,7 +50,6 @@ public class ClubService {
     }
 
     public void deleteClub(Long id) {
-        // This cascades and deletes memberships too (set up in the entity)
         clubRepository.deleteById(id);
     }
 
@@ -115,7 +113,6 @@ public class ClubService {
         dto.setMemberCount(membershipRepository.countByClubId(club.getId()));
         dto.setCreatedAt(club.getCreatedAt());
 
-        // isMember flag only makes sense when we know who's asking
         if (username != null) {
             userRepository.findByUsername(username).ifPresent(user ->
                 dto.setMember(membershipRepository.existsByUserIdAndClubId(user.getId(), club.getId()))

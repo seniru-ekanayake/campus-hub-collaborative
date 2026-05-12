@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-// Two groups of endpoints:
-//   /api/clubs/**     — students browsing/joining/leaving
-//   /api/admin/clubs  — admin CRUD
-//
-// The username is passed into the service so the DTO can include an isMember flag
-// showing whether the logged-in user is already in each club.
 @RestController
 @RequestMapping("/api")
 public class ClubController {
@@ -27,7 +21,6 @@ public class ClubController {
 
     @GetMapping("/clubs")
     public ResponseEntity<List<ClubDTO>> getActive(@AuthenticationPrincipal UserDetails userDetails) {
-        // userDetails can be null here if somehow called unauthenticated (shouldn't happen but just in case)
         String username = userDetails != null ? userDetails.getUsername() : null;
         return ResponseEntity.ok(clubService.getActiveClubs(username));
     }
@@ -63,8 +56,6 @@ public class ClubController {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
-
-    // --- Admin endpoints ---
 
     @GetMapping("/admin/clubs")
     @PreAuthorize("hasRole('ADMIN')")

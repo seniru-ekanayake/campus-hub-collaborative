@@ -1,61 +1,81 @@
 package com.wolverhampton.campushub.controller;
 
-import com.wolverhampton.campushub.entity.CheckIn;
+import com.wolverhampton.campushub.dto.AppDTO.*;
 import com.wolverhampton.campushub.service.CheckInService;
+import com.wolverhampton.campushub.service.RewardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/check-ins")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api")
 public class CheckInController {
-    
-    @Autowired
-    private CheckInService checkInService;
-    
-    @PostMapping
-    public ResponseEntity<CheckIn> createCheckIn(@RequestBody CheckIn checkIn) {
-        return new ResponseEntity<>(checkInService.createCheckIn(checkIn), HttpStatus.CREATED);
+
+    @Autowired private CheckInService checkInService;
+    @Autowired private RewardService rewardService;
+
+    @PostMapping("/checkin")
+    public ResponseEntity<?> checkIn(@RequestBody CheckInRequest request,
+                                     @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            return ResponseEntity.ok(checkInService.checkIn(request, userDetails.getUsername()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<CheckIn>> getCheckIn(@PathVariable Long id) {
-        Optional<CheckIn> checkIn = checkInService.getCheckInById(id);
-        return checkIn.isPresent() ? 
-            new ResponseEntity<>(checkIn, HttpStatus.OK) : 
-            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    @GetMapping("/checkin/my")
+    public ResponseEntity<List<CheckInDTO>> getMyCheckIns(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(checkInService.getMyCheckIns(userDetails.getUsername()));
     }
-    
-    @GetMapping
-    public ResponseEntity<List<CheckIn>> getAllCheckIns() {
-        return new ResponseEntity<>(checkInService.getAllCheckIns(), HttpStatus.OK);
+
+    @GetMapping("/rewards")
+    public ResponseEntity<List<RewardDTO>> getRewards() {
+        return ResponseEntity.ok(rewardService.getActiveRewards());
     }
-    
-    @PutMapping("/{id}")
-    public ResponseEntity<CheckIn> updateCheckIn(@PathVariable Long id, @RequestBody CheckIn checkIn) {
-        CheckIn updatedCheckIn = checkInService.updateCheckIn(id, checkIn);
-        return updatedCheckIn != null ? 
-            new ResponseEntity<>(updatedCheckIn, HttpStatus.OK) : 
-            new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    @GetMapping("/admin/checkins")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<CheckInDTO>> getAllCheckIns() {
+        return ResponseEntity.ok(checkInService.getAllCheckIns());
     }
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCheckIn(@PathVariable Long id) {
-        checkInService.deleteCheckIn(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    @GetMapping("/admin/rewards")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<RewardDTO>> getAllRewards() {
+        return ResponseEntity.ok(rewardService.getAllRewards());
     }
-    
-    @GetMapping("/student/{studentId}")
-    public ResponseEntity<List<CheckIn>> getCheckInsByStudent(@PathVariable String studentId) {
-        return new ResponseEntity<>(checkInService.getCheckInsByStudentId(studentId), HttpStatus.OK);
+
+    @PostMapping("/admin/rewards")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createReward(@RequestBody RewardDTO dto) {
+        try {
+            return ResponseEntity.ok(rewardService.create(dto));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
-    
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<CheckIn>> getCheckInsByStatus(@PathVariable String status) {
-        return new ResponseEntity<>(checkInService.getCheckInsByStatus(status), HttpStatus.OK);
+
+    @PutMapping("/admin/rewards/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateReward(@PathVariable Long id, @RequestBody RewardDTO dto) {
+        try {
+            return ResponseEntity.ok(rewardService.update(id, dto));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/admin/rewards/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteReward(@PathVariable Long id) {
+        rewardService.delete(id);
+        return ResponseEntity.ok(Map.of("message", "Reward deleted"));
     }
 }

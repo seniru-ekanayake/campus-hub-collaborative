@@ -1,53 +1,65 @@
 package com.wolverhampton.campushub.service;
 
+import com.wolverhampton.campushub.dto.AppDTO.RewardDTO;
 import com.wolverhampton.campushub.entity.Reward;
 import com.wolverhampton.campushub.repository.RewardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RewardService {
-    
+
     @Autowired
     private RewardRepository rewardRepository;
-    
-    public Reward createReward(Reward reward) {
-        return rewardRepository.save(reward);
+
+    public List<RewardDTO> getActiveRewards() {
+        return rewardRepository.findByActive(true).stream().map(this::toDTO).collect(Collectors.toList());
     }
-    
-    public Optional<Reward> getRewardById(Long id) {
-        return rewardRepository.findById(id);
+
+    public List<RewardDTO> getAllRewards() {
+        return rewardRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }
-    
-    public List<Reward> getAllRewards() {
-        return rewardRepository.findAll();
+
+    public RewardDTO create(RewardDTO dto) {
+        Reward r = new Reward();
+        mapToEntity(dto, r);
+        return toDTO(rewardRepository.save(r));
     }
-    
-    public Reward updateReward(Long id, Reward reward) {
-        Optional<Reward> existingReward = rewardRepository.findById(id);
-        if (existingReward.isPresent()) {
-            Reward r = existingReward.get();
-            r.setStudentId(reward.getStudentId());
-            r.setPoints(reward.getPoints());
-            r.setRewardType(reward.getRewardType());
-            r.setDescription(reward.getDescription());
-            r.setStatus(reward.getStatus());
-            return rewardRepository.save(r);
-        }
-        return null;
+
+    public RewardDTO update(Long id, RewardDTO dto) {
+        Reward r = rewardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reward not found"));
+        mapToEntity(dto, r);
+        return toDTO(rewardRepository.save(r));
     }
-    
-    public void deleteReward(Long id) {
+
+    public void delete(Long id) {
         rewardRepository.deleteById(id);
     }
-    
-    public List<Reward> getRewardsByStudentId(String studentId) {
-        return rewardRepository.findByStudentId(studentId);
+
+    private void mapToEntity(RewardDTO dto, Reward r) {
+        r.setName(dto.getName());
+        r.setDescription(dto.getDescription());
+        r.setPointsRequired(dto.getPointsRequired());
+        r.setAvailableQuantity(dto.getAvailableQuantity());
+        r.setActive(dto.isActive());
+        r.setLocationTypeName(dto.getLocationTypeName());
+        r.setPointValue(dto.getPointValue());
     }
-    
-    public List<Reward> getRewardsByStatus(String status) {
-        return rewardRepository.findByStatus(status);
+
+    private RewardDTO toDTO(Reward r) {
+        RewardDTO dto = new RewardDTO();
+        dto.setId(r.getId());
+        dto.setName(r.getName());
+        dto.setDescription(r.getDescription());
+        dto.setPointsRequired(r.getPointsRequired());
+        dto.setAvailableQuantity(r.getAvailableQuantity());
+        dto.setActive(r.isActive());
+        dto.setLocationTypeName(r.getLocationTypeName());
+        dto.setPointValue(r.getPointValue());
+        return dto;
     }
 }

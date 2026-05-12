@@ -17,7 +17,6 @@ public class AnnouncementService {
     @Autowired private AnnouncementRepository announcementRepository;
     @Autowired private UserRepository userRepository;
 
-    // Pinned announcements come first, then by newest — handled in the repo query
     public List<AnnouncementDTO> getAll() {
         return announcementRepository.findAllByOrderByPinnedDescCreatedAtDesc()
                 .stream().map(this::toDTO).collect(Collectors.toList());

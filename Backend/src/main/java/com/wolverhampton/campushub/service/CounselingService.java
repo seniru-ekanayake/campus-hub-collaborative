@@ -1,4 +1,4 @@
-package com.wolverhampton.campushub.service;
+﻿package com.wolverhampton.campushub.service;
 
 import com.wolverhampton.campushub.dto.AppDTO.*;
 import com.wolverhampton.campushub.entity.Counselor;
@@ -20,7 +20,7 @@ public class CounselingService {
     @Autowired private CounselingSessionRepository sessionRepository;
     @Autowired private UserRepository userRepository;
 
-    // Counselor management
+    
     public List<CounselorDTO> getActiveCounselors() {
         return counselorRepository.findByActive(true).stream().map(this::toCounselorDTO).collect(Collectors.toList());
     }
@@ -46,7 +46,7 @@ public class CounselingService {
         counselorRepository.deleteById(id);
     }
 
-    // Session management
+    
     public CounselingSessionDTO bookSession(SessionBookingRequest request, String username) {
         User student = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -79,7 +79,7 @@ public class CounselingService {
         CounselingSession session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new RuntimeException("Session not found"));
 
-        // Verify ownership or admin
+        
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         boolean isAdmin = user.getRoles().stream()

@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-// All authenticated users can read announcements.
-// Only admins can create/update/delete.
 @RestController
 @RequestMapping("/api")
 public class AnnouncementController {
@@ -26,7 +24,6 @@ public class AnnouncementController {
         return ResponseEntity.ok(announcementService.getAll());
     }
 
-    // Frontend uses this to filter by category tab (Academic, Events, General, etc.)
     @GetMapping("/announcements/category/{category}")
     public ResponseEntity<List<AnnouncementDTO>> getByCategory(@PathVariable String category) {
         return ResponseEntity.ok(announcementService.getByCategory(category));
