@@ -1,17 +1,26 @@
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
 
-const TOKEN_KEY = 'campus_hub_jwt';
-
-const saveToken = async (token) => {
-  await SecureStore.setItemAsync(TOKEN_KEY, token);
+export const saveToken = async (token) => {
+  if (Platform.OS === 'web') {
+    localStorage.setItem('auth_token', token);
+  } else {
+    await SecureStore.setItemAsync('auth_token', token);
+  }
 };
 
-const getToken = async () => {
-  return await SecureStore.getItemAsync(TOKEN_KEY);
+export const getToken = async () => {
+  if (Platform.OS === 'web') {
+    return localStorage.getItem('auth_token');
+  } else {
+    return await SecureStore.getItemAsync('auth_token');
+  }
 };
 
-const removeToken = async () => {
-  await SecureStore.deleteItemAsync(TOKEN_KEY);
+export const removeToken = async () => {
+  if (Platform.OS === 'web') {
+    localStorage.removeItem('auth_token');
+  } else {
+    await SecureStore.deleteItemAsync('auth_token');
+  }
 };
-
-export { saveToken, getToken, removeToken };
