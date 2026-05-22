@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B1628",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -13,7 +14,12 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.wolverhampton.campushub"
+      "bundleIdentifier": "com.wolverhampton.campushub",
+      "splash": {
+        "image": "./assets/splash-icon.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#0B1628"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +27,12 @@
         "backgroundColor": "#0B1628"
       },
       "package": "com.wolverhampton.campushub",
-      "edgeToEdgeEnabled": false
+      "edgeToEdgeEnabled": false,
+      "splash": {
+        "image": "./assets/splash-icon.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#0B1628"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,6 +40,11 @@
     "plugins": [
       "expo-secure-store",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e2ec2e0d-9298-4627-8dc3-b5159206672a"
+      }
+    }
   }
 }

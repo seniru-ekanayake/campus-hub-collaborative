@@ -1,4 +1,7 @@
-﻿import { createDrawerNavigator } from '@react-navigation/drawer';
+import React from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import DashboardScreen from '../screens/main/DashboardScreen';
 import AnnouncementsScreen from '../screens/main/AnnouncementsScreen';
@@ -16,19 +19,48 @@ import AddTransportScreen from '../screens/admin/AddTransportScreen';
 import AddClubScreen from '../screens/admin/AddClubScreen';
 import AddAnnouncementScreen from '../screens/admin/AddAnnouncementScreen';
 
-import { COLORS, FONTS } from '../constants/theme';
+import { COLORS, FONTS, SIZES } from '../constants/theme';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
+const CustomDrawerContent = (props) => (
+  <DrawerContentScrollView
+    {...props}
+    contentContainerStyle={{ flex: 1 }}
+    style={{ backgroundColor: COLORS.navyDeep }}
+  >
+    {/* Logo Header */}
+    <View style={styles.drawerHeader}>
+      <View style={styles.logoRow}>
+        <Image
+          source={require('../../assets/logo.png')}
+          style={styles.logo}
+          resizeMode="contain"
+        />
+        <View style={styles.titleBlock}>
+          <Text style={styles.appName}>Campus Hub</Text>
+          <Text style={styles.subtitle}>University of Wolverhampton</Text>
+        </View>
+      </View>
+      <View style={styles.divider} />
+    </View>
+
+    {/* Drawer Items */}
+    <DrawerItemList {...props} />
+  </DrawerContentScrollView>
+);
+
 const DrawerNav = () => (
-  <Drawer.Navigator 
-    screenOptions={{ 
+  <Drawer.Navigator
+    drawerContent={(props) => <CustomDrawerContent {...props} />}
+    screenOptions={{
       headerShown: false,
       drawerStyle: { backgroundColor: COLORS.navyDeep },
       drawerActiveTintColor: COLORS.gold,
       drawerInactiveTintColor: COLORS.textSecondary,
-      drawerLabelStyle: { fontFamily: FONTS.semiBold }
+      drawerLabelStyle: { fontFamily: FONTS.semiBold, fontSize: SIZES.md },
+      drawerActiveBackgroundColor: COLORS.navyCard,
     }}
   >
     <Drawer.Screen name="Dashboard" component={DashboardScreen} />
@@ -54,4 +86,43 @@ const AppNavigator = () => (
   </Stack.Navigator>
 );
 
+const styles = StyleSheet.create({
+  drawerHeader: {
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 8,
+  },
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  logo: {
+    width: 44,
+    height: 48,
+    marginRight: 12,
+  },
+  titleBlock: {
+    flex: 1,
+  },
+  appName: {
+    fontFamily: FONTS.bold,
+    fontSize: SIZES.xl,
+    color: COLORS.gold,
+    letterSpacing: 0.5,
+  },
+  subtitle: {
+    fontFamily: FONTS.regular,
+    fontSize: 10,
+    color: COLORS.textSecondary,
+    marginTop: 2,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: COLORS.navyBorder,
+    marginBottom: 8,
+  },
+});
+
 export default AppNavigator;
+

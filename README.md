@@ -197,6 +197,17 @@ Scan the QR code with the **Expo Go** app on your Android or iOS device.
 
 ---
 
+### 🎨 Phase 2 Theme & Custom Styling Updates
+
+The mobile app has been updated with a premium dark navy and gold color scheme (`#0B1628` & `#C9A84C`) designed to align with the University of Wolverhampton's branding. Key visual and loading upgrades include:
+
+* **Unified Asset Branding**: Replaced all default Expo white placeholders (`icon.png`, `adaptive-icon.png`, and `splash-icon.png` in the `assets` folder) with the custom **gold university logo**.
+* **Seamless Custom Loader**: Bypassed the native white splash screen. On app launch, the native splash hides immediately and renders an animated `<LoadingSpinner />` component featuring:
+  * Fade-in and scale-in animations for the gold logo.
+  * Gold `ActivityIndicator` spinner.
+  * System font fallbacks to prevent font-loading latency flashes.
+* **Custom Drawer Header**: Upgraded the side navigation drawer with a custom header displaying the logo and application title inline, complete with a gold border divider and active-item highlights.
+
 ## Database Entities
 
 | Entity | Description |

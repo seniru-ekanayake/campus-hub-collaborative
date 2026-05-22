@@ -56,9 +56,11 @@ const LoginScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.logoRow}>
-            <View style={styles.logoContainer}>
-              <Text style={styles.logoIcon}>🎓</Text>
-            </View>
+            <Image
+              source={require('../../../assets/logo.png')}
+              style={styles.logoImage}
+              resizeMode="contain"
+            />
           </View>
 
           <Text style={styles.appName}>Campus Hub</Text>
@@ -124,18 +126,9 @@ const styles = StyleSheet.create({
   logoRow: {
     marginBottom: 16,
   },
-  logoContainer: {
+  logoImage: {
     width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: COLORS.navyCard,
-    borderWidth: 2,
-    borderColor: COLORS.gold,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logoIcon: {
-    fontSize: 36,
+    height: 86,
   },
   appName: {
     fontFamily: FONTS.bold,
