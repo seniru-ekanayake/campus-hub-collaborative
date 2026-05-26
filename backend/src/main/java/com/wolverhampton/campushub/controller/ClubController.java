@@ -25,16 +25,16 @@ public class ClubController {
         return ResponseEntity.ok(clubService.getActiveClubs(username));
     }
 
+    @GetMapping("/clubs/my")
+    public ResponseEntity<List<ClubDTO>> getMyClubs(@AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(clubService.getMyClubs(userDetails.getUsername()));
+    }
+
     @GetMapping("/clubs/{id}")
     public ResponseEntity<ClubDTO> getOne(@PathVariable Long id,
                                           @AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails != null ? userDetails.getUsername() : null;
         return ResponseEntity.ok(clubService.getClub(id, username));
-    }
-
-    @GetMapping("/clubs/my")
-    public ResponseEntity<List<ClubDTO>> getMyClubs(@AuthenticationPrincipal UserDetails userDetails) {
-        return ResponseEntity.ok(clubService.getMyClubs(userDetails.getUsername()));
     }
 
     @PostMapping("/clubs/{id}/join")

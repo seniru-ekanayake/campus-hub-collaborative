@@ -19,8 +19,15 @@ public class EventService {
     @Autowired private UserRepository userRepository;
 
     public List<EventDTO> getUpcomingEvents() {
-        return eventRepository.findByEventDateAfterOrderByEventDateAsc(LocalDateTime.now())
-                .stream().map(this::toDTO).collect(Collectors.toList());
+        return eventRepository.findAll().stream()
+                .map(this::toDTO)
+                .sorted((a, b) -> {
+                    if (a.getEventDate() == null && b.getEventDate() == null) return 0;
+                    if (a.getEventDate() == null) return 1;
+                    if (b.getEventDate() == null) return -1;
+                    return a.getEventDate().compareTo(b.getEventDate());
+                })
+                .collect(Collectors.toList());
     }
 
     public List<EventDTO> getAllEvents() {
@@ -57,7 +64,30 @@ public class EventService {
         e.setDescription(dto.getDescription());
         e.setLocation(dto.getLocation());
         e.setCampus(dto.getCampus());
-        e.setEventDate(dto.getEventDate());
+        LocalDateTime eventDate = dto.getEventDate();
+        if (eventDate == null && dto.getDate() != null && !dto.getDate().trim().isEmpty()) {
+            try {
+                String d = dto.getDate().trim();
+                if (d.contains("T")) {
+                    eventDate = LocalDateTime.parse(d);
+                } else {
+                    String t = dto.getTime();
+                    if (t == null || t.trim().isEmpty()) {
+                        t = "00:00";
+                    }
+                    t = t.trim();
+                    if (t.length() == 5) {
+                        eventDate = LocalDateTime.parse(d + "T" + t);
+                    } else if (t.length() == 4 && t.contains(":")) {
+                        eventDate = LocalDateTime.parse(d + "T0" + t);
+                    } else {
+                        eventDate = LocalDateTime.parse(d + "T00:00");
+                    }
+                }
+            } catch (Exception ex) {
+            }
+        }
+        e.setEventDate(eventDate);
         e.setCapacity(dto.getCapacity());
         e.setCategory(dto.getCategory());
         e.setImageUrl(dto.getImageUrl());

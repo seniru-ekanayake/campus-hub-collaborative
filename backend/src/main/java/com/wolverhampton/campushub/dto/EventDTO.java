@@ -14,6 +14,8 @@ public class EventDTO {
     private String imageUrl;
     private String createdByUsername;
     private LocalDateTime createdAt;
+    private String date;
+    private String time;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -37,4 +39,13 @@ public class EventDTO {
     public void setCreatedByUsername(String createdByUsername) { this.createdByUsername = createdByUsername; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getDate() {
+        if (eventDate != null) {
+            return eventDate.toString();
+        }
+        return date;
+    }
+    public void setDate(String date) { this.date = date; }
+    public String getTime() { return time; }
+    public void setTime(String time) { this.time = time; }
 }

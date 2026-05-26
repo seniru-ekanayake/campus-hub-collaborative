@@ -37,9 +37,9 @@ const DashboardScreen = ({ navigation }) => {
   const loadData = async () => {
     try {
       const [a, e, f] = await Promise.all([getAnnouncements(), getEvents(), getFacilities()]);
-      setAnnouncements(a.data?.slice(0, 3) || []);
-      setEvents(e.data?.slice(0, 3) || []);
-      setFacilities(f.data?.slice(0, 3) || []);
+      setAnnouncements(a.data || []);
+      setEvents(e.data || []);
+      setFacilities(f.data || []);
     } catch (_) {}
   };
 
@@ -136,7 +136,7 @@ const DashboardScreen = ({ navigation }) => {
             <Text style={styles.emptyText}>No announcements available</Text>
           </Card>
         ) : (
-          announcements.map((item, i) => (
+          announcements.slice(0, 3).map((item, i) => (
             <Card key={item.id || i} style={styles.announcementCard}>
               <View style={styles.categoryRow}>
                 <View style={[styles.categoryDot, { backgroundColor: COLORS.gold }]} />
@@ -160,7 +160,7 @@ const DashboardScreen = ({ navigation }) => {
             <Text style={styles.emptyText}>No upcoming events</Text>
           </Card>
         ) : (
-          events.map((item, i) => (
+          events.slice(0, 3).map((item, i) => (
             <Card key={item.id || i} style={styles.eventCard}>
               <View style={styles.eventDateBox}>
                 <Text style={styles.eventDay}>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -91,28 +91,24 @@
         `Welcome back, ${user.firstName || user.username}! 👋`;
     }
 
-    // Load profile for points
     try {
       const profile = await Http.get('/auth/profile');
-      document.getElementById('stat-points').textContent = profile.engagementPoints || 0;
+      document.getElementById('stat-points').textContent = (profile && profile.engagementPoints) || 0;
     } catch {}
 
-    // My clubs count
     try {
       const clubs = await Http.get('/clubs/my');
-      document.getElementById('stat-clubs').textContent = clubs.length;
+      document.getElementById('stat-clubs').textContent = Array.isArray(clubs) ? clubs.length : 0;
     } catch {}
 
-    // My check-ins
     try {
       const checkins = await Http.get('/checkin/my');
-      document.getElementById('stat-checkins').textContent = checkins.length;
+      document.getElementById('stat-checkins').textContent = Array.isArray(checkins) ? checkins.length : 0;
     } catch {}
 
-    // My sessions
     try {
       const sessions = await Http.get('/counseling/sessions/my');
-      document.getElementById('stat-sessions').textContent = sessions.length;
+      document.getElementById('stat-sessions').textContent = Array.isArray(sessions) ? sessions.length : 0;
     } catch {}
 
     // Announcements

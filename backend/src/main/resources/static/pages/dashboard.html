@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -203,10 +203,10 @@
       if (el) { el.dataset.target = value; el.textContent = value; }
     };
 
-    try { const p = await Http.get('/auth/profile');      setStatEl('stat-points',   p.engagementPoints || 0); } catch {}
-    try { const c = await Http.get('/clubs/my');          setStatEl('stat-clubs',    c.length); } catch {}
-    try { const k = await Http.get('/checkin/my');        setStatEl('stat-checkins', k.length); } catch {}
-    try { const s = await Http.get('/counseling/sessions/my'); setStatEl('stat-sessions', s.length); } catch {}
+    try { const p = await Http.get('/auth/profile');           setStatEl('stat-points',   (p && p.engagementPoints) || 0); } catch {}
+    try { const c = await Http.get('/clubs/my');               setStatEl('stat-clubs',    Array.isArray(c) ? c.length : 0); } catch {}
+    try { const k = await Http.get('/checkin/my');             setStatEl('stat-checkins', Array.isArray(k) ? k.length : 0); } catch {}
+    try { const s = await Http.get('/counseling/sessions/my'); setStatEl('stat-sessions', Array.isArray(s) ? s.length : 0); } catch {}
 
     // Announcements
     const annEl = document.getElementById('dash-announcements');
